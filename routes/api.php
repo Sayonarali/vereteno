@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,10 +15,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(AuthController::class)->group(function ()
-{
-    Route::post('auth/reg', 'register');
-    Route::post('auth/login', 'login');
-    Route::post('auth/logout', 'logout');
-    Route::post('auth/refresh', 'refresh');
-});
+Route::controller(AuthController::class)
+    ->middleware('auth:api')
+    ->group(function ()
+    {
+        Route::post('auth/logout', 'logout');
+        Route::post('auth/refresh', 'refresh');
+    });
+
+Route::controller(AuthController::class)
+    ->group(function ()
+    {
+        Route::post('auth/reg', 'register');
+        Route::post('auth/login', 'login');
+    });
+
+Route::controller(ProductController::class)
+    ->group(function ()
+    {
+       Route::get('products', 'index');
+       Route::get('product/{id}', 'show');
+       Route::post('product', 'create');
+       Route::put('product/{id}', 'update');
+       Route::patch('product/{id}', 'update');
+       Route::delete('product/{id}', 'delete');
+    });
