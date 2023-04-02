@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,4 +40,15 @@ Route::controller(ProductController::class)
        Route::put('product/{id}', 'update');
        Route::patch('product/{id}', 'update');
        Route::delete('product/{id}', 'delete');
+    });
+
+Route::controller(CategoryController::class)
+    ->group(function ()
+    {
+        Route::get('categories', 'index');
+        Route::get('category/{id}', 'show');
+        Route::post('category', 'create');
+        Route::put('category/{id}', 'update');
+        Route::patch('category/{id}', 'update');
+        Route::delete('category/{id}', 'delete');
     });
