@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('title');
             $table->string('description')->nullable();
             $table->integer('category_id')->unsigned();
-//            $table->foreignId('category_id')->nullable()
-//                ->constrained()
-//                ->onUpdate('cascade')
-//                ->nullOnDelete();
+            $table->foreignId('category_id')->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->nullOnDelete();
             $table->boolean('is_discounted')->nullable();
             $table->timestamps();
         });
