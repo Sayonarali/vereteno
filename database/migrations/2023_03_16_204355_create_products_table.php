@@ -20,7 +20,10 @@ return new class extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->nullOnDelete();
-            $table->boolean('is_discounted')->nullable();
+            $table->foreignId('discount_id')->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->nullOnDelete();
             $table->timestamps();
         });
     }
