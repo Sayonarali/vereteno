@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
@@ -32,7 +32,6 @@ class ProductController extends Controller
         $request->validate([
             'title' => 'bail|required|string|unique:products|max:255',
             'description' => 'bail|nullable|string|max:255',
-            'is_discounted' => 'required|boolean',
         ]);
 
         $product = new Product();
@@ -40,7 +39,6 @@ class ProductController extends Controller
         if(!empty($request->description)){
             $product->description = $request->description;
         }
-        $product->is_discounted = $request->is_discounted;
 
         $product->save();
 
