@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\Product\Http\Controllers;
 
-use App\Models\Category;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Modules\Product\Entities\Category;
 use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller
