@@ -13,26 +13,21 @@ return new class extends Migration
     {
         Schema::create('product_attributes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->nullable()
+            $table->foreignId('product_id')
                 ->constrained()
-                ->onUpdate('cascade')
-                ->nullOnDelete();
-            $table->foreignId('size_id')->nullable()
+                ->onUpdate('cascade');
+            $table->foreignId('size_id')
                 ->constrained()
-                ->onUpdate('cascade')
-                ->nullOnDelete();
-            $table->foreignId('color_id')->nullable()
+                ->onUpdate('cascade');
+            $table->foreignId('color_id')
                 ->constrained()
-                ->onUpdate('cascade')
-                ->nullOnDelete();
-            $table->foreignId('material_id')->nullable()
+                ->onUpdate('cascade');
+            $table->foreignId('material_id')
                 ->constrained()
-                ->onUpdate('cascade')
-                ->nullOnDelete();
+                ->onUpdate('cascade');
             $table->string('article')->unique();
             $table->float('price');
             $table->integer('in_stock');
-            $table->timestamps();
         });
     }
 

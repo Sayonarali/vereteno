@@ -15,16 +15,17 @@ return new class extends Migration
         {
             $table->id();
             $table->string('title');
-            $table->string('description')->nullable();
-            $table->foreignId('category_id')->nullable()
+            $table->text('description');
+            $table->string('slug');
+            $table->foreignId('category_id')
                 ->constrained()
-                ->onUpdate('cascade')
-                ->nullOnDelete();
-            $table->foreignId('discount_id')->nullable()
+                ->onUpdate('cascade');
+            $table->foreignId('discount_id')
                 ->constrained()
-                ->onUpdate('cascade')
-                ->nullOnDelete();
-            $table->timestamps();
+                ->onUpdate('cascade');
+            $table->foreignId('vendor_code_id')
+                ->constrained()
+                ->onUpdate('cascade');
         });
     }
 
