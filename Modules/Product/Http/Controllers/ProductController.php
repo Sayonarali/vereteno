@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\Product\Http\Controllers;
 
-use App\Models\Product;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Modules\Product\Entities\Product;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
@@ -15,7 +16,7 @@ class ProductController extends Controller
 
         return response()->json([
             'products' => $products,
-        ],Response::HTTP_OK);
+        ], Response::HTTP_OK);
     }
 
     public function show(int $id): JsonResponse
@@ -24,7 +25,7 @@ class ProductController extends Controller
 
         return response()->json([
             'product' => $product,
-        ],Response::HTTP_OK);
+        ], Response::HTTP_OK);
     }
 
     public function create(Request $request): JsonResponse
@@ -36,7 +37,7 @@ class ProductController extends Controller
 
         $product = new Product();
         $product->title = $request->title;
-        if(!empty($request->description)){
+        if (!empty($request->description)) {
             $product->description = $request->description;
         }
 
@@ -44,7 +45,7 @@ class ProductController extends Controller
 
         return response()->json([
             'product' => $product,
-            ],Response::HTTP_CREATED);
+        ], Response::HTTP_CREATED);
     }
 
     public function update(int $id, Request $request): JsonResponse
@@ -57,19 +58,19 @@ class ProductController extends Controller
 
         $product = Product::find($id);
 
-        if(!empty($request->title)){
+        if (!empty($request->title)) {
             $product->title = $request->title;
         }
-        if(!empty($request->description)){
+        if (!empty($request->description)) {
             $product->description = $request->description;
         }
-        if(!empty($request->is_discounted)){
+        if (!empty($request->is_discounted)) {
             $product->is_discounted = $request->is_discounted;
         }
 
         return response()->json([
             'product' => $product,
-        ],Response::HTTP_OK);
+        ], Response::HTTP_OK);
     }
 
     public function delete(int $id): JsonResponse
