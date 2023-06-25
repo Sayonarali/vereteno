@@ -3,9 +3,9 @@
 namespace Modules\Product\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Modules\Product\Entities\Product;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller

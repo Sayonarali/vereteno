@@ -1,15 +1,18 @@
 <?php
 
-namespace Modules\Product\Entities;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Material extends Model
+class Product extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'title',
+        'description',
+        'category_id',
+        'is_discounted'
     ];
 }

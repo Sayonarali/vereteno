@@ -3,9 +3,9 @@
 namespace Modules\Category\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Modules\Product\Entities\Category;
 use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller
