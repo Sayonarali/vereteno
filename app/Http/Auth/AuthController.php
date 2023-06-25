@@ -3,6 +3,7 @@
 namespace App\Http\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,14 +16,14 @@ class AuthController extends Controller
     public function register(Request $request): JsonResponse
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
+            'login' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:6',
         ]);
 
         $user = User::create([
-            'name' => $request->name,
             'email' => $request->email,
+            'login' => $request->login,
             'password' => Hash::make($request->password),
         ]);
 
@@ -32,13 +33,18 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
         }
 
+        Cart::create([
+            'user_id' => $user->id,
+        ]);
+
         return response()->json([
             'message' => 'User created successfully',
             'user' => $user,
             'authorization' => [
                 'token' => $token,
                 'type' => 'bearer',
-            ]
+            ],
+            'userCart' => $user->cart
         ]);
     }
 
@@ -61,7 +67,8 @@ class AuthController extends Controller
             'authorization' => [
                 'token' => $token,
                 'type' => 'bearer',
-            ]
+            ],
+            'userCart' => Auth::user()->cart
         ]);
     }
 

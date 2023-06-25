@@ -15,12 +15,13 @@ use Modules\Product\Http\Controllers\ProductController;
 */
 
 Route::controller(ProductController::class)
+    ->prefix('products')
     ->group(function ()
     {
-        Route::get('products', 'index');
-        Route::get('product/{id}', 'show');
-        Route::post('product', 'create');
-        Route::put('product/{id}', 'update');
-        Route::patch('product/{id}', 'update');
-        Route::delete('product/{id}', 'delete');
+        Route::get('/', 'index');
+        Route::get('/{id}', 'show');
+        Route::post('/', 'create');
+        Route::put('/{id}', 'update');
+        Route::patch('/{id}', 'update');
+        Route::delete('/{id}', 'delete');
     });
