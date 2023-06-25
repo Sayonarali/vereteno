@@ -16,18 +16,7 @@ return new class extends Migration
             $table->foreignId('product_id')
                 ->constrained()
                 ->onUpdate('cascade');
-            $table->foreignId('size_id')
-                ->constrained()
-                ->onUpdate('cascade');
-            $table->foreignId('color_id')
-                ->constrained()
-                ->onUpdate('cascade');
-            $table->foreignId('material_id')
-                ->constrained()
-                ->onUpdate('cascade');
-            $table->string('article')->unique();
-            $table->float('price');
-            $table->integer('in_stock');
+            $table->string('vendor_code_id')->unique();
         });
     }
 

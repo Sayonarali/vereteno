@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table)
         {
             $table->id();
-            $table->string('title');
+            $table->string('name');
             $table->text('description');
             $table->string('slug');
             $table->foreignId('category_id')
@@ -26,6 +26,8 @@ return new class extends Migration
             $table->foreignId('vendor_code_id')
                 ->constrained()
                 ->onUpdate('cascade');
+            $table->float('price');
+            $table->integer('quantity');
         });
     }
 
