@@ -2,78 +2,79 @@
 
 namespace Modules\Category\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use Modules\Product\Entities\Category;
+use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
-    public function index()
+    public function index(): JsonResponse
     {
-        return view('category::index');
+        $categories = Category::all();
+
+        return response()->json([
+            'categories' => $categories,
+        ],Response::HTTP_OK);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
+    public function show(int $id): JsonResponse
     {
-        return view('category::create');
+        $category = Category::find($id);
+
+        return response()->json([
+            'category' => $category,
+        ],Response::HTTP_OK);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
+    public function create(Request $request): JsonResponse
     {
-        //
+        $request->validate([
+            'name' => 'bail|required|string|unique:categories|max:255',
+            'type' => 'bail|nullable|string|max:255'
+        ]);
+
+        $category = new Category();
+        $category->name = $request->name;
+        if(!empty($request->type)){
+            $category->type = $request->type;
+        }
+
+        $category->save();
+
+        return response()->json([
+            'category' => $category,
+        ],Response::HTTP_CREATED);
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
+    public function update(int $id, Request $request): JsonResponse
     {
-        return view('category::show');
+        $request->validate([
+            'name' => 'bail|nullable|string|unique:categories|max:255',
+            'type' => 'bail|nullable|string|max:255'
+        ]);
+
+        $category = Category::find($id);
+
+        if(!empty($request->name)){
+            $category->name = $request->name;
+        }
+        if(!empty($request->type)){
+            $category->type = $request->type;
+        }
+
+        return response()->json([
+            'category' => $category,
+        ],Response::HTTP_OK);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
+    public function delete(int $id): JsonResponse
     {
-        return view('category::edit');
-    }
+        Category::destroy($id);
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json([
+            'message' => 'deleted'
+        ], Response::HTTP_OK);
     }
 }

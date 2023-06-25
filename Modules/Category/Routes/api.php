@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Modules\Category\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,13 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/category', function (Request $request) {
-    return $request->user();
-});
+Route::controller(CategoryController::class)
+    ->group(function ()
+    {
+        Route::get('categories', 'index');
+        Route::get('category/{id}', 'show');
+        Route::post('category', 'create');
+        Route::put('category/{id}', 'update');
+        Route::patch('category/{id}', 'update');
+        Route::delete('category/{id}', 'delete');
+    });
