@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Modules\User\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::controller(UserController::class)
+    ->group(function ()
+    {
+        Route::get('users', 'index');
+        Route::get('user/{id}', 'show');
+        Route::put('user/{id}', 'update');
+        Route::patch('user/{id}', 'update');
+        Route::delete('user/{id}', 'delete');
+    });
