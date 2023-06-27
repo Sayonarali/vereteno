@@ -15,9 +15,10 @@ use Modules\Cart\Http\Controllers\CartController;
 */
 
 Route::controller(CartController::class)
-    ->prefix('carts')
+    ->prefix('cart')
     ->group(function () {
         Route::get('/{id}', 'show');
         Route::patch('/{id}', 'update');
+        Route::patch('/{id}/remove', 'removeItem');
         Route::delete('/{id}', 'empty');
     });
