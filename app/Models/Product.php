@@ -15,4 +15,6 @@ class Product extends Model
         'category_id',
         'is_discounted'
     ];
+
+    public $timestamps = false;
 }
