@@ -28,6 +28,7 @@ return new class extends Migration
                 ->onUpdate('cascade');
             $table->float('price');
             $table->integer('quantity');
+            $table->timestamps();
         });
     }
 

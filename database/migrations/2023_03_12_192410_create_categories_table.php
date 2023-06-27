@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('slug');
         });
         Schema::table('categories',function (Blueprint $table){
-            $table->foreignId('parent_id')->references('id')->on('categories');
+            $table->foreignId('parent_id')->nullable()->references('id')->on('categories');
         });
     }
 
