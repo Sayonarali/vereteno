@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Cart\Dto\Cart;
+namespace Modules\Cart\Dto\CartItem;
 
 class RemoveItemDto
 {

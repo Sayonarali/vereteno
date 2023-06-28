@@ -4,9 +4,9 @@ namespace Modules\Cart\Http\Requests\Cart;
 
 use App\Models\CartItem;
 use Illuminate\Foundation\Http\FormRequest;
-use Modules\Cart\Dto\Cart\RemoveItemDto;
+use Modules\Cart\Dto\CartItem\RemoveItemDto;
 
-class RemoveItemRequest extends FormRequest
+class DeleteItemRequest extends FormRequest
 {
     public function getDto()
     {

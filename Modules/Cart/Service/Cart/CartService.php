@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Cart\Service;
+namespace Modules\Cart\Service\Cart;
 
 use App\Models\Cart;
 use App\Models\CartItem;
-use Modules\Cart\Dto\Cart\RemoveItemDto;
 use Modules\Cart\Dto\Cart\UpdateCartDto;
+use Modules\Cart\Dto\CartItem\RemoveItemDto;
 
 class CartService
 {
@@ -32,6 +32,6 @@ class CartService
 
     public function empty($id)
     {
-        Cart::destroy($id);
+        CartItem::destroy($id);
     }
 }

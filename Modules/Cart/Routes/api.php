@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Cart\Http\Controllers\CartController;
+use Modules\Cart\Http\Controllers\CartItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,11 @@ Route::controller(CartController::class)
     ->group(function () {
         Route::get('/{id}', 'show');
         Route::patch('/{id}', 'update');
-        Route::patch('/{id}/remove', 'removeItem');
         Route::delete('/{id}', 'empty');
+    });
+
+Route::controller(CartItemController::class)
+    ->prefix('cart-item')
+    ->group(function () {
+        Route::delete('/{id}', 'deleteItem');
     });
