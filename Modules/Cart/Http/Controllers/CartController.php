@@ -3,7 +3,6 @@
 namespace Modules\Cart\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Modules\Cart\Http\Requests\Cart\DeleteItemRequest;
 use Modules\Cart\Http\Requests\Cart\UpdateCartRequest;
 use Modules\Cart\Service\Cart\CartService;
 
@@ -24,11 +23,6 @@ class CartController extends Controller
     public function update(int $id, UpdateCartRequest $request)
     {
         return $this->cartService->update($id, $request->getDto());
-    }
-
-    public function removeItem(DeleteItemRequest $request)
-    {
-        $this->cartService->removeItem($request->getDto());
     }
 
     public function empty($id)

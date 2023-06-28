@@ -21,17 +21,12 @@ class CartService
     {
         return Cart::query()->where('id', $id)
             ->with(['items' => function ($product) use ($dto) {
-                return $product->where('id', $dto->getProductId())->update(['quantity' => $dto->getQuantity()]);
+                return $product->where('product_id', $dto->getProductId())->update(['quantity' => $dto->getQuantity()]);
             }])->get();
     }
 
-    public function removeItem(RemoveItemDto $dto)
+    public function empty(int $id)
     {
-        CartItem::destroy($dto->getCartItemId());
-    }
-
-    public function empty($id)
-    {
-        CartItem::destroy($id);
+        CartItem::query()->where('cart_id', $id)->delete();
     }
 }
