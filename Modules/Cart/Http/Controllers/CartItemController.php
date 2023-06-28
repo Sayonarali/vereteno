@@ -3,7 +3,8 @@
 namespace Modules\Cart\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Modules\Cart\Http\Requests\Cart\DeleteItemRequest;
+use Modules\Cart\Http\Requests\CartItem\AddItemRequest;
+use Modules\Cart\Http\Requests\CartItem\DeleteItemRequest;
 use Modules\Cart\Service\CartItem\CartItemService;
 
 class CartItemController extends Controller
@@ -12,11 +13,16 @@ class CartItemController extends Controller
 
     public function __construct(CartItemService $cartItemService)
     {
-        $this->cartItemService = $cartItemService;
+        return $this->cartItemService = $cartItemService;
+    }
+
+    public function addItem(int $id, AddItemRequest $request)
+    {
+        return $this->cartItemService->addItem($id, $request->getDto());
     }
 
     public function deleteItem(DeleteItemRequest $request)
     {
-        $this->cartItemService->removeItem($request->getDto());
+        return $this->cartItemService->removeItem($request->getDto());
     }
 }

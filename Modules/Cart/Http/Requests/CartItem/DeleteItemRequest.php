@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Cart\Http\Requests\Cart;
+namespace Modules\Cart\Http\Requests\CartItem;
 
 use App\Models\CartItem;
 use Illuminate\Foundation\Http\FormRequest;

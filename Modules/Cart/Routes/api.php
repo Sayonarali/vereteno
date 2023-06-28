@@ -26,5 +26,6 @@ Route::controller(CartController::class)
 Route::controller(CartItemController::class)
     ->prefix('cart-item')
     ->group(function () {
+        Route::post('/{id}', 'addItem');
         Route::delete('/{id}', 'deleteItem');
     });

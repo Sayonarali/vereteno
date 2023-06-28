@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cart_id')
                 ->constrained()
+                ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->foreignId('product_id')
                 ->constrained()
+                ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->integer('quantity');
             $table->timestamps();
