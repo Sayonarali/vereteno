@@ -20,6 +20,11 @@ class CartItem extends Model
         'updated_at'
     ];
 
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class);
+    }
+
     public function product()
     {
         return $this->hasOne(Product::class);

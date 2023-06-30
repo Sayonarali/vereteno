@@ -11,6 +11,14 @@ class Category extends Model
 
     protected $fillable = [
         'name',
-        'type',
+        'slug',
+        'description',
+        'level',
+        'parent_id'
     ];
+
+    public function parent()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

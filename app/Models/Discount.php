@@ -14,4 +14,9 @@ class Discount extends Model
         'desc',
         'discount_percent'
     ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
 }
