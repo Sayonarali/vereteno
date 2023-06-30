@@ -36,7 +36,9 @@ class AuthController extends Controller
         Cart::create([
             'user_id' => $user->id,
         ]);
+
         Auth::user()->cart;
+
         return response()->json([
             'message' => 'User created successfully',
             'user' => $user,
