@@ -36,7 +36,7 @@ class AuthController extends Controller
         Cart::create([
             'user_id' => $user->id,
         ]);
-
+        Auth::user()->cart;
         return response()->json([
             'message' => 'User created successfully',
             'user' => $user,
@@ -44,7 +44,6 @@ class AuthController extends Controller
                 'token' => $token,
                 'type' => 'bearer',
             ],
-            'userCart' => $user->cart
         ]);
     }
 
@@ -61,6 +60,7 @@ class AuthController extends Controller
                 'message' => 'Unauthorized',
             ], Response::HTTP_UNAUTHORIZED);
         }
+        Auth::user()->cart;
 
         return response()->json([
             'user' => Auth::user(),
@@ -68,7 +68,13 @@ class AuthController extends Controller
                 'token' => $token,
                 'type' => 'bearer',
             ],
-            'userCart' => Auth::user()->cart
+        ]);
+    }
+
+    public function authByToken(): JsonResponse
+    {
+        return response()->json([
+            'user' => Auth::user()
         ]);
     }
 
