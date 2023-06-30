@@ -11,8 +11,8 @@ class CartItemService
     public function addItem(int $id, AddItemDto $dto)
     {
         return CartItem::query()->create([
-            'cart_id' => $id,
             'product_id' => $dto->getProductId(),
+            'cart_id' => $id,
             'quantity' => 1
         ]);
     }
