@@ -14,6 +14,8 @@ class Attribute extends Model
         'value',
     ];
 
+    public $timestamps = false;
+
     public function products()
     {
         return $this->belongsToMany(Product::class)->using(ProductAttribute::class);
