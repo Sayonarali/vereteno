@@ -18,7 +18,9 @@ class DatabaseSeeder extends Seeder
             MaterialSeeder::class,
             SizeSeeder::class,
             VendorCodeSeeder::class,
-            CategorySeeder::class
+            CategorySeeder::class,
+            AttributeSeeder::class,
+            DiscountSeeder::class,
         ]);
     }
 }
