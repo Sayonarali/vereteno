@@ -9,8 +9,12 @@ class ProductAttribute extends Pivot
 {
     use HasFactory;
 
+    public $table = 'product_attributes';
+
     protected $fillable = [
         'product_id',
         'attribute_id',
     ];
+
+    public $timestamps = false;
 }
