@@ -3,18 +3,16 @@
 namespace Modules\Cart\Service\Cart;
 
 use App\Models\Cart;
-use App\Models\CartItem;
 use Modules\Cart\Dto\Cart\UpdateCartDto;
-use Modules\Cart\Dto\CartItem\RemoveItemDto;
 
 class CartService
 {
     /**
      * @return mixed|string
      */
-    public function show($id): mixed
+    public function show($userId): mixed
     {
-        return Cart::query()->with('items')->find($id);
+        return Cart::query()->where('user_id', $userId)->with('products')->get();
     }
 
     public function update(int $id, UpdateCartDto $dto)
@@ -27,6 +25,5 @@ class CartService
 
     public function empty(int $id)
     {
-        CartItem::query()->where('cart_id', $id)->delete();
     }
 }
