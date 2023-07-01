@@ -12,4 +12,11 @@ class Material extends Model
     protected $fillable = [
         'name',
     ];
+
+    public $timestamps = false;
+
+    public function codes()
+    {
+        return $this->belongsToMany(VendorCode::class);
+    }
 }

@@ -16,6 +16,8 @@ class VendorCode extends Model
         'size_id'
     ];
 
+    public $timestamps = false;
+
     public function material()
     {
         return $this->hasOne(Material::class);

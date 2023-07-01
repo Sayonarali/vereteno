@@ -12,4 +12,6 @@ class Size extends Model
     protected $fillable = [
         'number',
     ];
+
+    public $timestamps = false;
 }
