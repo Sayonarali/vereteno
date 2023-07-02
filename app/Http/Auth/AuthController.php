@@ -15,14 +15,14 @@ class AuthController extends Controller
     public function register(Request $request): JsonResponse
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
+            'login' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:6',
         ]);
 
         $user = User::create([
-            'name' => $request->name,
             'email' => $request->email,
+            'login' => $request->login,
             'password' => Hash::make($request->password),
         ]);
 
@@ -38,7 +38,7 @@ class AuthController extends Controller
             'authorization' => [
                 'token' => $token,
                 'type' => 'bearer',
-            ]
+            ],
         ]);
     }
 
@@ -61,7 +61,14 @@ class AuthController extends Controller
             'authorization' => [
                 'token' => $token,
                 'type' => 'bearer',
-            ]
+            ],
+        ]);
+    }
+
+    public function authByToken(): JsonResponse
+    {
+        return response()->json([
+            'user' => Auth::user()
         ]);
     }
 

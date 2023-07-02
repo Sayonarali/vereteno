@@ -2,78 +2,62 @@
 
 namespace Modules\Cart\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Controller;
+use App\Models\Cart;
+use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
+use Modules\Cart\Http\Requests\Cart\UpdateCartRequest;
+use Modules\Cart\Service\Cart\CartService;
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
-    public function index()
+    private CartService $cartService;
+
+    public function __construct(CartService $cartService)
     {
-        return view('cart::index');
+        $this->cartService = $cartService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
+    public function show()
     {
-        return view('cart::create');
+        $userId = Auth::user()->getAuthIdentifier();
+        return Cart::query()->where('user_id', $userId)->with('product')->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
+    public function addProduct(Product $product)
     {
-        //
+        return Cart::query()->create([
+            'user_id' => Auth::user()->id,
+            'product_id' => $product->id,
+            'price' => $product->price,
+            'amount' => $product->price,
+            'quantity' => 1,
+        ]);
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
+    public function removeProduct(Product $product)
     {
-        return view('cart::show');
+        $userId = Auth::user()->getAuthIdentifier();
+        return Cart::query()->where('user_id', $userId)->where('product_id', $product->id)->delete();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
+    public function update(UpdateCartRequest $request)
     {
-        return view('cart::edit');
+        $userId = Auth::user()->getAuthIdentifier();
+        $dto = $request->getDto();
+        $product = Product::find($dto->getProductId());
+
+        Cart::query()->where('user_id', $userId)->where('product_id', $dto->getProductId())
+            ->update([
+                'quantity' => $dto->getQuantity(),
+                'amount' => $dto->getQuantity() * $product->price,
+            ]);
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
+    public function empty()
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
+        $userId = Auth::user()->getAuthIdentifier();
+        return Cart::query()->where('user_id', $userId)->delete();
     }
 }

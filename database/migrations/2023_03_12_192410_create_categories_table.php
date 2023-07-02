@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,11 +13,12 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
             $table->string('slug');
+            $table->text('description');
+            $table->integer('level');
         });
-        Schema::table('categories',function (Blueprint $table){
-            $table->foreignId('parent_id')->references('id')->on('categories');
+        Schema::table('categories', function (Blueprint $table) {
+            $table->foreignId('parent_id')->nullable()->references('id')->on('categories');
         });
     }
 

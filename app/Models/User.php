@@ -17,9 +17,14 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
+        'login',
         'name',
+        'surname',
+        'patronymic',
+        'phone',
         'email',
         'password',
+        'profile_image'
     ];
 
     /**
@@ -30,6 +35,8 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password',
         'remember_token',
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -40,6 +47,11 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.

@@ -15,18 +15,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::controller(AuthController::class)
+    ->prefix('auth')
     ->middleware('auth:api')
     ->group(function ()
     {
-        Route::post('auth/logout', 'logout');
-        Route::post('auth/refresh', 'refresh');
+        Route::get('/by-token', 'authByToken');
+        Route::post('/logout', 'logout');
+        Route::post('/refresh', 'refresh');
     });
 
 Route::controller(AuthController::class)
+    ->prefix('auth')
     ->group(function ()
     {
-        Route::post('auth/reg', 'register');
-        Route::post('auth/login', 'login');
+        Route::post('/reg', 'register');
+        Route::post('/login', 'login');
     });
 
 

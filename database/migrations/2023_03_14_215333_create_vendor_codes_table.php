@@ -16,18 +16,19 @@ return new class extends Migration
         Schema::create('vendor_codes', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
-            $table->foreignId('material_id')
+            $table->foreignId('material_id')->nullable()
                 ->constrained()
                 ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-            $table->foreignId('color_id')
+                ->nullOnDelete();
+            $table->foreignId('color_id')->nullable()
                 ->constrained()
                 ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-            $table->foreignId('size_id')
+                ->nullOnDelete();
+            $table->foreignId('size_id')->nullable()
                 ->constrained()
                 ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+                ->nullOnDelete();
+            $table->timestamps();
         });
     }
 
