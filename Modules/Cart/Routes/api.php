@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Cart\Http\Controllers\CartController;
+use Modules\Cart\Http\Controllers\CartItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,19 +14,15 @@ use Modules\Cart\Http\Controllers\CartController;
 |
 */
 
-Route::controller(CartController::class)
+Route::controller(CartItemController::class)
     ->middleware('auth:api')
-    ->prefix('cart')
+    ->prefix('cart-item')
     ->group(function () {
         Route::get('/', 'show');
         Route::patch('/', 'update');
         Route::delete('/', 'empty');
 
-        Route::post('/{product}', 'addProduct');
-        Route::delete('/{product}', 'removeProduct');
+        Route::post('/{product}', 'addItem');
+        Route::delete('/{id}', 'removeItem');
     });
 
-Route::controller(CartController::class)
-    ->prefix('cart-product')
-    ->group(function () {
-    });

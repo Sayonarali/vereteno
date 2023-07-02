@@ -2,8 +2,8 @@
 
 namespace Modules\Cart\Service\Cart;
 
-use App\Models\Cart;
-use Modules\Cart\Dto\Cart\UpdateCartDto;
+use App\Models\CartItem;
+use Modules\Cart\Dto\Cart\UpdateCartItemDto;
 
 class CartService
 {
@@ -12,12 +12,12 @@ class CartService
      */
     public function show($userId): mixed
     {
-        return Cart::query()->where('user_id', $userId)->with('products')->get();
+        return CartItem::query()->where('user_id', $userId)->with('products')->get();
     }
 
-    public function update(int $id, UpdateCartDto $dto)
+    public function update(int $id, UpdateCartItemDto $dto)
     {
-        return Cart::query()->where('id', $id)
+        return CartItem::query()->where('id', $id)
             ->with(['items' => function ($product) use ($dto) {
                 return $product->where('product_id', $dto->getProductId())->update(['quantity' => $dto->getQuantity()]);
             }])->get();

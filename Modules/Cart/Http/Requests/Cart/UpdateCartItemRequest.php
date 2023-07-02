@@ -4,14 +4,14 @@ namespace Modules\Cart\Http\Requests\Cart;
 
 use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
-use Modules\Cart\Dto\Cart\UpdateCartDto;
+use Modules\Cart\Dto\Cart\UpdateCartItemDto;
 
-class UpdateCartRequest extends FormRequest
+class UpdateCartItemRequest extends FormRequest
 {
     public function getDto()
     {
         $data = $this->validated();
-        return new UpdateCartDto(
+        return new UpdateCartItemDto(
             $data['productId'],
             $data['quantity']
         );
