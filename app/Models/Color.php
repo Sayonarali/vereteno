@@ -11,6 +11,7 @@ class Color extends Model
 
     protected $fillable = [
         'name',
+        'hex',
     ];
     public $timestamps = false;
 }
