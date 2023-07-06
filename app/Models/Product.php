@@ -46,7 +46,7 @@ class Product extends Model
         return $this->belongsToMany(Attribute::class)->using(ProductAttribute::class);
     }
 
-    public function carts()
+    public function cartItems()
     {
         return $this->hasMany(CartItem::class);
     }
@@ -54,5 +54,10 @@ class Product extends Model
     public function images()
     {
         return $this->hasMany(ProductImage::class);
+    }
+
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
     }
 }
