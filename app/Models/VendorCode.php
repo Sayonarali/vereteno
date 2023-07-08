@@ -18,18 +18,23 @@ class VendorCode extends Model
 
     public $timestamps = false;
 
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
     public function material()
     {
-        return $this->hasOne(Material::class);
+        return $this->belongsTo(Material::class, 'material_id');
     }
 
     public function color()
     {
-        return $this->hasOne(Color::class);
+        return $this->belongsTo(Color::class);
     }
 
     public function size()
     {
-        return $this->hasOne(Size::class);
+        return $this->belongsTo(Size::class);
     }
 }

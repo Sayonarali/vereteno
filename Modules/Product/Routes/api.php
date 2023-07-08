@@ -19,9 +19,9 @@ Route::controller(ProductController::class)
     ->group(function ()
     {
         Route::get('/', 'index');
-        Route::get('/{id}', 'show');
+        Route::get('/{product}', 'show');
         Route::post('/', 'create');
-        Route::put('/{id}', 'update');
-        Route::patch('/{id}', 'update');
-        Route::delete('/{id}', 'delete');
+        Route::put('/{product}', 'update');
+        Route::patch('/{product}', 'update');
+        Route::delete('/{product}', 'delete');
     });
