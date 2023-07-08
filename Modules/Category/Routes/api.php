@@ -19,9 +19,9 @@ Route::controller(CategoryController::class)
     ->group(function ()
     {
         Route::get('/', 'index');
-        Route::get('/{id}', 'show');
+        Route::get('/{category}', 'show');
         Route::post('/', 'create');
-        Route::put('/{id}', 'update');
-        Route::patch('/{id}', 'update');
-        Route::delete('/{id}', 'delete');
+        Route::put('/{category}', 'update');
+        Route::patch('/{category}', 'update');
+        Route::delete('/{category}', 'delete');
     });
