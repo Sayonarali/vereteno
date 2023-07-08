@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
-use Modules\Cart\Http\Requests\Cart\UpdateCartItemRequest;
+use Modules\Cart\Http\Requests\UpdateCartItemRequest;
 use Modules\Cart\Service\Cart\CartService;
 
 class CartItemController extends Controller
