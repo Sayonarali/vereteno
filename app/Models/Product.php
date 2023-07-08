@@ -10,6 +10,8 @@ class Product extends Model
 {
     use HasFactory;
 
+    public $table = 'products';
+
     protected $fillable = [
         'name',
         'description',
@@ -33,17 +35,17 @@ class Product extends Model
 
     public function discount()
     {
-        return $this->hasMany(Discount::class);
+        return $this->hasOne(Discount::class);
     }
 
     public function code()
     {
-        return $this->hasOne(VendorCode::class);
+        return $this->hasOne(VendorCode::class, 'id');
     }
 
-    public function attributes(): BelongsToMany
+    public function attributes()
     {
-        return $this->belongsToMany(Attribute::class)->using(ProductAttribute::class);
+        return $this->belongsToMany(Attribute::class, 'product_attributes')->using(ProductAttribute::class);
     }
 
     public function cartItems()
