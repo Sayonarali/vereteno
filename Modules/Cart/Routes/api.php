@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Cart\Http\Controllers\CartItemController;
+use Modules\Cart\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +14,7 @@ use Modules\Cart\Http\Controllers\CartItemController;
 |
 */
 
-Route::controller(CartItemController::class)
+Route::controller(CartController::class)
     ->middleware('auth:api')
     ->prefix('cart-item')
     ->group(function () {

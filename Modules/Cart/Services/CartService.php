@@ -1,18 +1,24 @@
 <?php
 
-namespace Modules\Cart\Service\Cart;
+namespace Modules\Cart\Services;
 
 use App\Models\CartItem;
-use Modules\Cart\Dto\Cart\UpdateCartItemDto;
+use Illuminate\Support\Facades\Auth;
+use Modules\Cart\Dto\ResultShowCartDto;
+use Modules\Cart\Dto\UpdateCartItemDto;
 
 class CartService
 {
-    /**
-     * @return mixed|string
-     */
-    public function show($userId): mixed
+    public function show()
     {
-        return CartItem::query()->where('user_id', $userId)->with('products')->get();
+        $totalCount = CartItem::query()->where('user_id', Auth::user()->getAuthIdentifier())->count();
+
+        $cartItems = CartItem::query()
+            ->where('user_id', Auth::user()->getAuthIdentifier())
+            ->with('product')
+            ->get();
+
+        return new ResultShowCartDto($totalCount, $cartItems);
     }
 
     public function update(int $id, UpdateCartItemDto $dto)

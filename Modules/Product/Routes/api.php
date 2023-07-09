@@ -20,8 +20,8 @@ Route::controller(ProductController::class)
     {
         Route::get('/', 'index');
         Route::get('/{product}', 'show');
-        Route::post('/', 'create');
-        Route::put('/{product}', 'update');
-        Route::patch('/{product}', 'update');
-        Route::delete('/{product}', 'delete');
+//        Route::post('/', 'create');
+//        Route::put('/{product}', 'update');
+//        Route::patch('/{product}', 'update');
+//        Route::delete('/{product}', 'delete');
     });

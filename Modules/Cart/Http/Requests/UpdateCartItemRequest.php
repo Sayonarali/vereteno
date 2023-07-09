@@ -4,7 +4,7 @@ namespace Modules\Cart\Http\Requests;
 
 use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
-use Modules\Cart\Dto\Cart\UpdateCartItemDto;
+use Modules\Cart\Dto\UpdateCartItemDto;
 
 class UpdateCartItemRequest extends FormRequest
 {

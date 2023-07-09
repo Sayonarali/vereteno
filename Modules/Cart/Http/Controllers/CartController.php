@@ -7,9 +7,10 @@ use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Modules\Cart\Http\Requests\UpdateCartItemRequest;
-use Modules\Cart\Service\Cart\CartService;
+use Modules\Cart\Http\Responses\ShowCartResponse;
+use Modules\Cart\Services\CartService;
 
-class CartItemController extends Controller
+class CartController extends Controller
 {
     private CartService $cartService;
 
@@ -20,8 +21,7 @@ class CartItemController extends Controller
 
     public function show()
     {
-        $userId = Auth::user()->getAuthIdentifier();
-        return CartItem::query()->where('user_id', $userId)->with('product')->get();
+        return new ShowCartResponse($this->cartService->show());
     }
 
     public function addItem(Product $product)

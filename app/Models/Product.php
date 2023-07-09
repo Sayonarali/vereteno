@@ -48,11 +48,6 @@ class Product extends Model
         return $this->belongsToMany(Attribute::class, 'product_attributes')->using(ProductAttribute::class);
     }
 
-    public function cartItems()
-    {
-        return $this->hasMany(CartItem::class);
-    }
-
     public function images()
     {
         return $this->hasMany(ProductImage::class);
