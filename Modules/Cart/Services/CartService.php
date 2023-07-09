@@ -38,7 +38,7 @@ class CartService
     public function addItem(Product $product)
     {
         return CartItem::query()->create([
-            'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->getAuthIdentifier(),
             'product_id' => $product->id,
             'quantity' => 1,
         ]);
