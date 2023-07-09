@@ -18,7 +18,7 @@ class ListCategoriesResponse implements \JsonSerializable
     {
         return [
             'totalCount' => $this->dto->getTotalCount(),
-            'products' => $this->dto->getCategories()->map(fn(Category $category) => new CategoryResponse($category)),
+            'categories' => $this->dto->getCategories()->map(fn(Category $category) => new CategoryResponse($category)),
         ];
     }
 }
