@@ -19,10 +19,10 @@ Route::controller(CartController::class)
     ->prefix('cart-item')
     ->group(function () {
         Route::get('/', 'show');
-        Route::patch('/', 'update');
+        Route::patch('/{cartItem}', 'update');
         Route::delete('/', 'empty');
 
         Route::post('/{product}', 'addItem');
-        Route::delete('/{id}', 'removeItem');
+        Route::delete('/{cartItem}', 'removeItem');
     });
 

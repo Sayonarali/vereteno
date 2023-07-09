@@ -3,9 +3,9 @@
 namespace Modules\Cart\Services;
 
 use App\Models\CartItem;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Modules\Cart\Dto\ResultShowCartDto;
-use Modules\Cart\Dto\UpdateCartItemDto;
 
 class CartService
 {
@@ -21,15 +21,31 @@ class CartService
         return new ResultShowCartDto($totalCount, $cartItems);
     }
 
-    public function update(int $id, UpdateCartItemDto $dto)
+    public function update(CartItem $cartItem, int $quantity)
     {
-        return CartItem::query()->where('id', $id)
-            ->with(['items' => function ($product) use ($dto) {
-                return $product->where('product_id', $dto->getProductId())->update(['quantity' => $dto->getQuantity()]);
-            }])->get();
+        return $cartItem->update([
+            'quantity' => $quantity,
+        ]);
     }
 
-    public function empty(int $id)
+    public function empty()
     {
+        return CartItem::query()
+            ->where('user_id', Auth::user()->getAuthIdentifier())
+            ->delete();
+    }
+
+    public function addItem(Product $product)
+    {
+        return CartItem::query()->create([
+            'user_id' => Auth::user()->id,
+            'product_id' => $product->id,
+            'quantity' => 1,
+        ]);
+    }
+
+    public function removeItem(CartItem $cartItem)
+    {
+        return $cartItem->delete();
     }
 }

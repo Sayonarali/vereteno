@@ -5,7 +5,7 @@ namespace Modules\Cart\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\CartItem;
 use App\Models\Product;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Modules\Cart\Http\Requests\UpdateCartItemRequest;
 use Modules\Cart\Http\Responses\ShowCartResponse;
 use Modules\Cart\Services\CartService;
@@ -24,39 +24,23 @@ class CartController extends Controller
         return new ShowCartResponse($this->cartService->show());
     }
 
-    public function addItem(Product $product)
+    public function update(CartItem $cartItem, int $quantity)
     {
-        return CartItem::query()->create([
-            'user_id' => Auth::user()->id,
-            'product_id' => $product->id,
-            'price' => $product->price,
-            'amount' => $product->price,
-            'quantity' => 1,
-        ]);
-    }
-
-    public function removeItem(int $id)
-    {
-        return CartItem::find($id)->delete();
-    }
-
-    public function update(UpdateCartItemRequest $request)
-    {
-        $userId = Auth::user()->getAuthIdentifier();
-        $dto = $request->getDto();
-        $product = Product::find($dto->getProductId());
-
-        CartItem::query()->where('user_id', $userId)->where('product_id', $dto->getProductId())
-            ->update([
-                'quantity' => $dto->getQuantity(),
-                'amount' => $dto->getQuantity() * $product->price,
-            ]);
-
+        return $this->cartService->update($cartItem, $quantity);
     }
 
     public function empty()
     {
-        $userId = Auth::user()->getAuthIdentifier();
-        return CartItem::query()->where('user_id', $userId)->delete();
+        return $this->cartService->empty();
+    }
+
+    public function addItem(Product $product)
+    {
+        return $this->cartService->addItem($product);
+    }
+
+    public function removeItem(CartItem $cartItem)
+    {
+        return $this->cartService->removeItem($cartItem);
     }
 }
