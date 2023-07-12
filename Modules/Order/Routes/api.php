@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\Order\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,14 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/order', function (Request $request) {
-    return $request->user();
-});
+Route::controller(OrderController::class)
+    ->middleware('auth:api')
+    ->prefix('order')
+    ->group(function () {
+        Route::get('/', 'show');
+        Route::patch('/{id}', 'update');
+        Route::delete('/', 'empty');
+
+        Route::post('/{id}', 'addItem');
+        Route::delete('/{id}', 'removeItem');
+    });
