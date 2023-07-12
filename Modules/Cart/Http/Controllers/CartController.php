@@ -5,8 +5,6 @@ namespace Modules\Cart\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\CartItem;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use Modules\Cart\Http\Requests\UpdateCartItemRequest;
 use Modules\Cart\Http\Responses\ShowCartResponse;
 use Modules\Cart\Services\CartService;
 
