@@ -3,8 +3,9 @@
 namespace Modules\Order\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\OrderItem;
-use App\Models\Product;
+use App\Models\Order;
+use Modules\Order\Http\Requests\CreateUpdateOrderRequest;
+use Modules\Order\Http\Responses\OrderResponse;
 use Modules\Order\Http\Responses\ShowOrderResponse;
 use Modules\Order\Services\OrderService;
 
@@ -22,23 +23,13 @@ class OrderController extends Controller
         return new ShowOrderResponse($this->orderService->show());
     }
 
-    public function update(OrderItem $orderItem, int $quantity)
+    public function create(CreateUpdateOrderRequest $request)
     {
-        return $this->orderService->update($orderItem, $quantity);
+        return new OrderResponse($this->orderService->create($request->getDto()));
     }
 
-    public function empty()
+    public function updateOrderStatus(Order $order, CreateUpdateorderRequest $request)
     {
-        return $this->orderService->empty();
-    }
-
-    public function addItem(Product $product)
-    {
-        return $this->orderService->addItem($product);
-    }
-
-    public function removeItem(OrderItem $orderItem)
-    {
-        return $this->orderService->removeItem($orderItem);
+        return new OrderResponse($this->orderService->updateOrderStatus($order, $request->getDto()));
     }
 }

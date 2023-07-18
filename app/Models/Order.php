@@ -9,6 +9,17 @@ class Order extends Model
 {
     use HasFactory;
 
+    const NEW_ORDER_STATUS = 'new';
+    const PROCESS_ORDER_STATUS = 'process';
+    const DELIVERED_ORDER_STATUS = 'delivered';
+    const CANCEL_ORDER_STATUS = 'cancel';
+
+    const PAID_PAYMENT_STATUS = 'paid';
+    const UNPAID_PAYMENT_STATUS = 'unpaid';
+
+    const ONLINE_PAYMENT_METHOD = 'online';
+    const OFFLINE_PAYMENT_METHOD = 'offline';
+
     protected $fillable = [
         'user_id',
         'status',

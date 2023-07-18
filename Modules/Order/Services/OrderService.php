@@ -2,9 +2,14 @@
 
 namespace Modules\Order\Services;
 
+use App\Models\CartItem;
 use App\Models\Order;
-use App\Models\Product;
+use App\Models\OrderAddress;
+use App\Models\OrderItem;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Modules\Order\Dto\CreateUpdateOrderDto;
 use Modules\Order\Dto\ResultShowOrderDto;
 
 class OrderService
@@ -21,31 +26,52 @@ class OrderService
         return new ResultShowOrderDto($totalCount, $orderItems);
     }
 
-    public function update(CartItem $cartItem, int $quantity)
+    public function create(CreateUpdateOrderDto $dto)
     {
-        return $cartItem->update([
-            'quantity' => $quantity,
-        ]);
-    }
-
-    public function empty()
-    {
-        return CartItem::query()
-            ->where('user_id', Auth::user()->getAuthIdentifier())
-            ->delete();
-    }
-
-    public function addItem(Product $product)
-    {
-        return CartItem::query()->create([
+        $order = new Order([
             'user_id' => Auth::user()->getAuthIdentifier(),
-            'product_id' => $product->id,
-            'quantity' => 1,
+            'status' => $dto->getStatus(),
+            'total' => 2000,
+            'payment_status' => $dto->getPaymentStatus(),
+            'payment_method' => $dto->getPaymentMethod(),
         ]);
+
+        $orderAddress = new OrderAddress([
+            'country' => $dto->getCountry(),
+            'region' => $dto->getRegion(),
+            'city' => $dto->getCity(),
+            'street' => $dto->getStreet(),
+            'postcode' => $dto->getPostcode(),
+        ]);
+
+        DB::transaction(function () use ($order, $dto, $orderAddress) {
+            $order->save();
+            is_null($dto->getCartItemIds()) ?: $this->saveOrderItems($order, $dto->getCartItemIds());
+            $order->address()->save($orderAddress);
+        });
+
+        return $order;
     }
 
-    public function removeItem(CartItem $cartItem)
+    public function saveOrderItems(Order $order, ?Collection $cartItemIds)
     {
-        return $cartItem->delete();
+        $order->items()->saveMany($cartItemIds->map(function (int $cartItemId) {
+            $cartItem = CartItem::find($cartItemId);
+            return new OrderItem([
+                'product_id' => $cartItem->product_id,
+                'price' => $cartItem->product->price,
+                'amount' => $cartItem->product->price * $cartItem->quantity,
+                'quantity' => $cartItem->quantity,
+            ]);
+        }));
+    }
+
+    public function updateOrderStatus(Order $order, CreateUpdateOrderDto $dto)
+    {
+        $order->update([
+            'status' => $dto->getStatus(),
+        ]);
+
+        return $order;
     }
 }

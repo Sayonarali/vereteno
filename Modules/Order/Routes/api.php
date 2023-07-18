@@ -19,9 +19,6 @@ Route::controller(OrderController::class)
     ->prefix('order')
     ->group(function () {
         Route::get('/', 'show');
-        Route::patch('/{id}', 'update');
-        Route::delete('/', 'empty');
-
-        Route::post('/{id}', 'addItem');
-        Route::delete('/{id}', 'removeItem');
+        Route::post('/', 'create');
+        Route::patch('/{id}', 'updateOrderStatus');
     });
