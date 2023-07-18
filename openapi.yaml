@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: vereteno API
+  description: vereteno e-commerce API
+  version: 1.0-beta
+servers:
+  - url: 'http://1467739-cx71348.tw1.ru/api/'
+paths:
+  /product:
+    get:
+      summary: Returns a list of products.
+      responses:
+        '200':
+          description: A JSON array of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: array
+  /product/{id}:
+    get:
+      summary: Returns a product.
+      responses:
+        '200':
+          description: A JSON product
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /category:
+    get:
+      summary: Returns a list of categories.
+      responses:
+        '200':
+          description: A JSON array of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: array
+  /category/{id}:
+    get:
+      summary: Returns a category.
+      responses:
+        '200':
+          description: A JSON category
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string

@@ -2,6 +2,8 @@
 
 use App\Http\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\Yaml\Yaml;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,5 +33,7 @@ Route::controller(AuthController::class)
         Route::post('/reg', 'register');
         Route::post('/login', 'login');
     });
-
+Route::get('/v1/documentation', function() {
+    return Storage::disk('public')->get('openapi.yaml');
+});
 
