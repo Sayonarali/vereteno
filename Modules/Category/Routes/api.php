@@ -15,6 +15,7 @@ use Modules\Category\Http\Controllers\CategoryController;
 */
 
 Route::controller(CategoryController::class)
+    ->prefix('v1')
     ->prefix('category')
     ->group(function ()
     {

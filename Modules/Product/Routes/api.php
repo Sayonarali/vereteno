@@ -15,6 +15,7 @@ use Modules\Product\Http\Controllers\ProductController;
 */
 
 Route::controller(ProductController::class)
+    ->prefix('v1')
     ->prefix('product')
     ->group(function ()
     {

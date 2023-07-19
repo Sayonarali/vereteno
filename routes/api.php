@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 */
 
 Route::controller(AuthController::class)
+    ->prefix('v1')
     ->prefix('auth')
     ->middleware('auth:api')
     ->group(function ()
@@ -26,12 +27,14 @@ Route::controller(AuthController::class)
     });
 
 Route::controller(AuthController::class)
+    ->prefix('v1')
     ->prefix('auth')
     ->group(function ()
     {
         Route::post('/reg', 'register');
         Route::post('/login', 'login');
     });
+
 Route::get('/v1/documentation', function() {
     return Storage::disk('public')->get('openapi.yaml');
 });
