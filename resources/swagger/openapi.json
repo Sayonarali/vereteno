@@ -142,6 +142,27 @@
                 "tags": [
                     "Auth"
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "login": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["email", "login", "password"]
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "A JSON array of products",
@@ -165,6 +186,27 @@
                 "tags": [
                     "Auth"
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "login": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["email", "login", "password"]
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "A JSON array of products",
@@ -211,6 +253,51 @@
                 "tags": [
                     "Product"
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "limit": {
+                                        "type": "integer"
+                                    },
+                                    "offset": {
+                                        "type": "integer"
+                                    },
+                                    "orderBy": {
+                                        "type": "string"
+                                    },
+                                    "orderDesc": {
+                                        "type": "boolean"
+                                    },
+                                    "search": {
+                                        "type": "string"
+                                    },
+                                    "materials": {
+                                        "type": "array",
+                                        "items": {
+                                            "type" : "integer"
+                                        }
+                                    },
+                                    "sizes": {
+                                        "type": "array",
+                                        "items": {
+                                            "type" : "integer"
+                                        }
+                                    },
+                                    "colors": {
+                                        "type": "array",
+                                        "items": {
+                                            "type" : "integer"
+                                        }
+                                    }
+                                },
+                                "required": ["limit", "offset"]
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "A JSON array of products",
@@ -248,7 +335,36 @@
                             }
                         }
                     }
-                }
+                },
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "login",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "password",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    }
+                ]
             }
         },
         "/category": {
