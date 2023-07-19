@@ -3,7 +3,6 @@
 use App\Http\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\Yaml\Yaml;
 
 /*
 |--------------------------------------------------------------------------
