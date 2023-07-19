@@ -2,7 +2,6 @@
 
 use App\Http\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,8 +15,7 @@ use Illuminate\Support\Facades\Storage;
 */
 
 Route::controller(AuthController::class)
-    ->prefix('v1')
-    ->prefix('auth')
+    ->prefix('v1/auth')
     ->middleware('auth:api')
     ->group(function ()
     {
@@ -27,8 +25,7 @@ Route::controller(AuthController::class)
     });
 
 Route::controller(AuthController::class)
-    ->prefix('v1')
-    ->prefix('auth')
+    ->prefix('v1/auth')
     ->group(function ()
     {
         Route::post('/reg', 'register');

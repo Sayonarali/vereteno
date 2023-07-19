@@ -1,0 +1,140 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "vereteno API",
+        "description": "vereteno e-commerce API",
+        "version": "1.0-beta"
+    },
+    "servers": [
+        {
+            "url": "http://1467739-cx71348.tw1.ru/api/v1",
+            "description": "Development server"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Registration, login, logout"
+        },
+        {
+            "name": "Product",
+            "description": "Product operations"
+        },
+        {
+            "name": "Category",
+            "description": "Category operations"
+        },
+        {
+            "name": "Cart",
+            "description": "Operations with cart-items"
+        }
+    ],
+    "components": {
+        "schemas": {
+            "Product": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "category_id": {
+                        "type": "integer"
+                    },
+                    "discount_id": {
+                        "type": "integer"
+                    },
+                    "vendor_code_id": {
+                        "type": "integer"
+                    },
+                    "price": {
+                        "type": "number"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "Category": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "level": {
+                        "type": "integer"
+                    },
+                    "parent_id": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "CartItem": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "product_id": {
+                        "type": "integer"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "OrderItem": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "order_id": {
+                        "type": "integer"
+                    },
+                    "product_id": {
+                        "type": "integer"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    },
+                    "amount": {
+                        "type": "number"
+                    },
+                    "price": {
+                        "type": "number"
+                    }
+                }
+            },
+            "securitySchemes": {
+                "api_key": {
+                    "type": "http",
+                    "scheme": "bearer",
+                    "bearerFormat": "JWT"
+                }
+            }
+        }
+    },
+    "paths": {
+    }
+}
