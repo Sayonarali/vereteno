@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use Modules\Order\Http\Controllers\OrderController;
 
 /*
@@ -15,8 +16,7 @@ use Modules\Order\Http\Controllers\OrderController;
 
 Route::controller(OrderController::class)
     ->middleware('auth:api')
-    ->prefix('v1')
-    ->prefix('order')
+    ->prefix('v1/order')
     ->group(function () {
         Route::get('/', 'show');
         Route::post('/', 'create');

@@ -15,8 +15,7 @@ use Modules\Category\Http\Controllers\CategoryController;
 */
 
 Route::controller(CategoryController::class)
-    ->prefix('v1')
-    ->prefix('category')
+    ->prefix('v1/category')
     ->group(function ()
     {
         Route::get('/', 'index');

@@ -15,8 +15,7 @@ use Modules\Product\Http\Controllers\ProductController;
 */
 
 Route::controller(ProductController::class)
-    ->prefix('v1')
-    ->prefix('product')
+    ->prefix('v1/product')
     ->group(function ()
     {
         Route::get('/', 'index');

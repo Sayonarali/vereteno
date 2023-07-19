@@ -16,7 +16,7 @@ use Modules\Cart\Http\Controllers\CartController;
 
 Route::controller(CartController::class)
     ->middleware('auth:api')
-    ->prefix('cart-item')
+    ->prefix('v1/cart-item')
     ->group(function () {
         Route::get('/', 'show');
         Route::patch('/{cartItem}', 'update');

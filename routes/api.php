@@ -35,7 +35,3 @@ Route::controller(AuthController::class)
         Route::post('/login', 'login');
     });
 
-Route::get('/v1/documentation', function() {
-    return Storage::disk('public')->get('openapi.yaml');
-});
-
