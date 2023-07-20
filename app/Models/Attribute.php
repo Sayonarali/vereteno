@@ -12,8 +12,7 @@ class Attribute extends Model
     public $table = 'attributes';
 
     protected $fillable = [
-        'type',
-        'value',
+        'name',
     ];
 
     public $timestamps = false;
@@ -21,5 +20,10 @@ class Attribute extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_attributes')->using(ProductAttribute::class);
+    }
+
+    public function values()
+    {
+        return $this->hasMany(AttributeValue::class);
     }
 }
