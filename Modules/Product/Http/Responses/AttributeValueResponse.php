@@ -15,6 +15,7 @@ class AttributeValueResponse implements \JsonSerializable
     public function jsonSerialize(): mixed
     {
         return [
+            'id' => $this->attribute->id,
             'name' => $this->attribute->attribute->name,
             'value' => $this->attribute->value,
         ];

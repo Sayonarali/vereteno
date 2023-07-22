@@ -42,9 +42,7 @@ class ListProductsRequest extends FormRequest
             'colors' => 'nullable|array',
             'colors.*' => 'required|int|min:0',
             'attributes' => 'nullable|array',
-            'attributes.*' => 'required|array',
-            'attributes.*.*' => 'required|array',
-            'attributes.*.*.*' => 'required|int|min:0',
+            'attributes.*' => 'required|int|min:0',
         ];
     }
 }
