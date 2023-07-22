@@ -3,8 +3,10 @@
 namespace Modules\Product\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\AttributeValue;
 use App\Models\Product;
 use Modules\Product\Http\Requests\ListProductsRequest;
+use Modules\Product\Http\Responses\AttributeValueResponse;
 use Modules\Product\Http\Responses\ListProductsResponse;
 use Modules\Product\Http\Responses\ProductResponse;
 use Modules\Product\Services\ProductService;
@@ -27,6 +29,27 @@ class ProductController extends Controller
     {
         return new ProductResponse($product);
     }
+
+    public function getAttributes()
+    {
+        return $this->productService->getAttributes()->map(fn(AttributeValue $attributeValue) => new AttributeValueResponse($attributeValue));
+    }
+
+    public function getColors()
+    {
+        return $this->productService->getColors();
+    }
+
+    public function getMaterials()
+    {
+        return $this->productService->getMaterials();
+    }
+
+    public function getSizes()
+    {
+        return $this->productService->getSizes();
+    }
+
 //
 //    public function create(CreateUpdateProductRequest $request)
 //    {

@@ -2,7 +2,11 @@
 
 namespace Modules\Product\Services;
 
+use App\Models\AttributeValue;
+use App\Models\Color;
+use App\Models\Material;
 use App\Models\Product;
+use App\Models\Size;
 use Modules\Product\Dto\ListProductsDto;
 use Modules\Product\Dto\ResultListProductsDto;
 
@@ -22,13 +26,13 @@ class ProductService
                     $query->whereIn('size_id', $dto->getFilterDto()->getSizes());
                 });
             })
-//            ->whereHas('attributes', function ($query) use ($dto) {
-//                $query->when($dto->getFilterDto()->getAttributes()->isNotEmpty(), function ($query) use ($dto) {
-////                    dd($dto->getFilterDto()->getAttributes());
-////                    $dto->getFilterDto()->getAttributes()->map(fn($item) => dd($item));
-//                    $query->whereIn('id', $dto->getFilterDto()->getAttributes());
+            ->whereHas('codes', function ($query) use ($dto) {
+//                $query->whereHas('products', function ($query) use ($dto) {
+                    $query->when($dto->getFilterDto()->getAttributes()->isNotEmpty(), function ($query) use ($dto) {
+                        $query->whereIn('attribute_id', $dto->getFilterDto()->getAttributes());
+                    });
 //                });
-//            })
+            })
             ->when($dto->getSearch(), function ($query, $search) {
                 $query->where('name', 'LIKE', "%$search%");
             })
@@ -41,6 +45,26 @@ class ProductService
             Product::all()->count(),
             $products->get()
         );
+    }
+
+    public function getAttributes()
+    {
+       return AttributeValue::all();
+    }
+
+    public function getColors()
+    {
+        return Color::all();
+    }
+
+    public function getMaterials()
+    {
+        return Material::all();
+    }
+
+    public function getSizes()
+    {
+        return Size::all();
     }
 
 //    public function create(Request $request)
