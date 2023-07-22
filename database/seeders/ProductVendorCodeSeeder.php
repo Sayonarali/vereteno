@@ -2,19 +2,19 @@
 
 namespace Database\Seeders;
 
-use App\Models\ProductAttribute;
+use App\Models\ProductVendorCode;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ProductAttributeSeeder extends Seeder
+class ProductVendorCodeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        ProductAttribute::factory()
-            ->count(300)
+        ProductVendorCode::factory()
+            ->count(100)
             ->create();
     }
 }

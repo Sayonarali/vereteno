@@ -6,18 +6,18 @@ use App\Models\Attribute;
 
 class AttributeResponse implements \JsonSerializable
 {
-    private Attribute $attribute;
-    public function __construct(Attribute $attribute)
+    private  $attribute;
+    public function __construct( $attribute)
     {
         $this->attribute = $attribute;
     }
 
     public function jsonSerialize(): mixed
     {
+        dd($attribute);
         return [
             'id' => $this->attribute->id,
-            'type' => $this->attribute->type,
-            'value' => $this->attribute->value,
+            'name' => $this->attribute->name,
         ];
     }
 }

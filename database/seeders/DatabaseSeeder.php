@@ -23,10 +23,11 @@ class DatabaseSeeder extends Seeder
             AttributeValueSeeder::class,
             DiscountSeeder::class,
             ProductSeeder::class,
-            ProductAttributeSeeder::class,
             CartItemSeeder::class,
             ProductImageSeeder::class,
-            OrderSeeder::class
+            OrderSeeder::class,
+            ProductVendorCodeSeeder::class,
+            ProductVendorCodeAttributeSeeder::class,
         ]);
     }
 }

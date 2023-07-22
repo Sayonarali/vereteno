@@ -11,7 +11,7 @@ class ProductService
     public function index(ListProductsDto $dto)
     {
         $products = Product::query()
-            ->whereHas('code', function ($query) use ($dto) {
+            ->whereHas('codes', function ($query) use ($dto) {
                 $query->when($dto->getFilterDto()->getColors()->isNotEmpty(), function ($query) use ($dto) {
                     $query->whereIn('color_id', $dto->getFilterDto()->getColors());
                 });
@@ -22,6 +22,13 @@ class ProductService
                     $query->whereIn('size_id', $dto->getFilterDto()->getSizes());
                 });
             })
+//            ->whereHas('attributes', function ($query) use ($dto) {
+//                $query->when($dto->getFilterDto()->getAttributes()->isNotEmpty(), function ($query) use ($dto) {
+////                    dd($dto->getFilterDto()->getAttributes());
+////                    $dto->getFilterDto()->getAttributes()->map(fn($item) => dd($item));
+//                    $query->whereIn('id', $dto->getFilterDto()->getAttributes());
+//                });
+//            })
             ->when($dto->getSearch(), function ($query, $search) {
                 $query->where('name', 'LIKE', "%$search%");
             })

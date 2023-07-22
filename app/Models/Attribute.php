@@ -17,13 +17,14 @@ class Attribute extends Model
 
     public $timestamps = false;
 
-    public function products()
-    {
-        return $this->belongsToMany(Product::class, 'product_attributes')->using(ProductAttribute::class);
-    }
-
     public function values()
     {
         return $this->hasMany(AttributeValue::class);
+    }
+
+    public function codes()
+    {
+        return $this->belongsToMany(ProductVendorCode::class, 'product_vendor_code_attributes')
+            ->using(ProductVendorCodeAttribute::class);
     }
 }

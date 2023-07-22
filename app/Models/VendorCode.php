@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class VendorCode extends Model
 {
+    public $table = 'vendor_codes';
+
     use HasFactory;
 
     protected $fillable = [
@@ -18,9 +20,9 @@ class VendorCode extends Model
 
     public $timestamps = false;
 
-    public function product()
+    public function products()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsToMany(Product::class, 'product_vendor_codes')->using(ProductVendorCode::class);
     }
 
     public function material()

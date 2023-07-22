@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -17,10 +16,6 @@ class Product extends Model
         'description',
         'slug',
         'category_id',
-        'discount_id',
-        'vendor_code_id',
-        'price',
-        'quantity'
     ];
 
     protected $hidden = [
@@ -33,19 +28,10 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function discount()
+    public function codes()
     {
-        return $this->hasOne(Discount::class);
-    }
-
-    public function code()
-    {
-        return $this->hasOne(VendorCode::class, 'id');
-    }
-
-    public function attributes()
-    {
-        return $this->belongsToMany(Attribute::class, 'product_attributes')->using(ProductAttribute::class);
+        return $this->belongsToMany(VendorCode::class, 'product_vendor_codes')
+            ->using(ProductVendorCode::class)->withPivot('price', 'quantity', 'discount_id');
     }
 
     public function images()
