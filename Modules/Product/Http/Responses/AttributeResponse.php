@@ -14,7 +14,6 @@ class AttributeResponse implements \JsonSerializable
 
     public function jsonSerialize(): mixed
     {
-        dd($attribute);
         return [
             'id' => $this->attribute->id,
             'name' => $this->attribute->name,

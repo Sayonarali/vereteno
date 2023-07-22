@@ -31,7 +31,7 @@ class Product extends Model
     public function codes()
     {
         return $this->belongsToMany(VendorCode::class, 'product_vendor_codes')
-            ->using(ProductVendorCode::class)->withPivot('price', 'quantity', 'discount_id');
+            ->using(ProductVendorCode::class)->withPivot('id', 'price', 'quantity', 'discount_id');
     }
 
     public function images()
