@@ -2,12 +2,13 @@
 
 namespace Modules\Product\Http\Responses;
 
-use App\Models\ProductVendorCodeAttribute;
+use App\Models\AttributeValue;
+use App\Models\VendorCode;
 
 class VendorCodeResponse implements \JsonSerializable
 {
-    private  $code;
-    public function __construct( $code)
+    private VendorCode $code;
+    public function __construct(VendorCode $code)
     {
         $this->code = $code;
     }
@@ -15,15 +16,14 @@ class VendorCodeResponse implements \JsonSerializable
     public function jsonSerialize(): mixed
     {
         return [
-            'id' => $this->code->id,
             'code' => $this->code->code,
-            'material' => $this->code->material,
+            'material' => $this->code->material->name,
             'color' => $this->code->color,
-            'size' => $this->code->size,
+            'size' => $this->code->size->number,
             'discount_id' => $this->code->pivot->discount_id,
             'price' => $this->code->pivot->price,
             'quantity' => $this->code->pivot->quantity,
-            'attributes' => $this->code->pivot->attributes->map(fn( $attribute) => new AttributeResponse($attribute))
+            'attributes' => $this->code->pivot->attributes->map(fn(AttributeValue $attribute) => new AttributeValueResponse($attribute))
         ];
     }
 }

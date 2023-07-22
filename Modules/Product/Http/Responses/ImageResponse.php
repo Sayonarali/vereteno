@@ -15,7 +15,6 @@ class ImageResponse implements \JsonSerializable
     public function jsonSerialize(): mixed
     {
         return [
-            'id' => $this->image->id,
             'path' => $this->image->disk . $this->image->path,
         ];
     }

@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             ProductImageSeeder::class,
             OrderSeeder::class,
             ProductVendorCodeSeeder::class,
-            ProductVendorCodeAttributeSeeder::class,
+            ProductVendorCodeAttributeValueSeeder::class,
         ]);
     }
 }

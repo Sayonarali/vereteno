@@ -10,11 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('product_vendor_code_attributes', function (Blueprint $table) {
+        Schema::create('product_vendor_code_attribute_values', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_vendor_code_id')
-                ->constrained();
-            $table->foreignId('attribute_id')
+            $table->unsignedBigInteger('product_vendor_code_id');
+            $table->foreign('product_vendor_code_id', 'product_vendor_code_attribute_values_id')->references('id')->on('product_vendor_codes');
+            $table->foreignId('attribute_value_id')
                 ->constrained();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_vendor_code_attributes');
+        Schema::dropIfExists('product_vendor_code_attribute_values');
     }
 };

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProductVendorCodeAttribute>
  */
-class ProductVendorCodeAttributeFactory extends Factory
+class ProductVendorCodeAttributeValueFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,7 @@ class ProductVendorCodeAttributeFactory extends Factory
     {
         return [
             'product_vendor_code_id' => fake()->numberBetween(1,100),
-            'attribute_id' => fake()->numberBetween(1, 25)
+            'attribute_value_id' => fake()->numberBetween(1, 100)
         ];
     }
 }

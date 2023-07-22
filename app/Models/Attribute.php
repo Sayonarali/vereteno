@@ -21,10 +21,4 @@ class Attribute extends Model
     {
         return $this->hasMany(AttributeValue::class);
     }
-
-//    public function codes()
-//    {
-//        return $this->belongsToMany(ProductVendorCode::class, 'product_vendor_code_attributes')
-//            ->using(ProductVendorCodeAttribute::class);
-//    }
 }

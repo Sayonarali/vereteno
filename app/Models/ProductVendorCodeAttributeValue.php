@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class ProductVendorCodeAttribute extends Pivot
+class ProductVendorCodeAttributeValue extends Pivot
 {
     use HasFactory;
 
-    public $table = 'product_vendor_code_attributes';
+    public $table = 'product_vendor_code_attribute_values';
 
     protected $fillable = [
         'product_vendor_code_id',
