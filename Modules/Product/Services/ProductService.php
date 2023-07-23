@@ -26,12 +26,10 @@ class ProductService
                     $query->whereIn('size_id', $dto->getFilterDto()->getSizes());
                 });
             })
-            ->whereHas('codes', function ($query) use ($dto) {
-//                $query->whereHas('products', function ($query) use ($dto) {
-                    $query->when($dto->getFilterDto()->getAttributes()->isNotEmpty(), function ($query) use ($dto) {
-                        $query->whereIn('attribute_id', $dto->getFilterDto()->getAttributes());
-                    });
-//                });
+            ->whereHas('category', function ($query) use ($dto) {
+                $query->when($dto->getFilterDto()->getCategories()->isNotEmpty(), function ($query) use ($dto) {
+                    $query->whereIn('category_id', $dto->getFilterDto()->getCategories());
+                });
             })
             ->when($dto->getSearch(), function ($query, $search) {
                 $query->where('name', 'LIKE', "%$search%");
@@ -39,17 +37,27 @@ class ProductService
             ->when($dto->getSortDesc(), function ($query) use ($dto) {
                 $query->orderByDesc($dto->getSortBy());
             })
-            ->limit($dto->getLimit())->offset($dto->getOffset());
+            ->limit($dto->getLimit())->offset($dto->getOffset())->get();
+
+        if ($dto->getFilterDto()->getAttributes()->isNotEmpty()) {
+            $products = $products->filter(function ($product) use ($dto) {
+                return $product->codes->filter(function ($code) use ($dto) {
+                    return $code->pivot->attributes->filter(function ($attribute) use ($dto) {
+                        return $dto->getFilterDto()->getAttributes()->contains($attribute->id);
+                    })->isNotEmpty();
+                })->isNotEmpty();
+            });
+        }
 
         return new ResultListProductsDto(
-            Product::all()->count(),
-            $products->get()
+            $products->count(),
+            $products
         );
     }
 
     public function getAttributes()
     {
-       return AttributeValue::all();
+        return AttributeValue::all();
     }
 
     public function getColors()

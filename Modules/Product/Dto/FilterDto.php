@@ -12,16 +12,27 @@ class FilterDto
 
     private Collection $colors;
     private Collection $attributes;
+    private Collection $categories;
 
     public function __construct(Collection $materials,
                                 Collection $sizes,
                                 Collection $colors,
-                                Collection $attributes)
+                                Collection $attributes,
+                                Collection $categories)
     {
         $this->materials = $materials;
         $this->sizes = $sizes;
         $this->colors = $colors;
         $this->attributes = $attributes;
+        $this->categories = $categories;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
     }
 
     /**

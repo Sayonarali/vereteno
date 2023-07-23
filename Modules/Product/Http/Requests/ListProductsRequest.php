@@ -23,6 +23,7 @@ class ListProductsRequest extends FormRequest
                 new Collection($data['sizes'] ?? []),
                 new Collection($data['colors']?? []),
                 new Collection($data['attributes']?? []),
+                new Collection($data['categories']?? []),
             )
         );
     }
@@ -43,6 +44,8 @@ class ListProductsRequest extends FormRequest
             'colors.*' => 'required|int|min:0',
             'attributes' => 'nullable|array',
             'attributes.*' => 'required|int|min:0',
+            'categories' => 'nullable|array',
+            'categories.*' => 'required|int|min:0',
         ];
     }
 }
