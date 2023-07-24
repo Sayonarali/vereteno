@@ -587,6 +587,38 @@
                     }
                 }
             },
+            "post": {
+                "summary": "Add 1 product by it's id to auth user's cart",
+                "tags": [
+                    "Cart"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "productId": {
+                                        "type": "integer"
+                                    },
+                                    "vendorCodeId": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "productId",
+                                    "vendorCodeId"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Boolean succeed or not"
+                    }
+                }
+            },
             "delete": {
                 "summary": "Removes all items from auth user cart",
                 "tags": [
@@ -646,28 +678,6 @@
                                 }
                             }
                         }
-                    }
-                }
-            },
-            "post": {
-                "summary": "Add 1 product by it's id to auth user's cart",
-                "tags": [
-                    "Cart"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "style": "simple"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Boolean succeed or not"
                     }
                 }
             },
