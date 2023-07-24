@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('attributes', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
-            $table->string('value');
+            $table->string('name');
         });
     }
 

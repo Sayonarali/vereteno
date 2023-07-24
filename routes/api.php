@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::controller(AuthController::class)
-    ->prefix('auth')
+    ->prefix('v1/auth')
     ->middleware('auth:api')
     ->group(function ()
     {
@@ -25,11 +25,10 @@ Route::controller(AuthController::class)
     });
 
 Route::controller(AuthController::class)
-    ->prefix('auth')
+    ->prefix('v1/auth')
     ->group(function ()
     {
         Route::post('/reg', 'register');
         Route::post('/login', 'login');
     });
-
 

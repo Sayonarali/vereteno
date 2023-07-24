@@ -14,9 +14,4 @@ class Material extends Model
     ];
 
     public $timestamps = false;
-
-    public function codes()
-    {
-        return $this->belongsToMany(VendorCode::class);
-    }
 }

@@ -15,13 +15,13 @@ use Modules\Category\Http\Controllers\CategoryController;
 */
 
 Route::controller(CategoryController::class)
-    ->prefix('category')
+    ->prefix('v1/category')
     ->group(function ()
     {
         Route::get('/', 'index');
-        Route::get('/{id}', 'show');
-        Route::post('/', 'create');
-        Route::put('/{id}', 'update');
-        Route::patch('/{id}', 'update');
-        Route::delete('/{id}', 'delete');
+        Route::get('/{category}', 'show');
+//        Route::post('/', 'create');
+//        Route::put('/{category}', 'update');
+//        Route::patch('/{category}', 'update');
+//        Route::delete('/{category}', 'delete');
     });

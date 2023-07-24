@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->decimal('discount_coefficient');
+            $table->float('discount_coefficient');
         });
     }
 

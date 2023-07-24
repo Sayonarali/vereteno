@@ -16,17 +16,13 @@ use Modules\Cart\Http\Controllers\CartController;
 
 Route::controller(CartController::class)
     ->middleware('auth:api')
-    ->prefix('cart')
+    ->prefix('v1/cart-item')
     ->group(function () {
         Route::get('/', 'show');
-        Route::patch('/', 'update');
+        Route::patch('/{cartItem}', 'update');
         Route::delete('/', 'empty');
 
-        Route::post('/{product}', 'addProduct');
-        Route::delete('/{product}', 'removeProduct');
+        Route::post('/', 'addItem');
+        Route::delete('/{cartItem}', 'removeItem');
     });
 
-Route::controller(CartController::class)
-    ->prefix('cart-product')
-    ->group(function () {
-    });

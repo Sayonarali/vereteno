@@ -15,13 +15,18 @@ use Modules\Product\Http\Controllers\ProductController;
 */
 
 Route::controller(ProductController::class)
-    ->prefix('product')
+    ->prefix('v1/product')
     ->group(function ()
     {
         Route::get('/', 'index');
-        Route::get('/{id}', 'show');
-        Route::post('/', 'create');
-        Route::put('/{id}', 'update');
-        Route::patch('/{id}', 'update');
-        Route::delete('/{id}', 'delete');
+        Route::get('/{product}', 'show');
+        Route::get('/list/attributes', 'getAttributes');
+        Route::get('/list/colors', 'getColors');
+        Route::get('/list/materials', 'getMaterials');
+        Route::get('/list/sizes', 'getSizes');
+
+//        Route::post('/', 'create');
+//        Route::put('/{product}', 'update');
+//        Route::patch('/{product}', 'update');
+//        Route::delete('/{product}', 'delete');
     });

@@ -9,15 +9,16 @@ class Attribute extends Model
 {
     use HasFactory;
 
+    public $table = 'attributes';
+
     protected $fillable = [
-        'type',
-        'value',
+        'name',
     ];
 
     public $timestamps = false;
 
-    public function products()
+    public function values()
     {
-        return $this->belongsToMany(Product::class)->using(ProductAttribute::class);
+        return $this->hasMany(AttributeValue::class);
     }
 }

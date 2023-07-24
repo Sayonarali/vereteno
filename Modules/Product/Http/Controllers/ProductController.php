@@ -3,83 +3,66 @@
 namespace Modules\Product\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\AttributeValue;
 use App\Models\Product;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\Response;
+use Modules\Product\Http\Requests\ListProductsRequest;
+use Modules\Product\Http\Responses\AttributeValueResponse;
+use Modules\Product\Http\Responses\ListProductsResponse;
+use Modules\Product\Http\Responses\ProductResponse;
+use Modules\Product\Services\ProductService;
 
 class ProductController extends Controller
 {
-    public function index()
-    {
-        $products = Product::query()->with('images')->get();
+    private ProductService $productService;
 
-        return response()->json([
-            'products' => $products,
-        ], Response::HTTP_OK);
+    public function __construct(ProductService $productService)
+    {
+        $this->productService = $productService;
     }
 
-    public function show(int $id): JsonResponse
+    public function index(ListProductsRequest $request)
     {
-        $product = Product::query()->with('images')->find($id);
-
-        return response()->json([
-            'product' => $product,
-        ], Response::HTTP_OK);
+        return new ListProductsResponse($this->productService->index($request->getDto()));
     }
 
-    public function create(Request $request): JsonResponse
+    public function show(Product $product)
     {
-        $request->validate([
-            'title' => 'bail|required|string|unique:products|max:255',
-            'description' => 'bail|nullable|string|max:255',
-        ]);
-
-        $product = new Product();
-        $product->title = $request->title;
-        if (!empty($request->description)) {
-            $product->description = $request->description;
-        }
-
-        $product->save();
-
-        return response()->json([
-            'product' => $product,
-        ], Response::HTTP_CREATED);
+        return new ProductResponse($product);
     }
 
-    public function update(int $id, Request $request): JsonResponse
+    public function getAttributes()
     {
-        $request->validate([
-            'title' => 'bail|nullable|string|unique:products|max:255',
-            'description' => 'bail|nullable|string|max:255',
-            'is_discounted' => 'nullable|boolean',
-        ]);
-
-        $product = Product::find($id);
-
-        if (!empty($request->title)) {
-            $product->title = $request->title;
-        }
-        if (!empty($request->description)) {
-            $product->description = $request->description;
-        }
-        if (!empty($request->is_discounted)) {
-            $product->is_discounted = $request->is_discounted;
-        }
-
-        return response()->json([
-            'product' => $product,
-        ], Response::HTTP_OK);
+        return $this->productService->getAttributes()->map(fn(AttributeValue $attributeValue) => new AttributeValueResponse($attributeValue));
     }
 
-    public function delete(int $id): JsonResponse
+    public function getColors()
     {
-        Product::destroy($id);
-
-        return response()->json([
-            'message' => 'deleted'
-        ], Response::HTTP_OK);
+        return $this->productService->getColors();
     }
+
+    public function getMaterials()
+    {
+        return $this->productService->getMaterials();
+    }
+
+    public function getSizes()
+    {
+        return $this->productService->getSizes();
+    }
+
+//
+//    public function create(CreateUpdateProductRequest $request)
+//    {
+//
+//    }
+//
+//    public function update(Product $product, CreateUpdateProductRequest $request)
+//    {
+//
+//    }
+//
+//    public function delete(Product $product)
+//    {
+//
+//    }
 }
