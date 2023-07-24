@@ -32,9 +32,9 @@ class CartController extends Controller
         return $this->cartService->empty();
     }
 
-    public function addItem(AddItemRequest $request)
+    public function create(AddItemRequest $request)
     {
-        return $this->cartService->addItem($request->getDto());
+        return $this->cartService->create($request->getDto());
     }
 
     public function removeItem(CartItem $cartItem)

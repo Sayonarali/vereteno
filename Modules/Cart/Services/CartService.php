@@ -36,17 +36,20 @@ class CartService
             ->delete();
     }
 
-    public function addItem(AddItemDto $dto)
+    public function create(AddItemDto $dto)
     {
         $productVendorCode = ProductVendorCode::query()
             ->where('product_id', $dto->getProductId())
-            ->where('vendor_code_id', $dto->getVendorCodeId());
+            ->where('vendor_code_id', $dto->getVendorCodeId())->first();
 
-        return CartItem::query()->create([
-            'user_id' => Auth::user()->getAuthIdentifier(),
-            'product_vendor_code_id' => $productVendorCode,
-            'quantity' => 1,
-        ]);
+        if(!empty($productVendorCode)){
+            return CartItem::query()->create([
+                'user_id' => Auth::user()->getAuthIdentifier(),
+                'product_vendor_code_id' => $productVendorCode->id,
+                'quantity' => 1,
+            ]);
+        };
+        return 'no such correlation';
     }
 
     public function removeItem(CartItem $cartItem)
