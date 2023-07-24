@@ -3,7 +3,7 @@
 namespace Modules\Cart\Services;
 
 use App\Models\CartItem;
-use App\Models\Product;
+use App\Models\ProductVendorCode;
 use Illuminate\Support\Facades\Auth;
 use Modules\Cart\Dto\ResultShowCartDto;
 
@@ -35,11 +35,11 @@ class CartService
             ->delete();
     }
 
-    public function addItem(Product $product)
+    public function addItem(ProductVendorCode $product)
     {
         return CartItem::query()->create([
             'user_id' => Auth::user()->getAuthIdentifier(),
-            'product_id' => $product->id,
+            'product_vendor_code_id' => $product->id,
             'quantity' => 1,
         ]);
     }

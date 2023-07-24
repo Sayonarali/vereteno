@@ -58,7 +58,7 @@ class OrderService
         $order->items()->saveMany($cartItemIds->map(function (int $cartItemId) {
             $cartItem = CartItem::find($cartItemId);
             return new OrderItem([
-                'product_id' => $cartItem->product_id,
+                'product_vendor_code_id' => $cartItem->product_vendor_code_id,
                 'price' => $cartItem->product->price,
                 'amount' => $cartItem->product->price * $cartItem->quantity,
                 'quantity' => $cartItem->quantity,

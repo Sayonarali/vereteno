@@ -20,7 +20,7 @@ class CartItemFactory extends Factory
     {
         return [
             'user_id' => fake()->numberBetween(1,100),
-            'product_id' => fake()->numberBetween(1,100),
+            'product_vendor_code_id' => fake()->numberBetween(1,100),
             'quantity' => fake()->numberBetween(1,100),
         ];
     }

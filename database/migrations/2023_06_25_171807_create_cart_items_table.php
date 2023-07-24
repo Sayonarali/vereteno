@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')
                 ->constrained()
                 ->onUpdate('cascade');
-            $table->foreignId('product_id')
+            $table->foreignId('product_vendor_code_id')
                 ->constrained()
                 ->onUpdate('cascade');
             $table->integer('quantity');
