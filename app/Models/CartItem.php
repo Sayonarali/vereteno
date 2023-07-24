@@ -24,6 +24,6 @@ class CartItem extends Model
 
     public function product()
     {
-        return $this->hasOne(ProductVendorCode::class, 'product_vendor_code_id');
+        return $this->belongsTo(ProductVendorCode::class, 'product_vendor_code_id');
     }
 }
