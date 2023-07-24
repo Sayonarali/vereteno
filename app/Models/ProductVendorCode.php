@@ -27,6 +27,11 @@ class ProductVendorCode extends Pivot
             ->using(ProductVendorCodeAttributeValue::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(ProductVendorCodeImage::class, 'product_vendor_code_id');
+    }
+
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_vendor_codes')

@@ -10,12 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('product_images', function (Blueprint $table) {
+        Schema::create('product_vendor_code_images', function (Blueprint $table) {
             $table->id();
             $table->string('disk')->default('images');
             $table->string('path');
             $table->string('title');
-            $table->foreignId('product_id')->nullable()
+            $table->foreignId('product_vendor_code_id')->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
                 ->nullOnDelete();
@@ -29,6 +29,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_images');
+        Schema::dropIfExists('product_vendor_code_images');
     }
 };

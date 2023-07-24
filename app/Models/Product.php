@@ -34,11 +34,6 @@ class Product extends Model
             ->using(ProductVendorCode::class)->withPivot('id', 'price', 'quantity', 'discount_id');
     }
 
-    public function images()
-    {
-        return $this->hasMany(ProductImage::class);
-    }
-
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);

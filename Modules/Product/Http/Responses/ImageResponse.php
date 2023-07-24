@@ -2,12 +2,12 @@
 
 namespace Modules\Product\Http\Responses;
 
-use App\Models\ProductImage;
+use App\Models\ProductVendorCodeImage;
 
 class ImageResponse implements \JsonSerializable
 {
-    private ProductImage $image;
-    public function __construct(ProductImage $image)
+    private ProductVendorCodeImage $image;
+    public function __construct(ProductVendorCodeImage $image)
     {
         $this->image = $image;
     }

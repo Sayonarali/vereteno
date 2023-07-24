@@ -3,6 +3,7 @@
 namespace Modules\Product\Http\Responses;
 
 use App\Models\AttributeValue;
+use App\Models\ProductVendorCodeImage;
 use App\Models\VendorCode;
 
 class VendorCodeResponse implements \JsonSerializable
@@ -16,6 +17,7 @@ class VendorCodeResponse implements \JsonSerializable
     public function jsonSerialize(): mixed
     {
         return [
+            'id' => $this->code->id,
             'code' => $this->code->code,
             'material' => $this->code->material->name,
             'color' => $this->code->color,
@@ -23,6 +25,7 @@ class VendorCodeResponse implements \JsonSerializable
             'discount_id' => $this->code->pivot->discount_id,
             'price' => $this->code->pivot->price,
             'quantity' => $this->code->pivot->quantity,
+            'images' => $this->code->pivot->images->map(fn(ProductVendorCodeImage $image) => new ImageResponse($image)),
             'attributes' => $this->code->pivot->attributes->map(fn(AttributeValue $attribute) => new AttributeValueResponse($attribute))
         ];
     }

@@ -3,7 +3,6 @@
 namespace Modules\Product\Http\Responses;
 
 use App\Models\Product;
-use App\Models\ProductImage;
 use App\Models\VendorCode;
 
 class ProductResponse implements \JsonSerializable
@@ -23,7 +22,6 @@ class ProductResponse implements \JsonSerializable
             'description' => $this->product->description,
             'slug' => $this->product->slug,
             'category' => new CategoryResponse($this->product->category),
-            'images' => $this->product->images->map(fn(ProductImage $image) => new ImageResponse($image)),
             'vendor_codes' => $this->product->codes->map(fn(VendorCode $code) => new VendorCodeResponse($code)),
         ];
     }
