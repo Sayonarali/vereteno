@@ -4,7 +4,7 @@ namespace Modules\Cart\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\CartItem;
-use App\Models\ProductVendorCode;
+use Modules\Cart\Http\Requests\AddItemRequest;
 use Modules\Cart\Http\Responses\ShowCartResponse;
 use Modules\Cart\Services\CartService;
 
@@ -32,9 +32,9 @@ class CartController extends Controller
         return $this->cartService->empty();
     }
 
-    public function addItem(ProductVendorCode $product)
+    public function addItem(AddItemRequest $request)
     {
-        return $this->cartService->addItem($product);
+        return $this->cartService->addItem($request->getDto());
     }
 
     public function removeItem(CartItem $cartItem)
