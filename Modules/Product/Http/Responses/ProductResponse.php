@@ -22,7 +22,7 @@ class ProductResponse implements \JsonSerializable
             'description' => $this->product->description,
             'slug' => $this->product->slug,
             'category' => new CategoryResponse($this->product->category),
-            'vendor_codes' => $this->product->codes->map(fn(VendorCode $code) => new VendorCodeResponse($code)),
+            'vendorCodes' => $this->product->codes->map(fn(VendorCode $code) => new VendorCodeResponse($code)),
         ];
     }
 }

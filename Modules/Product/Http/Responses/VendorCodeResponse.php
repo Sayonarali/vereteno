@@ -27,7 +27,7 @@ class VendorCodeResponse implements \JsonSerializable
             'quantity' => $this->code->pivot->quantity,
             'productVendorCodeId' => $this->code->pivot->id,
             'images' => $this->code->pivot->images->map(fn(ProductVendorCodeImage $image) => new ImageResponse($image)),
-            'attributes' => $this->code->pivot->attributes->map(fn(AttributeValue $attribute) => new AttributeValueResponse($attribute))
+            'attributes' => $this->code->pivot->attributes->map(fn(AttributeValue $attribute) => new AttributeResponse($attribute))
         ];
     }
 }

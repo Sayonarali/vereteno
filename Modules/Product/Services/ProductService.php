@@ -2,6 +2,7 @@
 
 namespace Modules\Product\Services;
 
+use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Color;
 use App\Models\Material;
@@ -57,7 +58,7 @@ class ProductService
 
     public function getAttributes()
     {
-        return AttributeValue::all();
+        return Attribute::query()->with('values')->get();
     }
 
     public function getColors()
