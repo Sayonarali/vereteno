@@ -2,34 +2,20 @@
 
 namespace Modules\Cart\Dto;
 
-use Illuminate\Support\Collection;
-
 class AddItemDto
 {
-    private int $productId;
-    private int $vendorCodeId;
+    private int $productVendorCodeId;
 
-    public function __construct(int $productId,
-                                int $vendorCodeId)
+    public function __construct(int $productVendorCodeId)
     {
-
-        $this->productId = $productId;
-        $this->vendorCodeId = $vendorCodeId;
+        $this->productVendorCodeId = $productVendorCodeId;
     }
 
     /**
      * @return int
      */
-    public function getProductId(): int
+    public function getProductVendorCodeId(): int
     {
-        return $this->productId;
-    }
-
-    /**
-     * @return int
-     */
-    public function getVendorCodeId(): int
-    {
-        return $this->vendorCodeId;
+        return $this->productVendorCodeId;
     }
 }

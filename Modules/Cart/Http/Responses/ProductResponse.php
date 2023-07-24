@@ -17,10 +17,10 @@ class ProductResponse implements \JsonSerializable
     public function jsonSerialize(): mixed
     {
         return [
-            'productId' => $this->productVendorCode->product_id,
-            'vendorCodeId' => $this->productVendorCode->vendor_code_id,
+            'productName' => $this->productVendorCode->product->name,
+            'productVendorCodeId' => $this->productVendorCode->id,
             'price' => $this->productVendorCode->price,
-            'discount_id' => $this->productVendorCode->discount_id,
+            'discount' => $this->productVendorCode->discount,
             'quantity' => $this->productVendorCode->quantity
         ];
     }

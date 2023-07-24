@@ -22,9 +22,10 @@ class VendorCodeResponse implements \JsonSerializable
             'material' => $this->code->material->name,
             'color' => $this->code->color,
             'size' => $this->code->size->number,
-            'discount_id' => $this->code->pivot->discount_id,
+            'discount' => $this->code->discount,
             'price' => $this->code->pivot->price,
             'quantity' => $this->code->pivot->quantity,
+            'productVendorCodeId' => $this->code->pivot->id,
             'images' => $this->code->pivot->images->map(fn(ProductVendorCodeImage $image) => new ImageResponse($image)),
             'attributes' => $this->code->pivot->attributes->map(fn(AttributeValue $attribute) => new AttributeValueResponse($attribute))
         ];

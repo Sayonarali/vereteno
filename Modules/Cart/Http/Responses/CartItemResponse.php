@@ -17,7 +17,7 @@ class CartItemResponse implements \JsonSerializable
     {
         return [
             'id' => $this->item->id,
-            'product' => $this->item->product,
+            'product' => new ProductResponse($this->item->product),
             'quantity' => $this->item->quantity
         ];
     }

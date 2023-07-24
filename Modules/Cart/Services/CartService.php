@@ -38,18 +38,11 @@ class CartService
 
     public function create(AddItemDto $dto)
     {
-        $productVendorCode = ProductVendorCode::query()
-            ->where('product_id', $dto->getProductId())
-            ->where('vendor_code_id', $dto->getVendorCodeId())->first();
-
-        if(!empty($productVendorCode)){
-            return CartItem::query()->create([
-                'user_id' => Auth::user()->getAuthIdentifier(),
-                'product_vendor_code_id' => $productVendorCode->id,
-                'quantity' => 1,
-            ]);
-        };
-        return 'no such correlation';
+        return CartItem::query()->create([
+            'user_id' => Auth::user()->getAuthIdentifier(),
+            'product_vendor_code_id' => $dto->getProductVendorCodeId(),
+            'quantity' => 1,
+        ]);
     }
 
     public function removeItem(CartItem $cartItem)
