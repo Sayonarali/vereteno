@@ -18,7 +18,7 @@ class AttributeResponse implements \JsonSerializable
         return [
             'id' => $this->attribute->id,
             'name' => $this->attribute->name,
-            'values' => $this->attribute->values->map(fn(AttributeValue $attributeValue) => new AttributeValueResponse($attributeValue)),
+            'values' => $this->attribute->values->map(fn(AttributeValue $attributeValue) => new GetAttributeValuesResponse($attributeValue)),
         ];
     }
 }

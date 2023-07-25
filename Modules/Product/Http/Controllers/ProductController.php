@@ -33,7 +33,7 @@ class ProductController extends Controller
 
     public function getAttributes()
     {
-        return $this->productService->getAttributes()->map(fn(Attribute $attributeValue) => new AttributeResponse($attributeValue));
+        return $this->productService->getAttributes()->map(fn(Attribute $attribute) => new AttributeResponse($attribute));
     }
 
     public function getColors()

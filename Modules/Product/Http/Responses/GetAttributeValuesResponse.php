@@ -4,7 +4,7 @@ namespace Modules\Product\Http\Responses;
 
 use App\Models\AttributeValue;
 
-class AttributeValueResponse implements \JsonSerializable
+class GetAttributeValuesResponse implements \JsonSerializable
 {
     private AttributeValue $attributeValue;
     public function __construct(AttributeValue $attributeValue)
@@ -16,7 +16,6 @@ class AttributeValueResponse implements \JsonSerializable
     {
         return [
             'attributeValueId' => $this->attributeValue->id,
-            'name' => $this->attributeValue->attribute->name,
             'value' => $this->attributeValue->value,
         ];
     }
