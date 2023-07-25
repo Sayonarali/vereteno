@@ -51,7 +51,7 @@ class ProductService
         }
 
         return new ResultListProductsDto(
-            Product::all()->count(),
+            $products->count(),
             $products
         );
     }
