@@ -47,11 +47,11 @@ class ProductService
                         return $dto->getFilterDto()->getAttributes()->contains($attribute->id);
                     })->isNotEmpty();
                 })->isNotEmpty();
-            });
+            })->values();
         }
 
         return new ResultListProductsDto(
-            $products->count(),
+            Product::all()->count(),
             $products
         );
     }
