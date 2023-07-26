@@ -37,9 +37,14 @@ class ProductService
             })
             ->when($dto->getSortDesc(), function ($query) use ($dto) {
                 $query->orderByDesc($dto->getSortBy());
-            })
-            ->limit($dto->getLimit())->offset($dto->getOffset())->get();
+            });
 
+        $totalCount = $products->count();
+        $products = $products->limit($dto->getLimit())->offset($dto->getOffset())->get();
+
+        /**
+         * @todo refactor attribute filter to query view
+         */
         if ($dto->getFilterDto()->getAttributes()->isNotEmpty()) {
             $products = $products->filter(function ($product) use ($dto) {
                 return $product->codes->filter(function ($code) use ($dto) {
@@ -48,10 +53,10 @@ class ProductService
                     })->isNotEmpty();
                 })->isNotEmpty();
             })->values();
+            $totalCount = $products->count();
         }
-
         return new ResultListProductsDto(
-            $products->count(),
+            $totalCount,
             $products
         );
     }
