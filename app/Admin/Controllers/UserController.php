@@ -6,6 +6,7 @@ use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Grid\Displayers\Actions;
 use Encore\Admin\Show;
 
 class UserController extends AdminController
@@ -15,7 +16,7 @@ class UserController extends AdminController
      *
      * @var string
      */
-    protected $title = 'User';
+    protected $title = 'Пользователи';
 
     /**
      * Make a grid builder.
@@ -26,19 +27,26 @@ class UserController extends AdminController
     {
         $grid = new Grid(new User());
 
-        $grid->column('id', __('Id'));
-        $grid->column('login', __('Login'));
-        $grid->column('name', __('Name'));
-        $grid->column('surname', __('Surname'));
-        $grid->column('patronymic', __('Patronymic'));
-        $grid->column('email', __('Email'));
-        $grid->column('phone', __('Phone'));
-        $grid->column('email_verified_at', __('Email verified at'));
-        $grid->column('password', __('Password'));
-        $grid->column('remember_token', __('Remember token'));
-        $grid->column('profile_image', __('Profile image'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('id', __('ID'));
+        $grid->column('login', __('Ник'));
+        $grid->column('name', __('Имя'));
+        $grid->column('surname', __('Фамилия'));
+        $grid->column('patronymic', __('Отчество'));
+        $grid->column('email', __('Почта'));
+        $grid->column('phone', __('Номер телефона'));
+
+        $grid->disableFilter();
+
+        $grid->quickSearch(function ($model, $query) {
+            $model->where('name', 'like', "%{$query}%")
+                ->orWhere('login', 'like', "%{$query}%")
+                ->orWhere('surname', 'like', "%{$query}%")
+                ->orWhere('patronymic', 'like', "%{$query}%")
+                ->orWhere('email', 'like', "%{$query}%");
+        });
+
+        $grid->disableCreateButton();
+        $grid->setActionClass(Actions::class);
 
         return $grid;
     }

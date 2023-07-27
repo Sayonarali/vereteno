@@ -2,10 +2,12 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Grid\Displayers\Actions;
 use Encore\Admin\Show;
 
 class ProductController extends AdminController
@@ -27,7 +29,7 @@ class ProductController extends AdminController
         $grid = new Grid(new Product());
 
         $grid->column('id', __('ID'))->sortable();
-        $grid->column('name', __('Название'))->sortable()->filter();
+        $grid->column('name', __('Название'))->sortable();
         $grid->column('description', __('Описание'))->width(500);
         $grid->column('slug', __('Слаг'));
         $grid->column('category.name', __('Категория'))->sortable();
@@ -38,43 +40,18 @@ class ProductController extends AdminController
             return join('&nbsp;', $codes);
         });
 
-        $grid->filter(function($filter){
-//            $filter->scope('new', 'Recently modified')->where('name', 'b');
-            $filter->equal('name', __('Название'));
-            $filter->equal('description', __('Описание'));
-            $filter->equal('category.name', __('Категория'))->select('api/v1/category');
-            $filter->in('codes', __('Артикулы'))->select('api/v1/product/list/codes');
+        $grid->disableFilter();
 
-            $filter->where(function ($query) {
-                switch ($this->input) {
-                    case 'yes':
-                        // custom complex query if the 'yes' option is selected
-                        $query->has('codes');
-                        break;
-                    case 'no':
-                        $query->doesntHave('codes');
-                        break;
-                }
-            }, 'Label of the field', 'name_for_url_shortcut')->radio([
-                '' => 'Все',
-                'yes' => 'С артикулами',
-                'no' => 'Без артикулов',
-            ]);
-
-
+        $grid->quickSearch(function ($model, $query) {
+            $model->whereHas('category', function ($builder) use ($query) {
+                return $builder->where('name', 'like', "%{$query}%");
+            })
+                ->where('products.name', 'like', "%{$query}%")
+                ->orWhere('products.description', 'like', "%{$query}%")
+                ->orWhere('products.slug', 'like', "%{$query}%");
         });
 
-        $grid->actions(function ($actions) {
-
-            // append an action.
-            $actions->append('<a href=""><i class="fa fa-eye"></i></a>');
-
-            // prepend an action.
-            $actions->prepend('<a href=""><i class="fa fa-paper-plane"></i></a>');
-        });
-
-
-
+        $grid->setActionClass(Actions::class);
         $grid->paginate(10);
 
         return $grid;
@@ -108,10 +85,16 @@ class ProductController extends AdminController
     {
         $form = new Form(new Product());
 
-        $form->text('name', __('Name'));
-        $form->textarea('description', __('Description'));
-        $form->text('slug', __('Slug'));
-        $form->number('category_id', __('Category id'));
+        $form->text('name', __('Название'))->setWidth(3)->required()->autofocus();
+        $form->textarea('description', __('Описание'))->setWidth(4)->rows(9)->required();
+        $form->text('slug', __('Слаг'))->setWidth(3)->required();
+        $form->select('category', 'Категория')->options(Category::all()->pluck('name', 'id'));
+
+        $form->footer(function ($footer) {
+            $footer->disableViewCheck();
+            $footer->disableEditingCheck();
+            $footer->disableCreatingCheck();
+        });
 
         return $form;
     }

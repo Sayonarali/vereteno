@@ -6,6 +6,7 @@ use App\Models\Material;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Grid\Displayers\Actions;
 use Encore\Admin\Show;
 
 class MaterialController extends AdminController
@@ -15,7 +16,7 @@ class MaterialController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Material';
+    protected $title = 'Материалы';
 
     /**
      * Make a grid builder.
@@ -26,9 +27,17 @@ class MaterialController extends AdminController
     {
         $grid = new Grid(new Material());
 
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
+        $grid->column('id', __('ID'))->sortable();
+        $grid->column('name', __('Название'))->sortable();
 
+        $grid->disableFilter();
+
+        $grid->quickSearch(function ($model, $query) {
+            $model->where('name', 'like', "%{$query}%");
+        });
+
+        $grid->setActionClass(Actions::class);
+        $grid->paginate(10);
         return $grid;
     }
 
@@ -57,7 +66,13 @@ class MaterialController extends AdminController
     {
         $form = new Form(new Material());
 
-        $form->text('name', __('Name'));
+        $form->text('name', __('Название'))->setWidth(3)->required()->autofocus();
+
+        $form->footer(function ($footer) {
+            $footer->disableViewCheck();
+            $footer->disableEditingCheck();
+            $footer->disableCreatingCheck();
+        });
 
         return $form;
     }
