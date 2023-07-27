@@ -3,9 +3,13 @@
 namespace App\Admin\Controllers;
 
 use App\Models\CartItem;
+use App\Models\Discount;
+use App\Models\Product;
+use App\Models\VendorCode;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Grid\Displayers\Actions;
 use Encore\Admin\Show;
 
 class CartItemController extends AdminController
@@ -15,7 +19,7 @@ class CartItemController extends AdminController
      *
      * @var string
      */
-    protected $title = 'CartItem';
+    protected $title = 'Корзины';
 
     /**
      * Make a grid builder.
@@ -26,10 +30,32 @@ class CartItemController extends AdminController
     {
         $grid = new Grid(new CartItem());
 
-        $grid->column('id', __('Id'));
-        $grid->column('user_id', __('User id'));
-        $grid->column('product_vendor_code_id', __('Product vendor code id'));
-        $grid->column('quantity', __('Quantity'));
+        $grid->column('id', __('ID'))->sortable();
+        $grid->column('user', __('Пользователь'))->display(function ($user) {
+            $userId = $user['id'];
+            $userName = $user['name'];
+            return "<a href='/admin/user/$userId'>$userName</a>";
+        })->sortable();
+        $grid->column('product.product_id', __('Название товара'))
+            ->display(function ($productId) {
+                return Product::find($productId)->name;
+            });
+        $grid->column('product.vendor_code_id', __('Артикул'))
+            ->display(function ($codeId) {
+                return VendorCode::find($codeId)->code;
+            });
+        $grid->column('product.price', __('Стоимость'))->sortable();
+        $grid->column('product.discount_id', __('Скидка'))
+            ->display(function ($discountId) {
+                return (100 - Discount::find($discountId)->discount_coefficient * 100) . '%';
+            })->sortable();
+        $grid->column('quantity', __('Количество'))->sortable();
+
+        $grid->disableFilter();
+
+        $grid->disableCreateButton();
+        $grid->setActionClass(Actions::class);
+        $grid->paginate(15);
 
         return $grid;
     }

@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->foreignId('product_vendor_code_id')->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
-                ->nullOnDelete();
+                ->onDelete('cascade');
             $table->integer('size')->unsigned();
             $table->timestamps();
         });

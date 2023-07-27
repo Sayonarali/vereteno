@@ -35,7 +35,7 @@ class ProductController extends AdminController
         $grid->column('category.name', __('Категория'))->sortable();
         $grid->column('codes', __('Артикулы'))->display(function ($codes) {
             $codes = array_map(function ($code) {
-                return "<span class='label label-default'>{$code['code']}</span>";
+                return "<span class='label label-default' style='font-size: 13px'>{$code['code']}</span>";
             }, $codes);
             return join('&nbsp;', $codes);
         });

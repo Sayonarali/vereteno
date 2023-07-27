@@ -26,7 +26,7 @@ class AttributeValueController extends AdminController
     {
         $grid = new Grid(new AttributeValue());
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('ID'));
         $grid->column('attribute_id', __('Attribute id'));
         $grid->column('value', __('Value'));
 

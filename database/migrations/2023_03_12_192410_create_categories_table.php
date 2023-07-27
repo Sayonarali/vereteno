@@ -18,7 +18,9 @@ return new class extends Migration {
             $table->integer('level');
         });
         Schema::table('categories', function (Blueprint $table) {
-            $table->foreignId('parent_id')->nullable()->references('id')->on('categories');
+            $table->foreignId('parent_id')->nullable()
+                ->references('id')->on('categories')
+                ->onUpdate('cascade')->nullOnDelete();
         });
     }
 
