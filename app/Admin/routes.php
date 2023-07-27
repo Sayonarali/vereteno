@@ -2,7 +2,13 @@
 
 use App\Admin\Controllers\ColorController;
 use App\Admin\Controllers\MaterialController;
+use App\Admin\Controllers\OrderAddressController;
+use App\Admin\Controllers\OrderController;
+use App\Admin\Controllers\OrderItemController;
 use App\Admin\Controllers\ProductController;
+use App\Admin\Controllers\SizeController;
+use App\Admin\Controllers\UserController;
+use App\Admin\Controllers\VendorCodeController;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
@@ -15,9 +21,13 @@ Route::group([
     'middleware'    => config('admin.route.middleware'),
     'as'            => config('admin.route.prefix') . '.',
 ], function (Router $router) {
-
     $router->get('/', 'HomeController@index')->name('home');
     $router->resource('product', ProductController::class);
     $router->resource('material', MaterialController::class);
     $router->resource('color', ColorController::class);
+    $router->resource('size', SizeController::class);
+    $router->resource('vendor-code', VendorCodeController::class);
+    $router->resource('order', OrderController::class);
+    $router->resource('order-address', OrderAddressController::class);
+    $router->resource('user', UserController::class);
 });
