@@ -26,22 +26,28 @@ class ProductService
                 $query->when($dto->getFilterDto()->getSizes()->isNotEmpty(), function ($query) use ($dto) {
                     $query->whereIn('size_id', $dto->getFilterDto()->getSizes());
                 });
+//                $query->when($dto->getSortDesc(), function ($query) use ($dto) {
+//                    $query->orderByDesc($dto->getSortBy());
+//                });
             })
             ->whereHas('category', function ($query) use ($dto) {
                 $query->when($dto->getFilterDto()->getCategories()->isNotEmpty(), function ($query) use ($dto) {
                     $query->whereIn('category_id', $dto->getFilterDto()->getCategories());
                 });
             })
+//            ->when($dto->getSortDesc(), function ($query) use ($dto) {
+//                $query->join('product_vendor_codes', 'product_vendor_codes.product_id', '=', 'products.id')
+//                    ->orderByDesc('product_vendor_codes.price')->select('products.*');
+//            })
             ->when($dto->getSearch(), function ($query, $search) {
                 $query->where('name', 'LIKE', "%$search%");
-            })
-            ->when($dto->getSortDesc(), function ($query) use ($dto) {
-                $query->orderByDesc($dto->getSortBy());
             });
 
         $totalCount = $products->count();
-        $products = $products->limit($dto->getLimit())->offset($dto->getOffset())->get();
-
+        $products = $products->limit($dto->getLimit())->offset($dto->getOffset())->get()
+            ->sortBy(function($product) {
+                return $product->codes->max->price;
+            });
         /**
          * @todo refactor attribute filter to query view
          */
@@ -80,58 +86,4 @@ class ProductService
     {
         return Size::all();
     }
-
-//    public function create(Request $request)
-//    {
-//        $request->validate([
-//            'title' => 'bail|required|string|unique:products|max:255',
-//            'description' => 'bail|nullable|string|max:255',
-//        ]);
-//
-//        $product = new Product();
-//        $product->title = $request->title;
-//        if (!empty($request->description)) {
-//            $product->description = $request->description;
-//        }
-//
-//        $product->save();
-//
-//        return response()->json([
-//            'product' => $product,
-//        ], Response::HTTP_CREATED);
-//    }
-//
-//    public function update(int $id, Request $request)
-//    {
-//        $request->validate([
-//            'title' => 'bail|nullable|string|unique:products|max:255',
-//            'description' => 'bail|nullable|string|max:255',
-//            'is_discounted' => 'nullable|boolean',
-//        ]);
-//
-//        $product = Product::find($id);
-//
-//        if (!empty($request->title)) {
-//            $product->title = $request->title;
-//        }
-//        if (!empty($request->description)) {
-//            $product->description = $request->description;
-//        }
-//        if (!empty($request->is_discounted)) {
-//            $product->is_discounted = $request->is_discounted;
-//        }
-//
-//        return response()->json([
-//            'product' => $product,
-//        ], Response::HTTP_OK);
-//    }
-//
-//    public function delete(int $id)
-//    {
-//        Product::destroy($id);
-//
-//        return response()->json([
-//            'message' => 'deleted'
-//        ], Response::HTTP_OK);
-//    }
 }

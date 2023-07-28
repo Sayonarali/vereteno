@@ -2,24 +2,25 @@
 
 namespace Modules\Order\Http\Responses;
 
-use App\Models\Product;
+use App\Models\ProductVendorCode;
 
 class ProductResponse implements \JsonSerializable
 {
-    private Product $product;
+    private ProductVendorCode $productVendorCode;
 
-    public function __construct(Product $product)
+    public function __construct(ProductVendorCode $productVendorCode)
     {
-        $this->product = $product;
+        $this->productVendorCode = $productVendorCode;
     }
 
     public function jsonSerialize(): mixed
     {
         return [
-            'id' => $this->product->id,
-            'name' => $this->product->name,
-            'description' => $this->product->description,
-            'images' => $this->product->images,
+            'productName' => $this->productVendorCode->product->name,
+            'productVendorCodeId' => $this->productVendorCode->id,
+            'price' => $this->productVendorCode->price,
+            'discount' => $this->productVendorCode->discount,
+            'quantity' => $this->productVendorCode->quantity
         ];
     }
 }

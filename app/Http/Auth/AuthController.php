@@ -65,13 +65,6 @@ class AuthController extends Controller
         ]);
     }
 
-    public function authByToken(): JsonResponse
-    {
-        return response()->json([
-            'user' => Auth::user()
-        ]);
-    }
-
     public function logout(): JsonResponse
     {
         Auth::logout();

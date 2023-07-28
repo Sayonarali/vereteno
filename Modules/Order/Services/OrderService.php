@@ -53,7 +53,7 @@ class OrderService
         return $order;
     }
 
-    public function saveOrderItems(Order $order, ?Collection $cartItemIds)
+    public function saveOrderItems(Order $order, Collection $cartItemIds)
     {
         $order->items()->saveMany($cartItemIds->map(function (int $cartItemId) {
             $cartItem = CartItem::find($cartItemId);

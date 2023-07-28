@@ -5,8 +5,9 @@ namespace Modules\Cart\Services;
 use App\Models\CartItem;
 use App\Models\ProductVendorCode;
 use Illuminate\Support\Facades\Auth;
-use Modules\Cart\Dto\AddItemDto;
+use Modules\Cart\Dto\CreateUpdateCartItemItemDto;
 use Modules\Cart\Dto\ResultShowCartDto;
+use Modules\Order\Dto\CreateUpdateOrderDto;
 
 class CartService
 {
@@ -19,14 +20,19 @@ class CartService
             ->with('product')
             ->get();
 
-        return new ResultShowCartDto($totalCount, $cartItems);
+        $totalSum = $cartItems->sum(function (CartItem $item) {
+           return $item->product->price;
+        });
+
+        return new ResultShowCartDto($totalCount, $cartItems, $totalSum);
     }
 
-    public function update(CartItem $cartItem, int $quantity)
+    public function update(CartItem $cartItem, CreateUpdateCartItemItemDto $dto)
     {
-        return $cartItem->update([
-            'quantity' => $quantity,
+        $cartItem->update([
+            'quantity' => $dto->getQuantity(),
         ]);
+        return $cartItem;
     }
 
     public function empty()
@@ -36,7 +42,7 @@ class CartService
             ->delete();
     }
 
-    public function create(AddItemDto $dto)
+    public function create(CreateUpdateCartItemItemDto $dto)
     {
         return CartItem::query()->create([
             'user_id' => Auth::user()->getAuthIdentifier(),

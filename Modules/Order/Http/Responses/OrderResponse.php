@@ -14,7 +14,7 @@ class OrderResponse implements \JsonSerializable
         $this->order = $order;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return [
             'orderId' => $this->order->id,

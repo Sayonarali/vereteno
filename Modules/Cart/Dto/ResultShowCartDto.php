@@ -8,12 +8,20 @@ class ResultShowCartDto
 {
     private int $totalCount;
     private Collection $items;
+    private $totalSum;
 
     public function __construct(int        $totalCount,
-                                Collection $items)
+                                Collection $items,
+                                           $totalSum)
     {
         $this->totalCount = $totalCount;
         $this->items = $items;
+        $this->totalSum = $totalSum;
+    }
+
+    public function getTotalSum()
+    {
+        return $this->totalSum;
     }
 
     /**

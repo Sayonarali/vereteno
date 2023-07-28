@@ -50,20 +50,4 @@ class ProductController extends Controller
     {
         return $this->productService->getSizes();
     }
-
-//
-//    public function create(CreateUpdateProductRequest $request)
-//    {
-//
-//    }
-//
-//    public function update(Product $product, CreateUpdateProductRequest $request)
-//    {
-//
-//    }
-//
-//    public function delete(Product $product)
-//    {
-//
-//    }
 }

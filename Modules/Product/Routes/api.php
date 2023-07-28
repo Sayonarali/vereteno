@@ -24,9 +24,4 @@ Route::controller(ProductController::class)
         Route::get('/list/colors', 'getColors');
         Route::get('/list/materials', 'getMaterials');
         Route::get('/list/sizes', 'getSizes');
-
-//        Route::post('/', 'create');
-//        Route::put('/{product}', 'update');
-//        Route::patch('/{product}', 'update');
-//        Route::delete('/{product}', 'delete');
     });

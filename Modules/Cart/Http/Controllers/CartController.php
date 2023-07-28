@@ -4,7 +4,8 @@ namespace Modules\Cart\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\CartItem;
-use Modules\Cart\Http\Requests\AddItemRequest;
+use Modules\Cart\Http\Requests\CreateUpdateCartItemRequest;
+use Modules\Cart\Http\Responses\CartItemResponse;
 use Modules\Cart\Http\Responses\ShowCartResponse;
 use Modules\Cart\Services\CartService;
 
@@ -22,9 +23,9 @@ class CartController extends Controller
         return new ShowCartResponse($this->cartService->show());
     }
 
-    public function update(CartItem $cartItem, int $quantity)
+    public function update(CartItem $cartItem, CreateUpdateCartItemRequest $request)
     {
-        return $this->cartService->update($cartItem, $quantity);
+        return new CartItemResponse($this->cartService->update($cartItem, $request->getDto()));
     }
 
     public function empty()
@@ -32,7 +33,7 @@ class CartController extends Controller
         return $this->cartService->empty();
     }
 
-    public function create(AddItemRequest $request)
+    public function create(CreateUpdateCartItemRequest $request)
     {
         return $this->cartService->create($request->getDto());
     }
