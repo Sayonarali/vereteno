@@ -18,7 +18,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->foreignId('product_vendor_code_id')
-                ->constrained()
+                ->references('id')->on('product_vendor_codes')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->integer('quantity');

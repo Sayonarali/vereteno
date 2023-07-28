@@ -35,7 +35,7 @@ class CartItemController extends AdminController
             $userId = $user['id'];
             $userName = $user['name'];
             return "<a href='/admin/user/$userId'>$userName</a>";
-        })->sortable();
+        });
         $grid->column('product.product_id', __('Название товара'))
             ->display(function ($productId) {
                 return Product::find($productId)->name;
@@ -44,7 +44,10 @@ class CartItemController extends AdminController
             ->display(function ($codeId) {
                 return VendorCode::find($codeId)->code;
             });
-        $grid->column('product.price', __('Стоимость'))->sortable();
+        $grid->column('product.price', __('Стоимость'))
+            ->display(function ($price) {
+                return $price . '₽';
+            })->sortable();
         $grid->column('product.discount_id', __('Скидка'))
             ->display(function ($discountId) {
                 return (100 - Discount::find($discountId)->discount_coefficient * 100) . '%';
@@ -52,9 +55,13 @@ class CartItemController extends AdminController
         $grid->column('quantity', __('Количество'))->sortable();
 
         $grid->disableFilter();
+        $grid->disableExport();
 
         $grid->disableCreateButton();
         $grid->setActionClass(Actions::class);
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+        });
         $grid->paginate(15);
 
         return $grid;

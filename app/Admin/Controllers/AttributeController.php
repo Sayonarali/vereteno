@@ -2,7 +2,6 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Actions\Attribute\AddValues;
 use App\Models\Attribute;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -38,6 +37,7 @@ class AttributeController extends AdminController
         })->sortable();
 
         $grid->disableFilter();
+        $grid->disableExport();
 
         $grid->quickSearch(function ($model, $query) {
             $model->where('name', 'like', "%{$query}%");
@@ -79,6 +79,15 @@ class AttributeController extends AdminController
         $form = new Form(new Attribute());
 
         $form->text('name', __('Особенность'))->setWidth(3)->required()->autofocus();
+
+        $form->hasMany('values', 'Значения', function (Form\NestedForm $form) {
+            $form->text('value');
+        });
+
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableView();
+            $tools->disableDelete();
+        });
 
         $form->footer(function ($footer) {
             $footer->disableViewCheck();

@@ -35,6 +35,7 @@ class CategoryController extends AdminController
         $grid->column('parent.name', __('Родительская категория'))->sortable();
 
         $grid->disableFilter();
+        $grid->disableExport();
 
         $grid->quickSearch(function ($model, $query) {
             $model->where('name', 'like', "%{$query}%")

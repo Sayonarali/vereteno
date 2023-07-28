@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\VendorCode;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -52,6 +53,9 @@ class ProductController extends AdminController
         });
 
         $grid->setActionClass(Actions::class);
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+        });
         $grid->paginate(10);
 
         return $grid;
@@ -88,8 +92,15 @@ class ProductController extends AdminController
         $form->text('name', __('Название'))->setWidth(3)->required()->autofocus();
         $form->textarea('description', __('Описание'))->setWidth(4)->rows(9)->required();
         $form->text('slug', __('Слаг'))->setWidth(3)->required();
-        $form->select('category', 'Категория')->options(Category::all()->pluck('name', 'id'));
+        $form->select('category', __('Категория'))->options(Category::all()->pluck('name', 'id'))->setWidth(3);
 
+        $form->multipleSelect('codes','Артикулы')->options(VendorCode::all()->pluck('code','id'))->setWidth(3);
+
+
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableView();
+            $tools->disableDelete();
+        });
         $form->footer(function ($footer) {
             $footer->disableViewCheck();
             $footer->disableEditingCheck();

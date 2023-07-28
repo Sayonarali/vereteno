@@ -42,7 +42,7 @@ class OrderController extends AdminController
                 'cancel' => 'warning',
             ]);
         $grid->column('total', __('Общая сумма заказа'))->display(function ($sum) {
-            return $sum . ' ₽';
+            return $sum . '₽';
         });
         $grid->column('payment_status', __('Статус оплаты'))->bool(['paid' => true, 'unpaid' => false]);
         $grid->column('payment_method', __('Способ оплаты'))->display(function ($method) {

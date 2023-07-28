@@ -25,8 +25,8 @@ return new class extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->nullOnDelete();
-            $table->float('price');
-            $table->integer('quantity');
+            $table->float('price')->nullable();
+            $table->integer('quantity')->nullable();
         });
     }
 
