@@ -826,7 +826,18 @@
                                     "postcode": {
                                         "type": "integer"
                                     }
-                                }
+                                },
+                                "required": [
+                                    "status",
+                                    "paymentStatus",
+                                    "paymentMethod",
+                                    "cartItemIds",
+                                    "country",
+                                    "region",
+                                    "city",
+                                    "street",
+                                    "postcode"
+                                ]
                             }
                         }
                     }

@@ -50,6 +50,8 @@ class OrderService
             $order->address()->save($orderAddress);
         });
 
+        CartItem::query()->whereIn('id',$dto->getCartItemIds() )->delete();
+
         return $order;
     }
 
