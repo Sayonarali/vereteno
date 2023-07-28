@@ -42,6 +42,9 @@ class CategoryController extends AdminController
                 ->orWhere('description', 'like', "%{$query}%")
                 ->orWhere('slug', 'like', "%{$query}%");
         });
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+        });
         $grid->setActionClass(Actions::class);
 
         return $grid;

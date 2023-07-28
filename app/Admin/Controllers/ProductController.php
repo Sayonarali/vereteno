@@ -18,7 +18,7 @@ class ProductController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Товары';
+    protected $title = 'Продукты';
 
     /**
      * Make a grid builder.
@@ -94,7 +94,7 @@ class ProductController extends AdminController
         $form->text('slug', __('Слаг'))->setWidth(3)->required();
         $form->select('category', __('Категория'))->options(Category::all()->pluck('name', 'id'))->setWidth(3);
 
-        $form->multipleSelect('codes','Артикулы')->options(VendorCode::all()->pluck('code','id'))->setWidth(3);
+//        $form->multipleSelect('codes','Артикулы')->options(VendorCode::all()->pluck('code','id'))->setWidth(3);
 
 
         $form->tools(function (Form\Tools $tools) {

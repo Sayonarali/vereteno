@@ -41,4 +41,9 @@ class ProductVendorCode extends Pivot
     {
         return $this->belongsTo(Discount::class, 'discount_id');
     }
+
+    public function code()
+    {
+        return $this->hasOne(VendorCode::class, 'id');
+    }
 }

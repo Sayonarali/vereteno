@@ -56,6 +56,9 @@ class VendorCodeController extends AdminController
                 });
         });
 
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+        });
         $grid->setActionClass(Actions::class);
 
         return $grid;

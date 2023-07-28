@@ -30,7 +30,7 @@ services:
             - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_ROOT_HOST: '%'
+            MYSQL_ROOT_HOST: '${MYSQL_ROOT_HOST}'
             MYSQL_DATABASE: '${DB_DATABASE}'
             MYSQL_USER: '${DB_USERNAME}'
             MYSQL_PASSWORD: '${DB_PASSWORD}'
@@ -42,13 +42,6 @@ services:
             interval: 60s
             retries: 3
             timeout: 5s
-    phpmyadmin:
-        image: phpmyadmin
-        restart: always
-        ports:
-            - 8081:80
-        environment:
-            - PMA_ARBITRARY=1
 volumes:
     app-mysql:
     caddy-data:
