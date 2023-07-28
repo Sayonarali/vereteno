@@ -28,7 +28,7 @@ class OrderController extends AdminController
     {
         $grid = new Grid(new Order());
 
-        $grid->column('id', __('ID'));
+        $grid->column('id', __('ID'))->sortable();
         $grid->column('user', __('Заказчик'))->display(function ($user) {
             $userId = $user['id'];
             $userName = $user['name'];
@@ -40,22 +40,24 @@ class OrderController extends AdminController
                 'process' => 'info',
                 'delivered' => 'default',
                 'cancel' => 'warning',
-            ]);
+            ])->sortable();
         $grid->column('total', __('Общая сумма заказа'))->display(function ($sum) {
             return $sum . '₽';
         });
-        $grid->column('payment_status', __('Статус оплаты'))->bool(['paid' => true, 'unpaid' => false]);
+        $grid->column('payment_status', __('Статус оплаты'))->bool(['paid' => true, 'unpaid' => false])->sortable();
         $grid->column('payment_method', __('Способ оплаты'))->display(function ($method) {
             if ($method === 'online') {
                 return "<span class='badge bg-olive-active'>online</span></h1>";
             }
             return "<span class='badge hover-bg-moon-gray'>offline</span></h1>";
         });
-        $grid->column('created_at', __('Создан'));
-        $grid->column('updated_at', __('Обновлен'));
+        $grid->column('created_at', __('Создан'))->sortable();
+        $grid->column('updated_at', __('Обновлен'))->sortable();
 
         $grid->disableFilter();
-
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+        });
         $grid->setActionClass(Actions::class);
         $grid->paginate(15);
 
@@ -100,6 +102,11 @@ class OrderController extends AdminController
         $form->decimal('total', __('Общая сумма'))->required();
         $form->select('payment_status', __('Статус оплаты'))->options(['unpaid' => 'не оплачен', 'paid' => 'оплачен'])->setWidth(2)->required();
         $form->select('payment_method', __('Способ оплаты'))->options(['online' => 'онлайн', 'offline' => 'в магазине'])->setWidth(2)->required();
+
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableView();
+            $tools->disableDelete();
+        });
 
         $form->footer(function ($footer) {
             $footer->disableViewCheck();

@@ -6,6 +6,7 @@ use App\Models\Discount;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Grid\Displayers\Actions;
 use Encore\Admin\Show;
 
 class DiscountController extends AdminController
@@ -15,7 +16,7 @@ class DiscountController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Discount';
+    protected $title = 'Скидки';
 
     /**
      * Make a grid builder.
@@ -26,9 +27,16 @@ class DiscountController extends AdminController
     {
         $grid = new Grid(new Discount());
 
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
-        $grid->column('discount_coefficient', __('Discount coefficient'));
+        $grid->column('id', __('ID'));
+        $grid->column('name', __('Название'));
+        $grid->column('discount_coefficient', __('Множитель скидки'));
+
+        $grid->disableFilter();
+        $grid->disableExport();
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+        });
+        $grid->setActionClass(Actions::class);
 
         return $grid;
     }
@@ -59,8 +67,19 @@ class DiscountController extends AdminController
     {
         $form = new Form(new Discount());
 
-        $form->text('name', __('Name'));
-        $form->decimal('discount_coefficient', __('Discount coefficient'));
+        $form->text('name', __('Название'))->setWidth(3)->required()->autofocus();
+        $form->decimal('discount_coefficient', __('Множитель скидки'))->setWidth(3)->required();
+
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableView();
+            $tools->disableDelete();
+        });
+
+        $form->footer(function ($footer) {
+            $footer->disableViewCheck();
+            $footer->disableEditingCheck();
+            $footer->disableCreatingCheck();
+        });
 
         return $form;
     }

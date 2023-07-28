@@ -58,10 +58,7 @@ class CartItemController extends AdminController
         $grid->disableExport();
 
         $grid->disableCreateButton();
-        $grid->setActionClass(Actions::class);
-        $grid->actions(function ($actions) {
-            $actions->disableView();
-        });
+        $grid->disableActions();
         $grid->paginate(15);
 
         return $grid;

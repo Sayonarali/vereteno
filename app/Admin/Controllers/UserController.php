@@ -36,6 +36,7 @@ class UserController extends AdminController
         $grid->column('phone', __('Номер телефона'));
 
         $grid->disableFilter();
+        $grid->disableExport();
 
         $grid->quickSearch(function ($model, $query) {
             $model->where('name', 'like', "%{$query}%")
@@ -45,6 +46,10 @@ class UserController extends AdminController
                 ->orWhere('email', 'like', "%{$query}%");
         });
 
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+            $actions->disableEdit();
+        });
         $grid->disableCreateButton();
         $grid->setActionClass(Actions::class);
 

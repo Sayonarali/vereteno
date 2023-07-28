@@ -33,6 +33,13 @@ class ColorController extends AdminController
             return "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='$color' class='bi bi-circle-fill' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>";
         });
 
+        $grid->export(function ($export) {
+            $export->except(['hex']);
+        });
+
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+        });
         $grid->disableFilter();
 
         $grid->quickSearch(function ($model, $query) {
@@ -74,6 +81,10 @@ class ColorController extends AdminController
         $form->text('name', __('Название'))->required()->autofocus()->setWidth(3);
         $form->color('hex', __('Hex'))->required()->setWidth(4);
 
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableView();
+            $tools->disableDelete();
+        });
         $form->footer(function ($footer) {
             $footer->disableViewCheck();
             $footer->disableEditingCheck();

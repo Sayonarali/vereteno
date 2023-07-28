@@ -39,6 +39,9 @@ class VendorCodeController extends AdminController
         });
         $grid->column('size.number', __('Размер'))->sortable();
 
+        $grid->export(function ($export) {
+            $export->except(['color.hex']);
+        });
         $grid->disableFilter();
 
         $grid->quickSearch(function ($model, $query) {

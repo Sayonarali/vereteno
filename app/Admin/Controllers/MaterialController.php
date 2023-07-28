@@ -31,6 +31,9 @@ class MaterialController extends AdminController
         $grid->column('name', __('Название'))->sortable();
 
         $grid->disableFilter();
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+        });
 
         $grid->quickSearch(function ($model, $query) {
             $model->where('name', 'like', "%{$query}%");
@@ -68,6 +71,10 @@ class MaterialController extends AdminController
 
         $form->text('name', __('Название'))->setWidth(3)->required()->autofocus();
 
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableView();
+            $tools->disableDelete();
+        });
         $form->footer(function ($footer) {
             $footer->disableViewCheck();
             $footer->disableEditingCheck();
