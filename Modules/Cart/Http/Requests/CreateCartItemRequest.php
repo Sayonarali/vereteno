@@ -2,25 +2,23 @@
 
 namespace Modules\Cart\Http\Requests;
 
-use App\Models\Product;
 use App\Models\ProductVendorCode;
-use App\Models\VendorCode;
 use Illuminate\Foundation\Http\FormRequest;
-use Modules\Cart\Dto\CreateUpdateCartItemItemDto;
+use Modules\Cart\Dto\CreateCartItemDto;
 
-class CreateUpdateCartItemRequest extends FormRequest
+class CreateCartItemRequest extends FormRequest
 {
     public function getDto()
     {
         $data = $this->validated();
-        return new CreateUpdateCartItemItemDto($data['productVendorCodeId'], $data['quantity']);
+        return new CreateCartItemDto($data['productVendorCodeId'], $data['quantity']);
     }
 
     public function rules()
     {
         return [
             'productVendorCodeId' => 'required|int|exists:' . ProductVendorCode::class . ',id',
-            'quantity' => 'nullable|int|min:1'
+            'quantity' => 'required|int|min:1'
         ];
     }
 }

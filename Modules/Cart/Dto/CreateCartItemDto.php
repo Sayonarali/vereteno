@@ -2,7 +2,7 @@
 
 namespace Modules\Cart\Dto;
 
-class CreateUpdateCartItemItemDto
+class CreateCartItemDto
 {
     private int $productVendorCodeId;
     private int $quantity;
