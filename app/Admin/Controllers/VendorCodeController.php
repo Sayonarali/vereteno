@@ -93,9 +93,9 @@ class VendorCodeController extends AdminController
         $form = new Form(new VendorCode());
 
         $form->text('code', __('Артикул'))->setWidth(3)->required()->autofocus();
-        $form->select('material', __('Материал'))->options(Material::all()->pluck('name', 'id'))->setWidth(4)->required();
-        $form->select('color', __('Цвет'))->options(Color::all()->pluck('name', 'id'))->setWidth(4)->required();
-        $form->select('size', __('Размер'))->options(Size::all()->pluck('number', 'id'))->setWidth(4)->required();
+        $form->select('material_id', __('Материал'))->options(Material::all()->pluck('name', 'id'))->setWidth(4)->required();
+        $form->select('color_id', __('Цвет'))->options(Color::all()->pluck('name', 'id'))->setWidth(4)->required();
+        $form->select('size_id', __('Размер'))->options(Size::all()->pluck('number', 'id'))->setWidth(4)->required();
 
         $form->footer(function ($footer) {
             $footer->disableViewCheck();

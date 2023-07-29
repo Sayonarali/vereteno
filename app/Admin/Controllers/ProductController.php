@@ -92,7 +92,7 @@ class ProductController extends AdminController
         $form->text('name', __('Название'))->setWidth(3)->required()->autofocus();
         $form->textarea('description', __('Описание'))->setWidth(4)->rows(9)->required();
         $form->text('slug', __('Слаг'))->setWidth(3)->required();
-        $form->select('category', __('Категория'))->options(Category::all()->pluck('name', 'id'))->setWidth(3);
+        $form->select('category_id', __('Категория'))->options(Category::all()->pluck('name', 'id'))->setWidth(3);
 
 //        $form->multipleSelect('codes','Артикулы')->options(VendorCode::all()->pluck('code','id'))->setWidth(3);
 

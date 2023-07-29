@@ -27,7 +27,7 @@ class CategoryController extends AdminController
     {
         $grid = new Grid(new Category());
 
-        $grid->column('id', __('ID'));
+        $grid->column('id', __('ID'))->sortable();
         $grid->column('name', __('Название'))->sortable();
         $grid->column('slug', __('Слаг'));
         $grid->column('description', __('Описание'));
@@ -83,7 +83,7 @@ class CategoryController extends AdminController
         $form->textarea('description', __('Описание'))->setWidth(4)->rows(9)->required();
         $form->text('slug', __('Слаг'))->setWidth(3)->required();
         $form->number('level', __('Уровень'))->default(1);
-        $form->select('parent', 'Родительская категория')->options(Category::all()->pluck('name', 'id'))->setWidth(2);
+        $form->select('parent_id', 'Родительская категория')->options(Category::all()->pluck('name', 'id'))->setWidth(2);
 
         $form->footer(function ($footer) {
             $footer->disableViewCheck();
