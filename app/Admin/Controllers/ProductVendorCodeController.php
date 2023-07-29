@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\AttributeValue;
 use App\Models\Discount;
 use App\Models\Product;
 use App\Models\ProductVendorCode;
@@ -88,6 +89,7 @@ class ProductVendorCodeController extends AdminController
         $form->decimal('price', __('Стоимость'));
         $form->number('quantity', __('Количество'));
 
+        $form->multipleSelect('attributes','Особенности')->options(AttributeValue::all()->pluck('value','id'));
         $form->multipleImage('images', 'Картинки')->pathColumn('path')->removable();
 
 //        $form->hasMany('images', 'Картинки', function (Form\NestedForm $form) {
