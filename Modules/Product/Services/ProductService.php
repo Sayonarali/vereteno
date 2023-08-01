@@ -23,9 +23,9 @@ class ProductService
                 $query->when($dto->getFilterDto()->getMaterials()->isNotEmpty(), function ($query) use ($dto) {
                     $query->whereIn('material_id', $dto->getFilterDto()->getMaterials());
                 });
-                $query->when($dto->getFilterDto()->getSizes()->isNotEmpty(), function ($query) use ($dto) {
-                    $query->whereIn('size_id', $dto->getFilterDto()->getSizes());
-                });
+//                $query->when($dto->getFilterDto()->getSizes()->isNotEmpty(), function ($query) use ($dto) {
+//                    $query->whereIn('size_id', $dto->getFilterDto()->getSizes());
+//                });
 //                $query->when($dto->getSortDesc(), function ($query) use ($dto) {
 //                    $query->orderByDesc($dto->getSortBy());
 //                });
@@ -61,6 +61,7 @@ class ProductService
             })->values();
             $totalCount = $products->count();
         }
+
         return new ResultListProductsDto(
             $totalCount,
             $products

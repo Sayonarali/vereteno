@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             CartItemSeeder::class,
             ProductVendorCodeImageSeeder::class,
             OrderSeeder::class,
+            ProductVendorCodeSizeSeeder::class,
         ]);
     }
 }

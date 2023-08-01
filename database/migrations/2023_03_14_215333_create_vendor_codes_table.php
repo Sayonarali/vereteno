@@ -24,10 +24,6 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
-            $table->foreignId('size_id')->nullable()
-                ->constrained()
-                ->cascadeOnUpdate()
-                ->nullOnDelete();
         });
     }
 

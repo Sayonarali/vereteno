@@ -23,7 +23,6 @@ class ProductVendorCodeFactory extends Factory
             'vendor_code_id' => fake()->numberBetween(1,30),
             'discount_id' => fake()->numberBetween(1,30),
             'price' => fake()->randomFloat(2, 2500,10000),
-            'quantity' => fake()->numberBetween(1,15),
         ];
     }
 }
