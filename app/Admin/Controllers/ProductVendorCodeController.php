@@ -101,6 +101,16 @@ class ProductVendorCodeController extends AdminController
         $form->checkbox('sizes', 'Размеры')
             ->options(Size::all()->pluck('number', 'id'))->setWidth(4);
 
+        if ($form->isEditing()) {
+            $form->hasMany('images', __('Картинки'), function (Form\NestedForm $form) {
+                $form->image('path', 'Изображение')
+                    ->move('/images/product')
+                    ->removable()
+                    ->downloadable()
+                    ->uniqueName();
+            });
+        }
+
         $form->tools(function (Form\Tools $tools) {
             $tools->disableView();
             $tools->disableDelete();

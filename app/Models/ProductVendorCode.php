@@ -29,7 +29,7 @@ class ProductVendorCode extends Pivot
 
     public function images()
     {
-        return $this->hasMany(ProductVendorCodeImage::class, 'product_vendor_code_id', 'product_vendor_code_id');
+        return $this->hasMany(ProductVendorCodeImage::class, 'product_vendor_code_id');
     }
 
     public function sizes()

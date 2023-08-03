@@ -13,7 +13,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Grid\Displayers\Actions;
 use Encore\Admin\Show;
 
-class ProductVendorCodeSizesController extends AdminController
+class ProductVendorCodeSizeController extends AdminController
 {
     /**
      * Title for current resource.

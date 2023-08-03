@@ -12,7 +12,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Grid\Displayers\Actions;
 use Encore\Admin\Show;
 
-class ProductVendorCodeImagesController extends AdminController
+class ProductVendorCodeImageController extends AdminController
 {
     /**
      * Title for current resource.
@@ -33,13 +33,13 @@ class ProductVendorCodeImagesController extends AdminController
         $grid->column('id', __('ID'))->sortable();
         $grid->column('product_vendor_code_id', __('Название продукта'))
             ->display(function ($codeId) {
-                return ProductVendorCode::find($codeId)->product->name;
+                return ProductVendorCode::find($codeId) ? ProductVendorCode::find($codeId)->product->name : '';
             })->sortable();
         $grid->column('path', __('Изображение'))->image('', 100, 100);
 
         $grid->column('code.vendor_code_id', __('Артикул'))
             ->display(function ($codeId) {
-                return VendorCode::find($codeId)->code;
+                return VendorCode::find($codeId) ? VendorCode::find($codeId)->code : '';
             })->sortable();
 
 
@@ -90,14 +90,12 @@ class ProductVendorCodeImagesController extends AdminController
         $form = new Form(new ProductVendorCodeImage());
 
         $form->display('disk', __('Диск'))->default('images')->setWidth(2);
-        $form->image('path', __('Картинка'))
-            ->name(function ($file) {
-                return '/product/' . $file->guessExtension();
-            });
         $form->text('title', __('Название'));
         $form->select('product_vendor_code_id', __('Название продукта'))
             ->options(Product::all()->pluck('name', 'id'))->setWidth(4)->required();
         $form->number('size', __('Размер изображения'))->setWidth(2)->default(12345);
+
+        $form->image('path', __('Картинка'))->removable()->downloadable();
 
         $form->tools(function (Form\Tools $tools) {
             $tools->disableView();

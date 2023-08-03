@@ -22,4 +22,16 @@ class ProductVendorCodeImage extends Model
     {
         return $this->belongsTo(ProductVendorCode::class, 'product_vendor_code_id');
     }
+//
+//    public function setPathAttribute($paths)
+//    {
+//        if (is_array($paths)) {
+//            $this->attributes['path'] = json_encode($paths);
+//        }
+//    }
+//
+//    public function getPathAttribute($paths)
+//    {
+//        return json_decode($paths, true);
+//    }
 }
