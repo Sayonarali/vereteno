@@ -2,13 +2,12 @@
 
 namespace Modules\Product\Http\Responses;
 
-
-use App\Models\ProductVendorCodeSize;
+use App\Models\Size;
 
 class SizeResponse implements \JsonSerializable
 {
-    private ProductVendorCodeSize $size;
-    public function __construct(ProductVendorCodeSize $size)
+    private Size $size;
+    public function __construct(Size $size)
     {
         $this->size = $size;
     }
@@ -16,9 +15,8 @@ class SizeResponse implements \JsonSerializable
     public function jsonSerialize(): mixed
     {
         return [
-            'productSizeId' => $this->size->id,
-            'size' => $this->size->size->number,
-            'quantity' => $this->size->quantity,
+            'id' => $this->size->id,
+            'size' => $this->size->number,
         ];
     }
 }
