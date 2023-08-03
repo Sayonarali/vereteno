@@ -10,6 +10,7 @@ use App\Admin\Controllers\OrderAddressController;
 use App\Admin\Controllers\OrderController;
 use App\Admin\Controllers\ProductController;
 use App\Admin\Controllers\ProductVendorCodeController;
+use App\Admin\Controllers\ProductVendorCodeImagesController;
 use App\Admin\Controllers\ProductVendorCodeSizesController;
 use App\Admin\Controllers\SizeController;
 use App\Admin\Controllers\UserController;
@@ -41,4 +42,5 @@ Route::group([
     $router->resource('cart-item', CartItemController::class);
     $router->resource('product-vendor-code', ProductVendorCodeController::class);
     $router->resource('product-vendor-code-size', ProductVendorCodeSizesController::class);
+    $router->resource('product-vendor-code-image', ProductVendorCodeImagesController::class);
 });

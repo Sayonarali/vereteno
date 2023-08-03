@@ -100,15 +100,6 @@ class ProductVendorCodeController extends AdminController
             ->options(AttributeValue::all()->pluck('value', 'id'))->setWidth(4);
         $form->checkbox('sizes', 'Размеры')
             ->options(Size::all()->pluck('number', 'id'))->setWidth(4);
-//        $form->number('quantity', __('Количество'));
-
-//        $form->multipleImage('images', 'Картинки')->pathColumn('path')->removable();
-
-//        $form->hasMany('images', 'Картинки', function (Form\NestedForm $form) {
-//                $form->text('path', 'Путь');
-//                $form->text('title', 'Название');
-//            $form->number('size', 'Размер');
-//        });
 
         $form->tools(function (Form\Tools $tools) {
             $tools->disableView();

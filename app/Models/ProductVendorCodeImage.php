@@ -17,4 +17,9 @@ class ProductVendorCodeImage extends Model
     ];
 
     public $timestamps = false;
+
+    public function code()
+    {
+        return $this->belongsTo(ProductVendorCode::class, 'product_vendor_code_id');
+    }
 }
