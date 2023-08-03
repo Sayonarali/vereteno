@@ -4,7 +4,6 @@ namespace App\Admin\Controllers;
 
 use App\Models\Color;
 use App\Models\Material;
-use App\Models\Size;
 use App\Models\VendorCode;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -37,7 +36,6 @@ class VendorCodeController extends AdminController
         $grid->column('color.hex', __('Hex'))->display(function ($color) {
             return "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='$color' class='bi bi-circle-fill' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8'/></svg>";
         });
-        $grid->column('size.number', __('Размер'))->sortable();
 
         $grid->export(function ($export) {
             $export->except(['color.hex']);
@@ -50,9 +48,6 @@ class VendorCodeController extends AdminController
             })
                 ->whereHas('material', function ($builder) use ($query) {
                     return $builder->orWhere('name', 'like', "%{$query}%");
-                })
-                ->whereHas('size', function ($builder) use ($query) {
-                    return $builder->orWhere('number', 'like', "%{$query}%");
                 });
         });
 
@@ -78,7 +73,6 @@ class VendorCodeController extends AdminController
         $show->field('code', __('Артикул'));
         $show->field('material_id', __('Материал'));
         $show->field('color_id', __('Цвет'));
-        $show->field('size_id', __('Размер'));
 
         return $show;
     }
@@ -93,9 +87,8 @@ class VendorCodeController extends AdminController
         $form = new Form(new VendorCode());
 
         $form->text('code', __('Артикул'))->setWidth(3)->required()->autofocus();
-        $form->select('material_id', __('Материал'))->options(Material::all()->pluck('name', 'id'))->setWidth(4)->required();
-        $form->select('color_id', __('Цвет'))->options(Color::all()->pluck('name', 'id'))->setWidth(4)->required();
-        $form->select('size_id', __('Размер'))->options(Size::all()->pluck('number', 'id'))->setWidth(4)->required();
+        $form->select('material_id', __('Материал'))->options(Material::all()->pluck('name', 'id'))->setWidth(4);
+        $form->select('color_id', __('Цвет'))->options(Color::all()->pluck('name', 'id'))->setWidth(4);
 
         $form->footer(function ($footer) {
             $footer->disableViewCheck();

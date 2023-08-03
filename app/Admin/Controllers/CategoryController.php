@@ -32,7 +32,10 @@ class CategoryController extends AdminController
         $grid->column('slug', __('Слаг'));
         $grid->column('description', __('Описание'));
         $grid->column('level', __('Уровень'))->sortable();
-        $grid->column('parent.name', __('Родительская категория'))->sortable();
+        $grid->column('parent_id', __('Родительская категория'))->sortable()
+            ->display(function ($parentCategoryId) {
+                return Category::find($parentCategoryId) ? Category::find($parentCategoryId)->name : '';
+            });
 
         $grid->disableFilter();
         $grid->disableExport();

@@ -29,17 +29,18 @@ class ProductVendorCode extends Pivot
 
     public function images()
     {
-        return $this->hasMany(ProductVendorCodeImage::class, 'product_vendor_code_id');
+        return $this->hasMany(ProductVendorCodeImage::class, 'product_vendor_code_id', 'product_vendor_code_id');
     }
 
     public function sizes()
     {
-        return $this->hasMany(ProductVendorCodeSize::class, 'product_vendor_code_id');
+        return $this->belongsToMany(Size::class, 'product_vendor_code_sizes', 'product_vendor_code_id')
+            ->using(ProductVendorCodeSize::class);
     }
 
     public function product()
     {
-        return $this->hasOne(Product::class, 'id');
+        return $this->belongsTo(Product::class);
     }
 
     public function discount()

@@ -34,7 +34,7 @@ class AttributeController extends AdminController
                 return "<span class='label label-default' style='font-size: 15px'>{$value['value']}</span>";
             }, $values);
             return join('&nbsp;', $values);
-        })->sortable();
+        });
 
         $grid->disableFilter();
         $grid->disableExport();

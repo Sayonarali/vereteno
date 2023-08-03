@@ -6,6 +6,8 @@ use App\Models\AttributeValue;
 use App\Models\Discount;
 use App\Models\Product;
 use App\Models\ProductVendorCode;
+use App\Models\ProductVendorCodeSize;
+use App\Models\Size;
 use App\Models\VendorCode;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -32,8 +34,14 @@ class ProductVendorCodeController extends AdminController
         $grid = new Grid(new ProductVendorCode());
 
         $grid->column('id', __('ID'))->sortable();
-        $grid->column('product.name', __('Название продукта'));
-        $grid->column('code.code', __('Артикул'))->sortable();
+        $grid->column('product_id', __('Название продукта'))
+            ->display(function ($productId) {
+                return Product::find($productId)->name;
+            })->sortable();
+        $grid->column('vendor_code_id', __('Артикул'))
+            ->display(function ($codeId) {
+                return VendorCode::find($codeId)->code;
+            })->sortable();
         $grid->column('discount.discount_coefficient', __('Множитель скидки'));
         $grid->column('price', __('Стоимость'))->display(function ($price) {
             return $price . '₽';
@@ -87,10 +95,14 @@ class ProductVendorCodeController extends AdminController
         $form->select('discount_id', __('Множитель скидки'))
             ->options(Discount::all()->pluck('discount_coefficient', 'id'))->setWidth(4);
         $form->decimal('price', __('Стоимость'));
-        $form->number('quantity', __('Количество'));
 
-        $form->multipleSelect('attributes','Особенности')->options(AttributeValue::all()->pluck('value','id'));
-        $form->multipleImage('images', 'Картинки')->pathColumn('path')->removable();
+        $form->multipleSelect('attributes', 'Особенности')
+            ->options(AttributeValue::all()->pluck('value', 'id'))->setWidth(4);
+        $form->checkbox('sizes', 'Размеры')
+            ->options(Size::all()->pluck('number', 'id'))->setWidth(4);
+//        $form->number('quantity', __('Количество'));
+
+//        $form->multipleImage('images', 'Картинки')->pathColumn('path')->removable();
 
 //        $form->hasMany('images', 'Картинки', function (Form\NestedForm $form) {
 //                $form->text('path', 'Путь');

@@ -23,4 +23,9 @@ class ProductVendorCodeSize extends Pivot
     {
         return $this->belongsTo(Size::class);
     }
+
+    public function code()
+    {
+        return $this->belongsTo(ProductVendorCode::class, 'product_vendor_code_id');
+    }
 }

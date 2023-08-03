@@ -27,9 +27,9 @@ class DiscountController extends AdminController
     {
         $grid = new Grid(new Discount());
 
-        $grid->column('id', __('ID'));
+        $grid->column('id', __('ID'))->sortable();
         $grid->column('name', __('Название'));
-        $grid->column('discount_coefficient', __('Множитель скидки'));
+        $grid->column('discount_coefficient', __('Множитель скидки'))->sortable();
 
         $grid->disableFilter();
         $grid->disableExport();
