@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Product;
+use App\Models\Statpage;
 use Modules\Product\Http\Requests\ListProductsRequest;
 use Modules\Product\Http\Responses\AttributeResponse;
+use Modules\Product\Http\Responses\BannerResponse;
 use Modules\Product\Http\Responses\ListProductsResponse;
 use Modules\Product\Http\Responses\ProductResponse;
 use Modules\Product\Services\ProductService;
@@ -30,6 +32,12 @@ class ProductController extends Controller
     {
         return new ProductResponse($product);
     }
+
+    public function getBanner()
+    {
+        return $this->productService->getBanner()->map(fn(Statpage $banner) => new BannerResponse($banner));
+    }
+
 
     public function getAttributes()
     {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Admin\Controllers\AttributeController;
+use App\Admin\Controllers\BannerController;
 use App\Admin\Controllers\CartItemController;
 use App\Admin\Controllers\CategoryController;
 use App\Admin\Controllers\ColorController;
@@ -13,6 +14,7 @@ use App\Admin\Controllers\ProductVendorCodeController;
 use App\Admin\Controllers\ProductVendorCodeImageController;
 use App\Admin\Controllers\ProductVendorCodeSizeController;
 use App\Admin\Controllers\SizeController;
+use App\Admin\Controllers\StatpageController;
 use App\Admin\Controllers\UserController;
 use App\Admin\Controllers\VendorCodeController;
 use Encore\Admin\Facades\Admin;
@@ -42,5 +44,5 @@ Route::group([
     $router->resource('cart-item', CartItemController::class);
     $router->resource('product-vendor-code', ProductVendorCodeController::class);
     $router->resource('product-vendor-code-size', ProductVendorCodeSizeController::class);
-//    $router->resource('product-vendor-code-image', ProductVendorCodeImageController::class);
+    $router->resource('banner', BannerController::class);
 });

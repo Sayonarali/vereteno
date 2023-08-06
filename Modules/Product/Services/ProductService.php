@@ -8,6 +8,7 @@ use App\Models\Color;
 use App\Models\Material;
 use App\Models\Product;
 use App\Models\Size;
+use App\Models\Statpage;
 use Modules\Product\Dto\ListProductsDto;
 use Modules\Product\Dto\ResultListProductsDto;
 
@@ -66,6 +67,11 @@ class ProductService
             $totalCount,
             $products
         );
+    }
+
+    public function getBanner()
+    {
+        return Statpage::query()->where('alias', 'banner')->get();
     }
 
     public function getAttributes()

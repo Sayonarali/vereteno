@@ -108,7 +108,7 @@ class ProductVendorCodeController extends AdminController
                     ->removable()
                     ->downloadable()
                     ->uniqueName();
-            });
+            })->setWidth(4);
         }
 
         $form->tools(function (Form\Tools $tools) {

@@ -20,6 +20,7 @@ Route::controller(ProductController::class)
     {
         Route::get('/', 'index');
         Route::get('/{product}', 'show');
+        Route::get('/stat-page/banner', 'getBanner');
         Route::get('/list/attributes', 'getAttributes');
         Route::get('/list/colors', 'getColors');
         Route::get('/list/materials', 'getMaterials');
