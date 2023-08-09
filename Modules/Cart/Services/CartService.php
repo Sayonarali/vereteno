@@ -3,12 +3,10 @@
 namespace Modules\Cart\Services;
 
 use App\Models\CartItem;
-use App\Models\ProductVendorCode;
 use Illuminate\Support\Facades\Auth;
 use Modules\Cart\Dto\CreateCartItemDto;
 use Modules\Cart\Dto\UpdateCartItemItemDto;
 use Modules\Cart\Dto\ResultShowCartDto;
-use Modules\Order\Dto\CreateUpdateOrderDto;
 
 class CartService
 {
@@ -22,7 +20,7 @@ class CartService
             ->get();
 
         $totalSum = $cartItems->sum(function (CartItem $item) {
-           return $item->product->price;
+           return $item->product->price * $item->quantity;
         });
 
         return new ResultShowCartDto($totalCount, $cartItems, $totalSum);
@@ -34,6 +32,7 @@ class CartService
             'user_id' => Auth::user()->getAuthIdentifier(),
             'product_vendor_code_id' => $dto->getProductVendorCodeId(),
             'quantity' => $dto->getQuantity(),
+            'size_id' => $dto->getSizeId(),
         ]);
 
         return $cartItem;

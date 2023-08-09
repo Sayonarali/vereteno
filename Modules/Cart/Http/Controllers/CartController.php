@@ -24,6 +24,11 @@ class CartController extends Controller
         return new ShowCartResponse($this->cartService->show());
     }
 
+    public function create(CreateCartItemRequest $request)
+    {
+        return new CartItemResponse($this->cartService->create($request->getDto()));
+    }
+
     public function update(CartItem $cartItem, UpdateCartItemRequest $request)
     {
         return new CartItemResponse($this->cartService->update($cartItem, $request->getDto()));
@@ -32,11 +37,6 @@ class CartController extends Controller
     public function empty()
     {
         return $this->cartService->empty();
-    }
-
-    public function create(CreateCartItemRequest $request)
-    {
-        return new CartItemResponse($this->cartService->create($request->getDto()));
     }
 
     public function removeItem(CartItem $cartItem)

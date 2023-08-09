@@ -6,11 +6,18 @@ class CreateCartItemDto
 {
     private int $productVendorCodeId;
     private int $quantity;
+    private int $sizeId;
 
-    public function __construct(int $productVendorCodeId, int $quantity)
+    public function __construct(int $productVendorCodeId, int $quantity, int $sizeId)
     {
         $this->productVendorCodeId = $productVendorCodeId;
         $this->quantity = $quantity;
+        $this->sizeId = $sizeId;
+    }
+
+    public function getSizeId(): int
+    {
+        return $this->sizeId;
     }
 
     /**

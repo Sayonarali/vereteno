@@ -35,7 +35,7 @@ class ProductVendorCode extends Pivot
     public function sizes()
     {
         return $this->belongsToMany(Size::class, 'product_vendor_code_sizes', 'product_vendor_code_id')
-            ->using(ProductVendorCodeSize::class);
+            ->using(ProductVendorCodeSize::class)->withPivot('id', 'quantity');
     }
 
     public function product()

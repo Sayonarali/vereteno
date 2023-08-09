@@ -22,6 +22,7 @@ class CartItemFactory extends Factory
             'user_id' => fake()->numberBetween(1,100),
             'product_vendor_code_id' => fake()->numberBetween(1,100),
             'quantity' => fake()->numberBetween(1,100),
+            'size_id' => fake()->numberBetween(1,5),
         ];
     }
 }

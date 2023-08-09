@@ -32,7 +32,7 @@ class ProductVendorCodeSizeController extends AdminController
         $grid = new Grid(new ProductVendorCodeSize());
 
         $grid->column('id', __('ID'))->sortable();
-        $grid->column('product_vendor_code_id', __('Название продукта'))
+        $grid->column('product_vendor_code_id', __('Название товара'))
             ->display(function ($codeId) {
                 return ProductVendorCode::find($codeId)->product->name;
             })->sortable();
@@ -48,8 +48,10 @@ class ProductVendorCodeSizeController extends AdminController
                 return $quantity . ' шт.';
             })->sortable();
 
+
         $grid->disableFilter();
         $grid->disableExport();
+        $grid->disableCreateButton();
 
         $grid->actions(function ($actions) {
             $actions->disableView();
@@ -88,8 +90,9 @@ class ProductVendorCodeSizeController extends AdminController
     {
         $form = new Form(new ProductVendorCodeSize());
 
-        $form->select('product_vendor_code_id', __('Название продукта'))
+        $form->select('product_vendor_code_id', __('Название товара'))
             ->options(Product::all()->pluck('name', 'id'))->setWidth(4)->required();
+        $form->display('code.vendor_code_id', __('Артикул'))->setWidth(4)->required();
         $form->select('size_id', __('Размер'))->options(Size::all()->pluck('number', 'id'))->setWidth(4)->required();
         $form->number('quantity', __('В наличии'));
 

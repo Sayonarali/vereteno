@@ -13,6 +13,7 @@ class CartItem extends Model
         'user_id',
         'product_vendor_code_id',
         'quantity',
+        'size_id',
     ];
 
     public $timestamps = false;
@@ -25,5 +26,10 @@ class CartItem extends Model
     public function product()
     {
         return $this->belongsTo(ProductVendorCode::class, 'product_vendor_code_id');
+    }
+
+    public function size()
+    {
+        return $this->belongsTo(Size::class);
     }
 }

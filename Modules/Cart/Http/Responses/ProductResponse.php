@@ -2,7 +2,6 @@
 
 namespace Modules\Cart\Http\Responses;
 
-use App\Models\CartItem;
 use App\Models\ProductVendorCode;
 
 class ProductResponse implements \JsonSerializable
@@ -19,9 +18,8 @@ class ProductResponse implements \JsonSerializable
         return [
             'productName' => $this->productVendorCode->product->name,
             'productVendorCodeId' => $this->productVendorCode->id,
-            'price' => $this->productVendorCode->price,
+            'originalPrice' => $this->productVendorCode->price,
             'discount' => $this->productVendorCode->discount,
-            'quantity' => $this->productVendorCode->quantity
         ];
     }
 }
