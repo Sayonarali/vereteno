@@ -17,7 +17,7 @@ class Size extends Model
 
     public function products()
     {
-        return $this->belongsToMany(ProductVendorCode::class, 'product_vendor_code_sizes', 'size_id')
-            ->using(ProductVendorCodeSize::class)->withPivot('id', 'quantity');;
+        return $this->belongsToMany(ProductVendorCode::class, 'product_vendor_code_sizes', 'size_id', 'size_id')
+            ->using(ProductVendorCodeSize::class)->withPivot('id', 'quantity');
     }
 }

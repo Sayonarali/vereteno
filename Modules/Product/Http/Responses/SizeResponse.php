@@ -17,6 +17,7 @@ class SizeResponse implements \JsonSerializable
         return [
             'id' => $this->size->id,
             'size' => $this->size->number,
+            'quantity' => $this->size->pivot->quantity,
         ];
     }
 }
