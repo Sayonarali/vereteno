@@ -21,6 +21,7 @@ class CategoryResponse implements \JsonSerializable
             'slug' => $this->category->slug,
             'level' => $this->category->level,
             'parent' => new ParentCategoryResponse($this->category->parent),
+            'image' => $this->category->image->path
         ];
     }
 }

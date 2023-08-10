@@ -36,6 +36,7 @@ class CategoryController extends AdminController
             ->display(function ($parentCategoryId) {
                 return Category::find($parentCategoryId) ? Category::find($parentCategoryId)->name : '';
             });
+        $grid->column('image.path', __('Картинка'))->image('', 300);
 
         $grid->disableFilter();
         $grid->disableExport();
@@ -87,6 +88,7 @@ class CategoryController extends AdminController
         $form->text('slug', __('Слаг'))->setWidth(3)->required();
         $form->number('level', __('Уровень'))->default(1);
         $form->select('parent_id', 'Родительская категория')->options(Category::all()->pluck('name', 'id'))->setWidth(2);
+        $form->image('image.path', __('Картинка'))->setWidth(3)->required();
 
         $form->footer(function ($footer) {
             $footer->disableViewCheck();

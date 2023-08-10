@@ -11,6 +11,7 @@ use App\Models\VendorCode;
 class VendorCodeResponse implements \JsonSerializable
 {
     private VendorCode $code;
+
     public function __construct(VendorCode $code)
     {
         $this->code = $code;
@@ -21,7 +22,7 @@ class VendorCodeResponse implements \JsonSerializable
         return [
             'id' => $this->code->id,
             'code' => $this->code->code,
-            'material' => $this->code->material->name,
+            'material' => $this->code->material ? '' : $this->code->material->name,
             'color' => $this->code->color,
             'discount' => $this->code->discount,
             'price' => $this->code->pivot->price,

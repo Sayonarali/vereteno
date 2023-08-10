@@ -23,4 +23,9 @@ class Category extends Model
     {
         return $this->belongsTo(static::class, 'parent_id');
     }
+
+    public function image()
+    {
+        return $this->hasOne(CategoryImage::class);
+    }
 }
