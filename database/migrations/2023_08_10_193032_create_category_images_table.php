@@ -11,18 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_vendor_code_sizes', function (Blueprint $table) {
+        Schema::create('category_images', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_vendor_code_id');
-            $table->foreign('product_vendor_code_id')
-                ->references('id')->on('product_vendor_codes')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->foreignId('size_id')
+            $table->string('path');
+            $table->foreignId('category_id')->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->integer('quantity')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_vendor_code_sizes');
+        Schema::dropIfExists('category_images');
     }
 };
