@@ -20,5 +20,6 @@ Route::controller(OrderController::class)
     ->group(function () {
         Route::get('/', 'show');
         Route::post('/', 'create');
+        Route::post('/custom', 'custom');
         Route::patch('/{id}', 'updateOrderStatus');
     });

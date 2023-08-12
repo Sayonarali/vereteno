@@ -3,6 +3,7 @@
 namespace Modules\Order\Services;
 
 use App\Models\CartItem;
+use App\Models\CustomOrder;
 use App\Models\Order;
 use App\Models\OrderAddress;
 use App\Models\OrderItem;
@@ -10,6 +11,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Modules\Order\Dto\CreateUpdateOrderDto;
+use Modules\Order\Dto\CustomOrderDto;
 use Modules\Order\Dto\ResultShowOrderDto;
 
 class OrderService
@@ -53,6 +55,15 @@ class OrderService
         CartItem::query()->whereIn('id',$dto->getCartItemIds() )->delete();
 
         return $order;
+    }
+
+    public function custom(CustomOrderDto $dto)
+    {
+        return CustomOrder::create([
+            'phone' => $dto->getPhone(),
+            'name' => $dto->getName(),
+            'description' => $dto->getDescription(),
+        ]);
     }
 
     public function saveOrderItems(Order $order, Collection $cartItemIds)

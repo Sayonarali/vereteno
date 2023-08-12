@@ -28,6 +28,11 @@ class OrderController extends Controller
         return new OrderResponse($this->orderService->create($request->getDto()));
     }
 
+    public function custom(CustomOrderRequest $request)
+    {
+        return new OrderResponse($this->orderService->custom($request->getDto()));
+    }
+
     public function updateOrderStatus(Order $order, CreateUpdateorderRequest $request)
     {
         return new OrderResponse($this->orderService->updateOrderStatus($order, $request->getDto()));

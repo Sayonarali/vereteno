@@ -882,6 +882,44 @@
                 }
             }
         },
+        "/order/custom": {
+            "post": {
+                "summary": "Create new order for unauth user",
+                "tags": [
+                    "Order"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "phone": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "phone",
+                                    "name",
+                                    "description"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Custom order accepted"
+                    }
+                }
+            }
+        },
         "/order/{id}": {
             "patch": {
                 "summary": "Update order's status by it's id",
