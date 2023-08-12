@@ -5,6 +5,7 @@ use App\Admin\Controllers\BannerController;
 use App\Admin\Controllers\CartItemController;
 use App\Admin\Controllers\CategoryController;
 use App\Admin\Controllers\ColorController;
+use App\Admin\Controllers\CustomOrderController;
 use App\Admin\Controllers\DiscountController;
 use App\Admin\Controllers\MaterialController;
 use App\Admin\Controllers\OrderAddressController;
@@ -45,4 +46,5 @@ Route::group([
     $router->resource('product-vendor-code', ProductVendorCodeController::class);
     $router->resource('product-vendor-code-size', ProductVendorCodeSizeController::class);
     $router->resource('banner', BannerController::class);
+    $router->resource('custom-order', CustomOrderController::class);
 });
