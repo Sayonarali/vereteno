@@ -23,7 +23,7 @@ class VendorCode extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_vendor_codes')
-            ->using(ProductVendorCode::class->withPivot('id', 'price', 'quantity', 'discount_id'));
+            ->using(ProductVendorCode::class)->withPivot('id', 'price', 'discount_id');
     }
 
     public function material()

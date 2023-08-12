@@ -24,7 +24,7 @@ class VendorCodeResponse implements \JsonSerializable
             'code' => $this->code->code,
             'material' => $this->code->material ? $this->code->material->name : '',
             'color' => $this->code->color,
-            'discount' => $this->code->discount,
+            'discount' => $this->code->pivot->discount ? $this->code->pivot->discount->discount_coefficient : null,
             'price' => $this->code->pivot->price,
             'sizes' => $this->code->pivot->sizes->map(fn(Size $size) => new SizeResponse($size)),
             'productVendorCodeId' => $this->code->pivot->id,
