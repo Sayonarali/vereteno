@@ -2,37 +2,39 @@
 
 namespace Modules\Cart\Dto;
 
+use Illuminate\Support\Collection;
+
 class CreateCartItemDto
 {
-    private int $productVendorCodeId;
-    private int $quantity;
-    private int $sizeId;
+    private Collection $productVendorCodeIds;
+    private Collection $quantity;
+    private Collection $sizeIds;
 
-    public function __construct(int $productVendorCodeId, int $quantity, int $sizeId)
+    public function __construct(Collection $productVendorCodeIds, Collection $quantity, Collection $sizeIds)
     {
-        $this->productVendorCodeId = $productVendorCodeId;
+        $this->productVendorCodeIds = $productVendorCodeIds;
         $this->quantity = $quantity;
-        $this->sizeId = $sizeId;
+        $this->sizeIds = $sizeIds;
     }
 
-    public function getSizeId(): int
+    public function getSizeIds(): Collection
     {
-        return $this->sizeId;
+        return $this->sizeIds;
     }
 
     /**
-     * @return int
+     * @return Collection
      */
-    public function getQuantity(): int
+    public function getQuantity(): Collection
     {
         return $this->quantity;
     }
 
     /**
-     * @return int
+     * @return Collection
      */
-    public function getProductVendorCodeId(): int
+    public function getProductVendorCodeIds(): Collection
     {
-        return $this->productVendorCodeId;
+        return $this->productVendorCodeIds;
     }
 }

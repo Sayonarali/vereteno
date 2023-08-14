@@ -26,7 +26,7 @@ class CartController extends Controller
 
     public function create(CreateCartItemRequest $request)
     {
-        return new CartItemResponse($this->cartService->create($request->getDto()));
+        return $this->cartService->create($request->getDto())->map(fn(CartItem $item) => new CartItemResponse($item));
     }
 
     public function update(CartItem $cartItem, UpdateCartItemRequest $request)

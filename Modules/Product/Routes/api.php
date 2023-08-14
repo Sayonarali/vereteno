@@ -25,4 +25,5 @@ Route::controller(ProductController::class)
         Route::get('/list/colors', 'getColors');
         Route::get('/list/materials', 'getMaterials');
         Route::get('/list/sizes', 'getSizes');
+        Route::get('/list/by-ids', 'showByIds');
     });

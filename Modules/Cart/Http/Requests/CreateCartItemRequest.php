@@ -12,15 +12,18 @@ class CreateCartItemRequest extends FormRequest
     public function getDto()
     {
         $data = $this->validated();
-        return new CreateCartItemDto($data['productVendorCodeId'], $data['quantity'], $data['sizeId']);
+        return new CreateCartItemDto($data['productVendorCodeIds'], $data['quantity'], $data['sizeIds']);
     }
 
     public function rules()
     {
         return [
-            'productVendorCodeId' => 'required|int|exists:' . ProductVendorCode::class . ',id',
-            'quantity' => 'required|int|min:1',
-            'sizeId' => 'required|int|exists:' . Size::class . ',id'
+            'productVendorCodeIds' => 'required|array',
+            'productVendorCodeIds.*' => 'required|int|exists:' . ProductVendorCode::class . ',id',
+            'quantity' => 'required|array',
+            'quantity.*' => 'required|int|min:1',
+            'sizeIds' => 'required|array',
+            'sizeIds.*' => 'required|int|exists:' . Size::class . ',id'
         ];
     }
 }

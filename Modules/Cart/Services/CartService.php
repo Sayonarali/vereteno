@@ -3,6 +3,7 @@
 namespace Modules\Cart\Services;
 
 use App\Models\CartItem;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Modules\Cart\Dto\CreateCartItemDto;
 use Modules\Cart\Dto\UpdateCartItemItemDto;
@@ -20,7 +21,7 @@ class CartService
             ->get();
 
         $totalSum = $cartItems->sum(function (CartItem $item) {
-           return $item->product->price * $item->quantity;
+            return $item->product->price * $item->quantity;
         });
 
         return new ResultShowCartDto($totalCount, $cartItems, $totalSum);
@@ -28,14 +29,18 @@ class CartService
 
     public function create(CreateCartItemDto $dto)
     {
-        $cartItem = CartItem::create([
-            'user_id' => Auth::user()->getAuthIdentifier(),
-            'product_vendor_code_id' => $dto->getProductVendorCodeId(),
-            'quantity' => $dto->getQuantity(),
-            'size_id' => $dto->getSizeId(),
-        ]);
+        $cartItems = new Collection();
+        foreach ($dto->getProductVendorCodeIds() as $key => $value) {
+            $cartItem = CartItem::create([
+                'user_id' => Auth::user()->getAuthIdentifier(),
+                'product_vendor_code_id' => $dto->getProductVendorCodeIds()[$key],
+                'quantity' => $dto->getQuantity()[$key],
+                'size_id' => $dto->getSizeIds()[$key],
+            ]);
+            $cartItems->add($cartItem);
+        }
 
-        return $cartItem;
+        return $cartItems;
     }
 
     public function update(CartItem $cartItem, UpdateCartItemItemDto $dto)

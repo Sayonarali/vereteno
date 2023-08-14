@@ -33,6 +33,11 @@ class ProductController extends Controller
         return new ProductResponse($product);
     }
 
+    public function showByIds(array $productVendorCodeIds)
+    {
+        return new ListProductsResponse($this->productService->showByIds($productVendorCodeIds));
+    }
+
     public function getBanner()
     {
         return $this->productService->getBanner()->map(fn(Statpage $banner) => new BannerResponse($banner));

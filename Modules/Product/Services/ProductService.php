@@ -69,6 +69,17 @@ class ProductService
         );
     }
 
+    public function showByIds(array $productVendorCodeIds)
+    {
+        $products = Product::query()->whereIn('id', $productVendorCodeIds)->get();
+        $totalCount = $products->count();
+
+        return new ResultListProductsDto(
+            $totalCount,
+            $products
+        );
+    }
+
     public function getBanner()
     {
         return Statpage::query()->where('alias', 'banner')->get();
