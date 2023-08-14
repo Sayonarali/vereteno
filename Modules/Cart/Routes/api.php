@@ -26,3 +26,8 @@ Route::controller(CartController::class)
         Route::delete('/{cartItem}', 'removeItem');
     });
 
+Route::controller(CartController::class)
+    ->prefix('v1/cart-item')
+    ->group(function () {
+        Route::post('/session', 'addToCartSession');
+    });
