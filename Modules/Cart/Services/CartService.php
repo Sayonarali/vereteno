@@ -29,7 +29,7 @@ class CartService
 
     public function create(CreateCartItemDto $dto)
     {
-        $cartItems = new Collection();
+        $cartItems = new Collection([]);
         foreach ($dto->getProductVendorCodeIds() as $key => $value) {
             $cartItem = CartItem::create([
                 'user_id' => Auth::user()->getAuthIdentifier(),
