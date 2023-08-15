@@ -13,17 +13,20 @@ class ListProductsRequest extends FormRequest
     public function getDto(): ListProductsDto
     {
         $data = $this->validated();
-        return new ListProductsDto($data['limit'],
+        return new ListProductsDto(
+            $data['limit'],
             $data['offset'],
-            $data['orderBy'] ?? null,
+            $data['orderBy'] ?? '',
             $data['orderDesc'] ?? null,
-            $data['search'] ?? null,
+            $data['priceFrom'] ?? null,
+            $data['priceTo'] ?? null,
+            $data['search'] ?? '',
             new FilterDto(
                 new Collection($data['materials'] ?? []),
                 new Collection($data['sizes'] ?? []),
-                new Collection($data['colors']?? []),
-                new Collection($data['attributes']?? []),
-                new Collection($data['categories']?? []),
+                new Collection($data['colors'] ?? []),
+                new Collection($data['attributes'] ?? []),
+                new Collection($data['categories'] ?? []),
             )
         );
     }
@@ -35,7 +38,9 @@ class ListProductsRequest extends FormRequest
             'offset' => 'required|int|min:0',
             'orderBy' => ['nullable', 'string', Rule::in(['price', 'updated_at'])],
             'orderDesc' => 'nullable|bool',
-            'search' => 'nullable','string','max:3000',
+            'priceFrom' => 'nullable|int|min:0',
+            'priceTo' => 'nullable|int|min:1',
+            'search' => 'nullable|string|max:3000',
             'materials' => 'nullable|array',
             'materials.*' => 'required|int|min:0',
             'sizes' => 'nullable|array',
