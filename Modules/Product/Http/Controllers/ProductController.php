@@ -8,6 +8,7 @@ use App\Models\AttributeValue;
 use App\Models\Product;
 use App\Models\Statpage;
 use Modules\Product\Http\Requests\ListProductsRequest;
+use Modules\Product\Http\Requests\ShowByIdsRequest;
 use Modules\Product\Http\Responses\AttributeResponse;
 use Modules\Product\Http\Responses\BannerResponse;
 use Modules\Product\Http\Responses\ListProductsResponse;
@@ -33,9 +34,9 @@ class ProductController extends Controller
         return new ProductResponse($product);
     }
 
-    public function showByIds(array $productVendorCodeIds)
+    public function showByIds(ShowByIdsRequest $request)
     {
-        return new ListProductsResponse($this->productService->showByIds($productVendorCodeIds));
+        return new ListProductsResponse($this->productService->showByIds($request->getProductVendorCodeIds()));
     }
 
     public function getBanner()
