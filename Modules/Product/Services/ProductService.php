@@ -46,7 +46,7 @@ class ProductService
 
         $totalCount = $products->count();
         $products = $products->limit($dto->getLimit())->offset($dto->getOffset())->get()
-            ->sortBy(function($product) {
+            ->sortBy(function ($product) {
                 return $product->codes->max->price;
             });
         /**
@@ -71,7 +71,12 @@ class ProductService
 
     public function showByIds(array $productVendorCodeIds)
     {
-        $products = Product::query()->whereIn('id', $productVendorCodeIds)->get();
+        $products = Product::query()
+            ->whereHas('codes', function ($query) use ($productVendorCodeIds) {
+                $query->whereIn('id', $productVendorCodeIds);
+            })
+            ->get();
+
         $totalCount = $products->count();
 
         return new ResultListProductsDto(
