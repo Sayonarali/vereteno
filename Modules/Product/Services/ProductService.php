@@ -73,7 +73,7 @@ class ProductService
     {
         $products = Product::query()
             ->whereHas('codes', function ($query) use ($productVendorCodeIds) {
-                $query->whereIn('id', $productVendorCodeIds);
+                $query->whereIn('product_vendor_codes.id', $productVendorCodeIds);
             })
             ->get();
 
