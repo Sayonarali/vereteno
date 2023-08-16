@@ -34,12 +34,12 @@ class ProductVendorCodeSizeController extends AdminController
         $grid->column('id', __('ID'))->sortable();
         $grid->column('product_vendor_code_id', __('Название товара'))
             ->display(function ($codeId) {
-                return ProductVendorCode::find($codeId)->product->name;
+                return ProductVendorCode::find($codeId) ? ProductVendorCode::find($codeId)->product->name : '';
             })->sortable();
 
         $grid->column('code.vendor_code_id', __('Артикул'))
             ->display(function ($codeId) {
-                return VendorCode::find($codeId)->code;
+                return VendorCode::find($codeId) ? VendorCode::find($codeId)->code : '';
             })->sortable();
 
         $grid->column('size.number', __('Размеры'))->sortable();
