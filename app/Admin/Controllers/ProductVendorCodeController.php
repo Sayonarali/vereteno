@@ -46,9 +46,6 @@ class ProductVendorCodeController extends AdminController
         $grid->column('price', __('Стоимость'))->display(function ($price) {
             return $price . '₽';
         });
-        $grid->column('quantity', __('Количество'))->display(function ($quantity) {
-            return $quantity . ' шт.';
-        });
 
         $grid->disableFilter();
         $grid->actions(function ($actions) {
