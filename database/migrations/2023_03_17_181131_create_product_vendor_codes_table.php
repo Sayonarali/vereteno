@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('product_vendor_codes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->nullable()
+            $table->foreignId('product_id')
                 ->constrained()
                 ->onUpdate('cascade')
-                ->nullOnDelete();
+                ->onDelete('cascade');
             $table->foreignId('vendor_code_id')
                 ->constrained()
                 ->onUpdate('cascade')
@@ -25,8 +25,7 @@ return new class extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->nullOnDelete();
-            $table->float('price');
-            $table->integer('quantity');
+            $table->float('price')->nullable();
         });
     }
 

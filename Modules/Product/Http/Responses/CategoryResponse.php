@@ -16,11 +16,12 @@ class CategoryResponse implements \JsonSerializable
     public function jsonSerialize(): mixed
     {
         return [
+            'id' => $this->category->id,
             'name' => $this->category->name,
             'description' => $this->category->description,
             'slug' => $this->category->slug,
             'level' => $this->category->level,
-            'parent' => $this->category->parent->name,
+            'parent' => $this->category->parent ? $this->category->parent->name : null,
         ];
     }
 }

@@ -18,6 +18,7 @@ class ShowCartResponse implements \JsonSerializable
     {
         return [
             'totalCount' => $this->dto->getTotalCount(),
+            'totalSum' => $this->dto->getTotalSum(),
             'items' => $this->dto->getItems()->map(fn(CartItem $item) => new CartItemResponse($item)),
         ];
     }

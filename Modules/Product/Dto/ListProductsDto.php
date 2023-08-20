@@ -10,11 +10,15 @@ class ListProductsDto
     private ?bool $sortDesc;
     private FilterDto $filterDto;
     private ?string $search;
+    private ?int $priceFrom;
+    private ?int $priceTo;
 
     public function __construct(int       $limit,
                                 int       $offset,
                                 ?string   $sortBy,
                                 ?bool     $sortDesc,
+                                ?int      $priceFrom,
+                                ?int      $priceTo,
                                 ?string   $search,
                                 FilterDto $filterDto)
     {
@@ -24,6 +28,18 @@ class ListProductsDto
         $this->sortDesc = $sortDesc;
         $this->filterDto = $filterDto;
         $this->search = $search;
+        $this->priceFrom = $priceFrom;
+        $this->priceTo = $priceTo;
+    }
+
+    public function getPriceFrom(): ?int
+    {
+        return $this->priceFrom;
+    }
+
+    public function getPriceTo(): ?int
+    {
+        return $this->priceTo;
     }
 
     /**

@@ -1,5 +1,4 @@
 version: '3'
-
 services:
     php:
         image: sauromates/laravel-fpm
@@ -21,8 +20,9 @@ services:
             - caddy-config:/config
         depends_on:
             - php
+            - frontend
         environment:
-            SERVER_NAME: ${SERVER_NAME:-localhost, localhost:80, caddy:80}
+            SERVER_NAME: ${SERVER_NAME:-localhost, localhost:80, caddy:80, localhost:3000, caddy:3000}
     mysql:
         image: 'mysql/mysql-server:8.0'
         restart: unless-stopped
@@ -34,7 +34,6 @@ services:
             MYSQL_DATABASE: '${DB_DATABASE}'
             MYSQL_USER: '${DB_USERNAME}'
             MYSQL_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
             - 'app-mysql:/var/lib/mysql'
         healthcheck:
@@ -42,13 +41,21 @@ services:
             interval: 60s
             retries: 3
             timeout: 5s
-    phpmyadmin:
-        image: phpmyadmin
-        restart: always
-        ports:
-            - 8081:80
-        environment:
-            - PMA_ARBITRARY=1
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        expose:
+            - 3000
+        env_file:
+            - ./frontend/.env
+#    phpmyadmin:
+#        image: phpmyadmin
+#        restart: always
+#        ports:
+#            - 8081:80
+#        environment:
+#            - PMA_ARBITRARY=1
 volumes:
     app-mysql:
     caddy-data:

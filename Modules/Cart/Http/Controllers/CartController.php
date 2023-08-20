@@ -4,7 +4,9 @@ namespace Modules\Cart\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\CartItem;
-use Modules\Cart\Http\Requests\AddItemRequest;
+use Modules\Cart\Http\Requests\CreateCartItemRequest;
+use Modules\Cart\Http\Requests\UpdateCartItemRequest;
+use Modules\Cart\Http\Responses\CartItemResponse;
 use Modules\Cart\Http\Responses\ShowCartResponse;
 use Modules\Cart\Services\CartService;
 
@@ -22,19 +24,19 @@ class CartController extends Controller
         return new ShowCartResponse($this->cartService->show());
     }
 
-    public function update(CartItem $cartItem, int $quantity)
+    public function create(CreateCartItemRequest $request)
     {
-        return $this->cartService->update($cartItem, $quantity);
+        return $this->cartService->create($request->getDto())->map(fn(CartItem $item) => new CartItemResponse($item));
+    }
+
+    public function update(CartItem $cartItem, UpdateCartItemRequest $request)
+    {
+        return new CartItemResponse($this->cartService->update($cartItem, $request->getDto()));
     }
 
     public function empty()
     {
         return $this->cartService->empty();
-    }
-
-    public function addItem(AddItemRequest $request)
-    {
-        return $this->cartService->addItem($request->getDto());
     }
 
     public function removeItem(CartItem $cartItem)

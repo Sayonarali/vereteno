@@ -22,7 +22,6 @@ Route::controller(CartController::class)
         Route::patch('/{cartItem}', 'update');
         Route::delete('/', 'empty');
 
-        Route::post('/', 'addItem');
+        Route::post('/', 'create');
         Route::delete('/{cartItem}', 'removeItem');
     });
-

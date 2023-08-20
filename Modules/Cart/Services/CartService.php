@@ -3,9 +3,10 @@
 namespace Modules\Cart\Services;
 
 use App\Models\CartItem;
-use App\Models\ProductVendorCode;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Modules\Cart\Dto\AddItemDto;
+use Modules\Cart\Dto\CreateCartItemDto;
+use Modules\Cart\Dto\UpdateCartItemItemDto;
 use Modules\Cart\Dto\ResultShowCartDto;
 
 class CartService
@@ -19,14 +20,35 @@ class CartService
             ->with('product')
             ->get();
 
-        return new ResultShowCartDto($totalCount, $cartItems);
+        $totalSum = $cartItems->sum(function (CartItem $item) {
+            return $item->product->price * $item->quantity;
+        });
+
+        return new ResultShowCartDto($totalCount, $cartItems, $totalSum);
     }
 
-    public function update(CartItem $cartItem, int $quantity)
+    public function create(CreateCartItemDto $dto)
     {
-        return $cartItem->update([
-            'quantity' => $quantity,
+        $cartItems = new Collection([]);
+        foreach ($dto->getProductVendorCodeIds() as $key => $value) {
+            $cartItem = CartItem::create([
+                'user_id' => Auth::user()->getAuthIdentifier(),
+                'product_vendor_code_id' => $dto->getProductVendorCodeIds()[$key],
+                'quantity' => $dto->getQuantity()[$key],
+                'size_id' => $dto->getSizeIds()[$key],
+            ]);
+            $cartItems->add($cartItem);
+        }
+
+        return $cartItems;
+    }
+
+    public function update(CartItem $cartItem, UpdateCartItemItemDto $dto)
+    {
+        $cartItem->update([
+            'quantity' => $dto->getQuantity(),
         ]);
+        return $cartItem;
     }
 
     public function empty()
@@ -34,19 +56,6 @@ class CartService
         return CartItem::query()
             ->where('user_id', Auth::user()->getAuthIdentifier())
             ->delete();
-    }
-
-    public function addItem(AddItemDto $dto)
-    {
-        $productVendorCode = ProductVendorCode::query()
-            ->where('product_id', $dto->getProductId())
-            ->where('vendor_code_id', $dto->getVendorCodeId());
-
-        return CartItem::query()->create([
-            'user_id' => Auth::user()->getAuthIdentifier(),
-            'product_vendor_code_id' => $productVendorCode,
-            'quantity' => 1,
-        ]);
     }
 
     public function removeItem(CartItem $cartItem)

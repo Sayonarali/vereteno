@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
+            $table->string('meta_description')->nullable();
             $table->string('slug');
             $table->foreignId('category_id')->nullable()
                 ->constrained()

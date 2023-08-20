@@ -13,9 +13,14 @@ return new class extends Migration {
         Schema::create('product_vendor_code_attribute_values', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_vendor_code_id');
-            $table->foreign('product_vendor_code_id', 'product_vendor_code_attribute_values_id')->references('id')->on('product_vendor_codes');
+            $table->foreign('product_vendor_code_id', 'product_vendor_code_attribute_values_id')
+                ->references('id')->on('product_vendor_codes')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->foreignId('attribute_value_id')
-                ->constrained();
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

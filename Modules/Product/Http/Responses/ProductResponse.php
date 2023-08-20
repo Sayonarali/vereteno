@@ -21,8 +21,8 @@ class ProductResponse implements \JsonSerializable
             'name' => $this->product->name,
             'description' => $this->product->description,
             'slug' => $this->product->slug,
-            'category' => new CategoryResponse($this->product->category),
-            'vendor_codes' => $this->product->codes->map(fn(VendorCode $code) => new VendorCodeResponse($code)),
+            'category' => $this->product->category ? new CategoryResponse($this->product->category) : null,
+            'vendorCodes' => $this->product->codes->map(fn(VendorCode $code) => new VendorCodeResponse($code)),
         ];
     }
 }

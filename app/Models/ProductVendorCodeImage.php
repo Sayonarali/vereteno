@@ -11,10 +11,13 @@ class ProductVendorCodeImage extends Model
 
     protected $fillable = [
         'path',
-        'title',
         'product_vendor_code_id',
-        'size'
     ];
 
     public $timestamps = false;
+
+    public function code()
+    {
+        return $this->belongsTo(ProductVendorCode::class, 'product_vendor_code_id');
+    }
 }

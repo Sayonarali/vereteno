@@ -15,11 +15,18 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')
                 ->constrained()
-                ->onUpdate('cascade');
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->foreignId('product_vendor_code_id')
-                ->constrained()
-                ->onUpdate('cascade');
+                ->references('id')->on('product_vendor_codes')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->integer('quantity');
+            $table->foreignId('size_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->timestamp('expires_at')->nullable();
         });
     }
 

@@ -6,16 +6,18 @@ use App\Models\Category;
 
 class ParentCategoryResponse implements \JsonSerializable
 {
-    private Category $category;
-    public function __construct(Category $category)
+    private ?Category $category;
+
+    public function __construct(?Category $category)
     {
         $this->category = $category;
     }
 
     public function jsonSerialize(): mixed
     {
+        $id = $this->category ? $this->category->id : '';
         return [
-            'id' => $this->category->id,
+            'id' => $id
 //            'name' => $this->category->name,
 //            'level' => $this->category->level,
         ];

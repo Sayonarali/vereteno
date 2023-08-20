@@ -19,7 +19,6 @@ Route::controller(AuthController::class)
     ->middleware('auth:api')
     ->group(function ()
     {
-        Route::get('/by-token', 'authByToken');
         Route::post('/logout', 'logout');
         Route::post('/refresh', 'refresh');
     });

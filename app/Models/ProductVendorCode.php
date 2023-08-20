@@ -32,9 +32,24 @@ class ProductVendorCode extends Pivot
         return $this->hasMany(ProductVendorCodeImage::class, 'product_vendor_code_id');
     }
 
-    public function products()
+    public function sizes()
     {
-        return $this->belongsToMany(Product::class, 'product_vendor_codes')
-            ->using(ProductVendorCode::class)->withPivot('id', 'price', 'quantity', 'discount_id');
+        return $this->belongsToMany(Size::class, 'product_vendor_code_sizes', 'product_vendor_code_id')
+            ->using(ProductVendorCodeSize::class)->withPivot('id', 'quantity');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function discount()
+    {
+        return $this->belongsTo(Discount::class, 'discount_id');
+    }
+
+    public function code()
+    {
+        return $this->hasOne(VendorCode::class, 'id');
     }
 }

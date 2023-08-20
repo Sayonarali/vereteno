@@ -12,14 +12,11 @@ return new class extends Migration {
     {
         Schema::create('product_vendor_code_images', function (Blueprint $table) {
             $table->id();
-            $table->string('disk')->default('images');
             $table->string('path');
-            $table->string('title');
             $table->foreignId('product_vendor_code_id')->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
-                ->nullOnDelete();
-            $table->integer('size')->unsigned();
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

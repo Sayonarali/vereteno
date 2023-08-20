@@ -3,10 +3,14 @@
 namespace Modules\Product\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Product;
+use App\Models\Statpage;
 use Modules\Product\Http\Requests\ListProductsRequest;
-use Modules\Product\Http\Responses\AttributeValueResponse;
+use Modules\Product\Http\Requests\ShowByIdsRequest;
+use Modules\Product\Http\Responses\AttributeResponse;
+use Modules\Product\Http\Responses\BannerResponse;
 use Modules\Product\Http\Responses\ListProductsResponse;
 use Modules\Product\Http\Responses\ProductResponse;
 use Modules\Product\Services\ProductService;
@@ -30,9 +34,20 @@ class ProductController extends Controller
         return new ProductResponse($product);
     }
 
+    public function showByIds(ShowByIdsRequest $request)
+    {
+        return new ListProductsResponse($this->productService->showByIds($request->getProductVendorCodeIds()));
+    }
+
+    public function getBanner()
+    {
+        return $this->productService->getBanner()->map(fn(Statpage $banner) => new BannerResponse($banner));
+    }
+
+
     public function getAttributes()
     {
-        return $this->productService->getAttributes()->map(fn(AttributeValue $attributeValue) => new AttributeValueResponse($attributeValue));
+        return $this->productService->getAttributes()->map(fn(Attribute $attribute) => new AttributeResponse($attribute));
     }
 
     public function getColors()
@@ -49,20 +64,4 @@ class ProductController extends Controller
     {
         return $this->productService->getSizes();
     }
-
-//
-//    public function create(CreateUpdateProductRequest $request)
-//    {
-//
-//    }
-//
-//    public function update(Product $product, CreateUpdateProductRequest $request)
-//    {
-//
-//    }
-//
-//    public function delete(Product $product)
-//    {
-//
-//    }
 }

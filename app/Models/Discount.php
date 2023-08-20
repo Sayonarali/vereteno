@@ -12,7 +12,7 @@ class Discount extends Model
     protected $fillable = [
         'name',
         'desc',
-        'discount_percent'
+        'discount_coefficient'
     ];
 
     protected $hidden = [

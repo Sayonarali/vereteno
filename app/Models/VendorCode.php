@@ -22,7 +22,8 @@ class VendorCode extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_vendor_codes')->using(ProductVendorCode::class);
+        return $this->belongsToMany(Product::class, 'product_vendor_codes')
+            ->using(ProductVendorCode::class)->withPivot('id', 'price', 'discount_id');
     }
 
     public function material()
@@ -33,10 +34,5 @@ class VendorCode extends Model
     public function color()
     {
         return $this->belongsTo(Color::class);
-    }
-
-    public function size()
-    {
-        return $this->belongsTo(Size::class);
     }
 }
