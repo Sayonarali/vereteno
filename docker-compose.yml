@@ -20,7 +20,7 @@ services:
             - caddy-config:/config
         depends_on:
             - php
-            - frontend
+#            - frontend
         environment:
             SERVER_NAME: ${SERVER_NAME:-localhost, localhost:80, caddy:80, localhost:3000, caddy:3000}
     mysql:
@@ -41,21 +41,14 @@ services:
             interval: 60s
             retries: 3
             timeout: 5s
-    frontend:
-        build:
-            context: ./frontend
-            dockerfile: Dockerfile
-        expose:
-            - 3000
-        env_file:
-            - ./frontend/.env
-#    phpmyadmin:
-#        image: phpmyadmin
-#        restart: always
-#        ports:
-#            - 8081:80
-#        environment:
-#            - PMA_ARBITRARY=1
+#    frontend:
+#        build:
+#            context: ./frontend
+#            dockerfile: Dockerfile
+#        expose:
+#            - 3000
+#        env_file:
+#            - ./frontend/.env
 volumes:
     app-mysql:
     caddy-data:
