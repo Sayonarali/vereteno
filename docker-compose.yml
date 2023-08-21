@@ -20,9 +20,8 @@ services:
             - caddy-config:/config
         depends_on:
             - php
-#            - frontend
         environment:
-            SERVER_NAME: ${SERVER_NAME:-localhost, localhost:80, caddy:80, localhost:3000, caddy:3000}
+            SERVER_NAME: ${SERVER_NAME:-localhost, localhost:80, caddy:80}
     mysql:
         image: 'mysql/mysql-server:8.0'
         restart: unless-stopped
@@ -41,14 +40,6 @@ services:
             interval: 60s
             retries: 3
             timeout: 5s
-#    frontend:
-#        build:
-#            context: ./frontend
-#            dockerfile: Dockerfile
-#        expose:
-#            - 3000
-#        env_file:
-#            - ./frontend/.env
 volumes:
     app-mysql:
     caddy-data:
