@@ -1,0 +1,25 @@
+{$SERVER_NAME}
+
+log
+
+# Matches requests for HTML documents, for static files and for Next.js files,
+# except for known API paths and paths with extensions handled by API Platform
+@pwa expression `(
+        header({'Accept': '*text/html*'})
+        && !path(
+            '/admin*', '/api*', '/uploads*', '/docs*', '/graphql*', '/bundles*', '/contexts*', '/_profiler*', '/_wdt*',
+            '*.json*', '*.html', '*.csv', '*.yml', '*.yaml', '*.xml'
+        )
+    )
+    || path('/favicon.ico', '/manifest.json', '/robots.txt', '/_next*', '/sitemap*')`
+
+route {
+    root * /var/www/html/public
+    reverse_proxy @pwa http://185.154.195.91:3000
+    php_fastcgi php:9000
+    encode zstd gzip
+    file_server
+}
+
+
+

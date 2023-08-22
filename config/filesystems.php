@@ -44,6 +44,21 @@ return [
             'throw' => false,
         ],
 
+        'images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/images'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'admin' => [
+            'driver' =>'local',
+            'root' => public_path('uploads'),
+            'visibility' =>'public',
+            'url' => env('APP_URL').'/uploads',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -71,6 +86,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('images') => storage_path('app/images'),
     ],
 
 ];
