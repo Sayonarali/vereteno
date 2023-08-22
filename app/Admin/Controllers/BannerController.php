@@ -80,8 +80,8 @@ class BannerController extends AdminController
         $form->text('title', __('Название'))->setWidth(3)->required();
         $form->textarea('content', __('Содержание'))->setWidth(5);
         $form->image('path', __('Картинка'))->setWidth(4)->required();
-        $form->text('meta_description', __('Мета описание'))->setWidth(6);
-        $form->text('meta_keywords', __('Мета тэги'))->setWidth(6);
+        $form->text('meta_description', __('Надпись на кнопке'))->setWidth(6);
+        $form->text('meta_keywords', __('Ссылка'))->setWidth(6);
 
 
         $form->tools(function (Form\Tools $tools) {
