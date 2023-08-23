@@ -41,7 +41,9 @@ class CustomOrderController extends AdminController
         $grid->column('updated_at', __('Обновлено'));
 
         $grid->disableFilter();
+        $grid->disableExport();
         $grid->disableCreateButton();
+
         $grid->actions(function ($actions) {
             $actions->disableView();
         });

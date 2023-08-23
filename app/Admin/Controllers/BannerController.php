@@ -30,11 +30,11 @@ class BannerController extends AdminController
         $grid->model()->where('alias', 'banner');
 
         $grid->column('id', __('ID'))->sortable();
-        $grid->column('title', __('Название'));
+        $grid->column('title', __('Заголовок'));
         $grid->column('content', __('Содержание'))->width(450);
         $grid->column('path', __('Картинка'))->image('', 300);
-        $grid->column('meta_description', __('Мета описание'));
-        $grid->column('meta_keywords', __('Мета тэги'));
+        $grid->column('meta_description', __('Надпись на кнопке'));
+        $grid->column('meta_keywords', __('Ссылка'));
 
         $grid->disableFilter();
         $grid->actions(function ($actions) {
@@ -77,7 +77,7 @@ class BannerController extends AdminController
         $form = new Form(new Statpage());
 
         $form->text('alias', __('Элиас'))->setWidth(3)->default('banner')->readonly();
-        $form->text('title', __('Название'))->setWidth(3)->required();
+        $form->text('title', __('Заголовок'))->setWidth(3)->required();
         $form->textarea('content', __('Содержание'))->setWidth(5);
         $form->image('path', __('Картинка'))->setWidth(4)->required();
         $form->text('meta_description', __('Надпись на кнопке'))->setWidth(6);
