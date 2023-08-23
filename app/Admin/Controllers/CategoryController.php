@@ -91,7 +91,12 @@ class CategoryController extends AdminController
         $form->image('image.path', __('Картинка'))->setWidth(3)->required()->move('/images/category')
             ->removable()
             ->downloadable()
-            ->uniqueName();;
+            ->uniqueName();
+
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableView();
+            $tools->disableDelete();
+        });
 
         $form->footer(function ($footer) {
             $footer->disableViewCheck();

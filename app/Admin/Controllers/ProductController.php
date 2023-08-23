@@ -41,6 +41,7 @@ class ProductController extends AdminController
             return join('&nbsp;', $codes);
         });
 
+        $grid->disableExport();
         $grid->disableFilter();
 
         $grid->quickSearch(function ($model, $query) {

@@ -31,6 +31,8 @@ class SizeController extends AdminController
         $grid->column('number', __('Размер'))->sortable();
 
         $grid->disableFilter();
+        $grid->disableExport();
+
         $grid->actions(function ($actions) {
             $actions->disableView();
         });

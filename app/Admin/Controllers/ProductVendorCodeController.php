@@ -42,9 +42,16 @@ class ProductVendorCodeController extends AdminController
             ->display(function ($codeId) {
                 return VendorCode::find($codeId)->code;
             })->sortable();
-        $grid->column('discount.discount_coefficient', __('Множитель скидки'));
+        $grid->column('discount.name', __('Скидка'));
         $grid->column('price', __('Стоимость'))->display(function ($price) {
             return $price . '₽';
+        });
+
+        $grid->column('attributes', __('Особенности'))->display(function ($attributes) {
+            $attributes = array_map(function ($attribute) {
+                return "<span class='label label-default' style='font-size: 13px'>{$attribute['value']}</span>";
+            }, $attributes);
+            return join('&nbsp;', $attributes);
         });
 
         $grid->disableFilter();
@@ -89,8 +96,8 @@ class ProductVendorCodeController extends AdminController
         $form->select('product_id', __('Название продукта'))->options(Product::all()->pluck('name', 'id'))->setWidth(4)->required();
         $form->select('vendor_code_id', __('Артикул'))->setWidth(4)->required()
             ->options(VendorCode::all()->pluck('code', 'id'))->setWidth(4);
-        $form->select('discount_id', __('Множитель скидки'))
-            ->options(Discount::all()->pluck('discount_coefficient', 'id'))->setWidth(4);
+        $form->select('discount_id', __('Скидка'))
+            ->options(Discount::all()->pluck('name', 'id'))->setWidth(4);
         $form->decimal('price', __('Стоимость'));
 
         $form->multipleSelect('attributes', 'Особенности')

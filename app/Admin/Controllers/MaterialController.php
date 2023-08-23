@@ -31,6 +31,8 @@ class MaterialController extends AdminController
         $grid->column('name', __('Название'))->sortable();
 
         $grid->disableFilter();
+        $grid->disableExport();
+
         $grid->actions(function ($actions) {
             $actions->disableView();
         });
