@@ -91,9 +91,9 @@ class ProductVendorCodeSizeController extends AdminController
         $form = new Form(new ProductVendorCodeSize());
 
         $form->select('product_vendor_code_id', __('Название товара'))
-            ->options(Product::all()->pluck('name', 'id'))->setWidth(4)->required();
+            ->options(ProductVendorCode::query()->with('product')->get()->pluck('product.name', 'id'))->setWidth(4)->required()->readonly();
         $form->select('code.vendor_code_id', __('Артикул'))
-            ->options(VendorCode::all()->pluck('code', 'id'))->setWidth(4)->required();
+            ->options(VendorCode::all()->pluck('code', 'id'))->setWidth(4)->required()->readonly();
         $form->display('size.number', __('Размер'))->setWidth(1);
         $form->number('quantity', __('В наличии'));
 

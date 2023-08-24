@@ -100,12 +100,12 @@ class ProductVendorCodeController extends AdminController
             ->options(Discount::all()->pluck('name', 'id'))->setWidth(4);
         $form->decimal('price', __('Стоимость'));
 
-        $form->multipleSelect('attributes', 'Особенности')
-            ->options(AttributeValue::all()->pluck('value', 'id'))->setWidth(4);
         $form->checkbox('sizes', 'Размеры')
             ->options(Size::all()->pluck('number', 'id'))->setWidth(4);
 
         if ($form->isEditing()) {
+            $form->multipleSelect('attributes', 'Особенности')
+                ->options(AttributeValue::all()->pluck('value', 'id'))->setWidth(4);
             $form->hasMany('images', __('Картинки'), function (Form\NestedForm $form) {
                 $form->image('path', 'Изображение')
                     ->move('/images/product')
