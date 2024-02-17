@@ -21,7 +21,7 @@ class CategoryResponse implements \JsonSerializable
             'description' => $this->category->description,
             'slug' => $this->category->slug,
             'level' => $this->category->level,
-            'parent' => $this->category->parent ? $this->category->parent->name : null,
+            'parent' => $this->category->parent ? $this->category->parent : null,
         ];
     }
 }
