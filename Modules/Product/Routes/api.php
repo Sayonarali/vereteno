@@ -19,7 +19,7 @@ Route::controller(ProductController::class)
     ->group(function ()
     {
         Route::get('/', 'index');
-        Route::get('/{product}', 'show');
+        Route::get('/{productVendorCode}', 'show');
         Route::get('/stat-page/banner', 'getBanner');
         Route::get('/list/attributes', 'getAttributes');
         Route::get('/list/colors', 'getColors');

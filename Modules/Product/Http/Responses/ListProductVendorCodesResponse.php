@@ -18,7 +18,8 @@ class ListProductVendorCodesResponse implements \JsonSerializable
     {
         return [
             'totalCount' => $this->dto->getTotalCount(),
-            'productVendorCodes' => $this->dto->getProductVendorCodes()->map(fn(ProductVendorCode $productVendorCode) => new ProductVendorCodeResponse($productVendorCode)),
+            'productVendorCodes' => $this->dto->getProductVendorCodes()
+                ->map(fn(ProductVendorCode $productVendorCode) => new ProductVendorCodeResponse($productVendorCode)),
         ];
     }
 }
