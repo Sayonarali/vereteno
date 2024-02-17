@@ -50,6 +50,6 @@ class ProductVendorCode extends Pivot
 
     public function code()
     {
-        return $this->hasOne(VendorCode::class, 'id');
+        return $this->hasOne(VendorCode::class, 'id', 'vendor_code_id');
     }
 }

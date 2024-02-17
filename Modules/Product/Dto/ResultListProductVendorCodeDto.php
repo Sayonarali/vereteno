@@ -4,16 +4,16 @@ namespace Modules\Product\Dto;
 
 use Illuminate\Support\Collection;
 
-class ResultListProductsDto
+class ResultListProductVendorCodeDto
 {
     private int $totalCount;
-    private Collection $products;
+    private Collection $productVendorCodes;
 
     public function __construct(int        $totalCount,
-                                Collection $products)
+                                Collection $productVendorCodes)
     {
         $this->totalCount = $totalCount;
-        $this->products = $products;
+        $this->productVendorCodes = $productVendorCodes;
     }
 
     /**
@@ -27,8 +27,8 @@ class ResultListProductsDto
     /**
      * @return Collection
      */
-    public function getProducts(): Collection
+    public function getProductVendorCodes(): Collection
     {
-        return $this->products;
+        return $this->productVendorCodes;
     }
 }

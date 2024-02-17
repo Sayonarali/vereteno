@@ -20,8 +20,4 @@ Route::controller(CategoryController::class)
     {
         Route::get('/', 'index');
         Route::get('/{category}', 'show');
-//        Route::post('/', 'create');
-//        Route::put('/{category}', 'update');
-//        Route::patch('/{category}', 'update');
-//        Route::delete('/{category}', 'delete');
     });

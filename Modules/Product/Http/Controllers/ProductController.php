@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Product;
+use App\Models\ProductVendorCode;
 use App\Models\Statpage;
 use Modules\Product\Http\Requests\ListProductsRequest;
 use Modules\Product\Http\Requests\ShowByIdsRequest;
 use Modules\Product\Http\Responses\AttributeResponse;
 use Modules\Product\Http\Responses\BannerResponse;
-use Modules\Product\Http\Responses\ListProductsResponse;
-use Modules\Product\Http\Responses\ProductResponse;
+use Modules\Product\Http\Responses\ListProductVendorCodesResponse;
+use Modules\Product\Http\Responses\ProductVendorCodeResponse;
 use Modules\Product\Services\ProductService;
 
 class ProductController extends Controller
@@ -26,17 +27,17 @@ class ProductController extends Controller
 
     public function index(ListProductsRequest $request)
     {
-        return new ListProductsResponse($this->productService->index($request->getDto()));
+        return new ListProductVendorCodesResponse($this->productService->index($request->getDto()));
     }
 
-    public function show(Product $product)
+    public function show(ProductVendorCode $productVendorCode)
     {
-        return new ProductResponse($product);
+        return new ProductVendorCodeResponse($productVendorCode);
     }
 
     public function showByIds(ShowByIdsRequest $request)
     {
-        return new ListProductsResponse($this->productService->showByIds($request->getProductVendorCodeIds()));
+        return new ListProductVendorCodesResponse($this->productService->showByIds($request->getProductVendorCodeIds()));
     }
 
     public function getBanner()
