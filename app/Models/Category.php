@@ -28,4 +28,25 @@ class Category extends Model
     {
         return $this->hasOne(CategoryImage::class);
     }
+
+    public function children()
+    {
+        return $this->hasMany(self::class, 'parent_id');
+    }
+
+    public static function allChildrenIds(Model $model, array &$childs = []) {
+        foreach ($model->children as $child) {
+            $childs[] = $child['id'];
+            static::allChildrenIds($child, $childs);
+        }
+        return $childs;
+    }
+
+    public static function allChildren(Model $model, array &$childs = []) {
+        foreach ($model->children as $child) {
+            $childs[] = $child;
+            static::allChildren($child, $childs);
+        }
+        return $childs;
+    }
 }

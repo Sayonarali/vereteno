@@ -4,20 +4,29 @@ namespace Modules\Product\Services;
 
 use App\Models\Attribute;
 use App\Models\AttributeValue;
+use App\Models\Category;
 use App\Models\Color;
 use App\Models\Material;
 use App\Models\Product;
+use App\Models\ProductVendorCode;
 use App\Models\Size;
 use App\Models\Statpage;
 use Modules\Product\Dto\ListProductsDto;
 use Modules\Product\Dto\ResultListProductsDto;
+use Modules\Product\Dto\ResultListProductVendorCodeDto;
 
 class ProductService
 {
     public function index(ListProductsDto $dto)
     {
-        $products = Product::query()
-            ->whereHas('codes', function ($query) use ($dto) {
+        $productVendorCodes = ProductVendorCode::query()
+            ->when($dto->getFilterDto()->getColors()->isNotEmpty(), function ($query) use ($dto) {
+                $query->whereIn('color_id', $dto->getFilterDto()->getColors());
+            })
+            ->when($dto->getFilterDto()->getMaterials()->isNotEmpty(), function ($query) use ($dto) {
+                $query->whereIn('material_id', $dto->getFilterDto()->getMaterials());
+            })
+            ->whereHas('product', function ($query) use ($dto) {
                 $query->when($dto->getFilterDto()->getColors()->isNotEmpty(), function ($query) use ($dto) {
                     $query->whereIn('color_id', $dto->getFilterDto()->getColors());
                 });
@@ -27,45 +36,38 @@ class ProductService
 //                $query->when($dto->getFilterDto()->getSizes()->isNotEmpty(), function ($query) use ($dto) {
 //                    $query->whereIn('size_id', $dto->getFilterDto()->getSizes());
 //                });
-//                $query->when($dto->getSortDesc(), function ($query) use ($dto) {
-//                    $query->orderByDesc($dto->getSortBy());
-//                });
-            })
-            ->whereHas('category', function ($query) use ($dto) {
-                $query->when($dto->getFilterDto()->getCategories()->isNotEmpty(), function ($query) use ($dto) {
-                    $query->whereIn('category_id', $dto->getFilterDto()->getCategories());
+                $query->whereHas('category', function ($query) use ($dto) {
+                    $query->when($dto->getFilterDto()->getCategories()->isNotEmpty(), function ($query) use ($dto) {
+                        $allChildrenCategoriesId = [];
+                        $categories = Category::whereIn('id', $dto->getFilterDto()->getCategories())->get();
+                        foreach ($categories as $category) {
+                            Category::allChildrenIds($category, $allChildrenCategoriesId);
+                        }
+                        $query->whereIn('category_id', array_merge($dto->getFilterDto()->getCategories()->toArray(), $allChildrenCategoriesId));
+                    });
                 });
-            })
-//            ->when($dto->getSortDesc(), function ($query) use ($dto) {
-//                $query->join('product_vendor_codes', 'product_vendor_codes.product_id', '=', 'products.id')
-//                    ->orderByDesc('product_vendor_codes.price')->select('products.*');
-//            })
-            ->when($dto->getSearch(), function ($query, $search) {
-                $query->where('name', 'LIKE', "%$search%");
+                $query->when($dto->getSearch(), function ($query, $search) {
+                    $query->where('name', 'LIKE', "%$search%");
+                });
             });
 
-        $totalCount = $products->count();
-        $products = $products->limit($dto->getLimit())->offset($dto->getOffset())->get()
-            ->sortBy(function ($product) {
-                return $product->codes->max->price;
-            });
+        $totalCount = $productVendorCodes->count();
+        $productVendorCodes = $productVendorCodes->limit($dto->getLimit())->offset($dto->getOffset())->get();
         /**
          * @todo refactor attribute filter to query view
          */
         if ($dto->getFilterDto()->getAttributes()->isNotEmpty()) {
-            $products = $products->filter(function ($product) use ($dto) {
-                return $product->codes->filter(function ($code) use ($dto) {
-                    return $code->pivot->attributes->filter(function ($attribute) use ($dto) {
-                        return $dto->getFilterDto()->getAttributes()->contains($attribute->id);
-                    })->isNotEmpty();
+            $productVendorCodes = $productVendorCodes->filter(function ($productVendorCode) use ($dto) {
+                return $productVendorCode->attributes->filter(function ($attribute) use ($dto) {
+                    return $dto->getFilterDto()->getAttributes()->contains($attribute->id);
                 })->isNotEmpty();
             })->values();
-            $totalCount = $products->count();
+            $totalCount = $productVendorCodes->count();
         }
 
-        return new ResultListProductsDto(
+        return new ResultListProductVendorCodeDto(
             $totalCount,
-            $products
+            $productVendorCodes
         );
     }
 
