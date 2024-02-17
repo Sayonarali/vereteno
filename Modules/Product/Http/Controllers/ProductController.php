@@ -4,8 +4,6 @@ namespace Modules\Product\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
-use App\Models\AttributeValue;
-use App\Models\Product;
 use App\Models\ProductVendorCode;
 use App\Models\Statpage;
 use Modules\Product\Http\Requests\ListProductsRequest;

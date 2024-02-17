@@ -3,16 +3,13 @@
 namespace Modules\Product\Services;
 
 use App\Models\Attribute;
-use App\Models\AttributeValue;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Material;
-use App\Models\Product;
 use App\Models\ProductVendorCode;
 use App\Models\Size;
 use App\Models\Statpage;
 use Modules\Product\Dto\ListProductsDto;
-use Modules\Product\Dto\ResultListProductsDto;
 use Modules\Product\Dto\ResultListProductVendorCodeDto;
 
 class ProductService
@@ -20,34 +17,40 @@ class ProductService
     public function index(ListProductsDto $dto)
     {
         $productVendorCodes = ProductVendorCode::query()
-            ->when($dto->getFilterDto()->getColors()->isNotEmpty(), function ($query) use ($dto) {
-                $query->whereIn('color_id', $dto->getFilterDto()->getColors());
-            })
-            ->when($dto->getFilterDto()->getMaterials()->isNotEmpty(), function ($query) use ($dto) {
-                $query->whereIn('material_id', $dto->getFilterDto()->getMaterials());
-            })
-            ->whereHas('product', function ($query) use ($dto) {
+            ->whereHas('code', function ($query) use ($dto) {
                 $query->when($dto->getFilterDto()->getColors()->isNotEmpty(), function ($query) use ($dto) {
                     $query->whereIn('color_id', $dto->getFilterDto()->getColors());
                 });
                 $query->when($dto->getFilterDto()->getMaterials()->isNotEmpty(), function ($query) use ($dto) {
                     $query->whereIn('material_id', $dto->getFilterDto()->getMaterials());
                 });
-//                $query->when($dto->getFilterDto()->getSizes()->isNotEmpty(), function ($query) use ($dto) {
-//                    $query->whereIn('size_id', $dto->getFilterDto()->getSizes());
-//                });
-                $query->whereHas('category', function ($query) use ($dto) {
-                    $query->when($dto->getFilterDto()->getCategories()->isNotEmpty(), function ($query) use ($dto) {
-                        $allChildrenCategoriesId = [];
-                        $categories = Category::whereIn('id', $dto->getFilterDto()->getCategories())->get();
-                        foreach ($categories as $category) {
-                            Category::allChildrenIds($category, $allChildrenCategoriesId);
-                        }
-                        $query->whereIn('category_id', array_merge($dto->getFilterDto()->getCategories()->toArray(), $allChildrenCategoriesId));
+            })
+            ->whereHas('product', function ($query) use ($dto) {
+                $query->when($dto->getFilterDto()->getColors()->isNotEmpty(), function ($query) use ($dto) {
+                    $query->whereHas('category', function ($query) use ($dto) {
+                        $query->when($dto->getFilterDto()->getCategories()->isNotEmpty(), function ($query) use ($dto) {
+                            $allChildrenCategoriesId = [];
+                            $categories = Category::whereIn('id', $dto->getFilterDto()->getCategories())->get();
+                            foreach ($categories as $category) {
+                                Category::allChildrenIds($category, $allChildrenCategoriesId);
+                            }
+                            $query->whereIn('category_id', array_merge($dto->getFilterDto()->getCategories()->toArray(), $allChildrenCategoriesId));
+                        });
+                    });
+                    $query->when($dto->getSearch(), function ($query, $search) {
+                        $query->where('name', 'LIKE', "%$search%");
                     });
                 });
-                $query->when($dto->getSearch(), function ($query, $search) {
-                    $query->where('name', 'LIKE', "%$search%");
+            })
+            ->when($dto->getPriceFrom(), function ($query) use ($dto) {
+                $query->where('price', '>=', $dto->getPriceFrom());
+            })
+            ->when($dto->getPriceTo(), function ($query) use ($dto) {
+                $query->where('price', '<=', $dto->getPriceTo());
+            })
+            ->whereHas('sizes', function ($query) use ($dto) {
+                $query->when($dto->getFilterDto()->getSizes()->isNotEmpty(), function ($query) use ($dto) {
+                    $query->whereIn('id', $dto->getFilterDto()->getSizes());
                 });
             });
 
@@ -73,17 +76,11 @@ class ProductService
 
     public function showByIds(array $productVendorCodeIds)
     {
-        $products = Product::query()
-            ->whereHas('codes', function ($query) use ($productVendorCodeIds) {
-                $query->whereIn('product_vendor_codes.id', $productVendorCodeIds);
-            })
-            ->get();
+        $productVendorCodes = ProductVendorCode::whereIn('id', $productVendorCodeIds)->get();
 
-        $totalCount = $products->count();
-
-        return new ResultListProductsDto(
-            $totalCount,
-            $products
+        return new ResultListProductVendorCodeDto(
+            $productVendorCodes->count(),
+            $productVendorCodes
         );
     }
 
