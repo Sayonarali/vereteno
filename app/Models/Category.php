@@ -37,7 +37,9 @@ class Category extends Model
     public static function allChildrenIds(Model $model, array &$childs = []) {
         foreach ($model->children as $child) {
             $childs[] = $child['id'];
-            static::allChildrenIds($child, $childs);
+            if (!empty($child->children)) {
+                static::allChildrenIds($child, $childs);
+            }
         }
         return $childs;
     }
