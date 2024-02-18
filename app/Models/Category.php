@@ -39,7 +39,9 @@ class Category extends Model
         if (!empty($model->children)) {
             foreach ($model->children as $child) {
                 $childs[] = $child['id'];
-                static::allChildrenIds($child, $childs);
+                if (!empty($child->children)) {
+                    static::allChildrenIds($child, $childs);
+                }
             }
         }
         return $childs;
