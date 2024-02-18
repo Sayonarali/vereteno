@@ -26,20 +26,18 @@ class ProductService
                 });
             })
             ->whereHas('product', function ($query) use ($dto) {
-                $query->when($dto->getFilterDto()->getColors()->isNotEmpty(), function ($query) use ($dto) {
-                    $query->whereHas('category', function ($query) use ($dto) {
-                        $query->when($dto->getFilterDto()->getCategories()->isNotEmpty(), function ($query) use ($dto) {
-                            $allChildrenCategoriesId = [];
-                            $categories = Category::whereIn('id', $dto->getFilterDto()->getCategories())->get();
-                            foreach ($categories as $category) {
-                                Category::allChildrenIds($category, $allChildrenCategoriesId);
-                            }
-                            $query->whereIn('category_id', array_merge($dto->getFilterDto()->getCategories()->toArray(), $allChildrenCategoriesId));
-                        });
+                $query->whereHas('category', function ($query) use ($dto) {
+                    $query->when($dto->getFilterDto()->getCategories()->isNotEmpty(), function ($query) use ($dto) {
+                        $allChildrenCategoriesId = [];
+                        $categories = Category::whereIn('id', $dto->getFilterDto()->getCategories())->get();
+                        foreach ($categories as $category) {
+                            Category::allChildrenIds($category, $allChildrenCategoriesId);
+                        }
+                        $query->whereIn('category_id', array_merge($dto->getFilterDto()->getCategories()->toArray(), $allChildrenCategoriesId));
                     });
-                    $query->when($dto->getSearch(), function ($query, $search) {
-                        $query->where('name', 'LIKE', "%$search%");
-                    });
+                });
+                $query->when($dto->getSearch(), function ($query, $search) {
+                    $query->where('name', 'LIKE', "%$search%");
                 });
             })
             ->when($dto->getPriceFrom(), function ($query) use ($dto) {
