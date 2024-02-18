@@ -34,10 +34,10 @@ class Category extends Model
         return $this->hasMany(self::class, 'parent_id');
     }
 
-    public static function allChildrenIds(Model $model, array &$childs = [])
+    public static function allChildrenIds(Model $model, array &$childs = []): array
     {
-        if (!empty($model->{$model->children})) {
-            foreach ($model->{$model->children} as $child) {
+        if (!empty($model->children)) {
+            foreach ($model->children as $child) {
                 $childs[] = $child['id'];
                 if (!empty($child->children)) {
                     static::allChildrenIds($child, $childs);
