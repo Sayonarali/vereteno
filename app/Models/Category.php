@@ -41,9 +41,11 @@ class Category extends Model
                 $childId = $child['id'];
                 if (!in_array($childId, $processed)) {
                     $processed[] = $childId;
-                    $childs[] = $child['id'];
-                    $childIds = static::allChildrenIds($child); // Recursively get child IDs
-                    $childs = array_merge($childs, $childIds); // Merge child IDs with current IDs
+                    $childs[] = $childId;
+                    if (!empty($child['children'])) {
+                        $childIds = static::allChildrenIds($child, $processed); // Recursively get child IDs
+                        $childs = array_merge($childs, $childIds); // Merge child IDs with current IDs
+                    }
                 }
             }
         }
