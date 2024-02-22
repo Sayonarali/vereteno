@@ -36,16 +36,13 @@ class Category extends Model
 
     public static function allChildrenIds(Model $model, array &$childs = [], $processed = []): array
     {
-        if (!empty($model->children)) {
+        if (!$model->children->isEmpty()) {
             foreach ($model->children as $child) {
-                $childId = $child['id'];
-                if (!in_array($childId, $processed)) {
-                    $processed[] = $childId;
-                    $childs[] = $childId;
-                    if (!empty($child['children'])) {
-                        $childIds = static::allChildrenIds($child, $processed); // Recursively get child IDs
-                        $childs = array_merge($childs, $childIds); // Merge child IDs with current IDs
-                    }
+                if (!in_array($child['id'], $processed)) {
+                    $processed[] = $child['id'];
+                    $childs[] = $child['id'];
+                    $childIds = static::allChildrenIds($child, $processed);
+                    $childs = array_merge($childs, $childIds);
                 }
             }
         }
