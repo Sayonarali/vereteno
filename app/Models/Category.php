@@ -34,13 +34,17 @@ class Category extends Model
         return $this->hasMany(self::class, 'parent_id');
     }
 
-    public static function allChildrenIds(Model $model, array &$childs = []): array
+    public static function allChildrenIds(Model $model, array &$childs = [], $processed = []): array
     {
         if (!empty($model->children)) {
             foreach ($model->children as $child) {
-                $childs[] = $child['id'];
-                $childIds = static::allChildrenIds($child); // Recursively get child IDs
-                $childs = array_merge($childs, $childIds); // Merge child IDs with current IDs
+                $childId = $child['id'];
+                if (!in_array($childId, $processed)) {
+                    $processed[] = $childId;
+                    $childs[] = $child['id'];
+                    $childIds = static::allChildrenIds($child); // Recursively get child IDs
+                    $childs = array_merge($childs, $childIds); // Merge child IDs with current IDs
+                }
             }
         }
         return $childs;
