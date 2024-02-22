@@ -38,28 +38,4 @@ class Category extends Model
     {
         return $this->children()->with('children')->get();
     }
-
-    public static function allChildrenIds(Model $model, array &$childs = [], $processed = []): array
-    {
-        if (!$model->children->isEmpty()) {
-            foreach ($model->children as $child) {
-                if (!in_array($child['id'], $processed)) {
-                    $processed[] = $child['id'];
-                    $childs[] = $child['id'];
-                    $childIds = static::allChildrenIds($child, $processed);
-                    $childs = array_merge($childs, $childIds);
-                }
-            }
-        }
-        return $childs;
-    }
-
-    public static function allChildren(Model $model, array &$childs = [])
-    {
-        foreach ($model->children as $child) {
-            $childs[] = $child;
-            static::allChildren($child, $childs);
-        }
-        return $childs;
-    }
 }
