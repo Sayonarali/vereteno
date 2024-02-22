@@ -34,6 +34,11 @@ class Category extends Model
         return $this->hasMany(self::class, 'parent_id');
     }
 
+    public function getAllChildrenCategories()
+    {
+        return $this->children()->with('children')->get();
+    }
+
     public static function allChildrenIds(Model $model, array &$childs = [], $processed = []): array
     {
         if (!$model->children->isEmpty()) {

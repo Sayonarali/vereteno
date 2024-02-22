@@ -31,7 +31,8 @@ class ProductService
                         $allChildrenCategoriesId = [];
                         $categories = Category::whereIn('id', $dto->getFilterDto()->getCategories())->get();
                         foreach ($categories as $category) {
-                            $allChildrenCategoriesId = Category::allChildrenIds($category, $allChildrenCategoriesId);
+//                            $allChildrenCategoriesId = Category::allChildrenIds($category, $allChildrenCategoriesId);
+                            $allChildrenCategoriesId = $category->getAllChildrenCategories()->pluck('id')->all();
                         }
                         $query->whereIn('category_id', array_merge($dto->getFilterDto()->getCategories()->toArray(), $allChildrenCategoriesId));
                     });
