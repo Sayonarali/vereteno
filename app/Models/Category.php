@@ -39,10 +39,8 @@ class Category extends Model
         if (!empty($model->children)) {
             foreach ($model->children as $child) {
                 $childs[] = $child['id'];
-//                dd($child->children);
-                if ($child->children) {
-                    static::allChildrenIds($child, $childs);
-                }
+                $childIds = static::allChildrenIds($child); // Recursively get child IDs
+                $childs = array_merge($childs, $childIds); // Merge child IDs with current IDs
             }
         }
         return $childs;
