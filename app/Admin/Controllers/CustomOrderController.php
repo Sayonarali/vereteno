@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\CustomOrder;
+use Carbon\Carbon;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -37,8 +38,12 @@ class CustomOrderController extends AdminController
                 'process' => 'info',
                 'approved' => 'default',
             ])->sortable();;
-        $grid->column('created_at', __('Отправлено'))->date();
-        $grid->column('updated_at', __('Обновлено'))->date();
+        $grid->column('created_at', __('Отправлено'))->display(function ($date) {
+            return Carbon::parse($date)->format('d.m.Y');
+        });
+        $grid->column('updated_at', __('Обновлено'))->display(function ($date) {
+            return Carbon::parse($date)->format('d.m.Y');
+        });
 
         $grid->disableFilter();
         $grid->disableExport();
