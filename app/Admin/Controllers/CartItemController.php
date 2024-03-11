@@ -32,9 +32,7 @@ class CartItemController extends AdminController
 
         $grid->column('id', __('ID'))->sortable();
         $grid->column('user', __('Пользователь'))->display(function ($user) {
-            $userId = $user['id'];
-            $userName = $user['name'];
-            return "<a href='/admin/user/$userId'>$userName</a>";
+            return $user['login'];
         });
         $grid->column('product.product_id', __('Название товара'))
             ->display(function ($productId) {
