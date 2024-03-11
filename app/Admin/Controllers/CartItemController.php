@@ -50,7 +50,8 @@ class CartItemController extends AdminController
             })->sortable();
         $grid->column('product.discount_id', __('Скидка'))
             ->display(function ($discountId) {
-                return (100 - Discount::find($discountId)->discount_coefficient * 100) . '%';
+                $discount = Discount::find($discountId);
+                return $discount ? (100 - Discount::find($discountId)->discount_coefficient * 100) . '%' : '-';
             })->sortable();
         $grid->column('quantity', __('Количество'))->sortable();
 
