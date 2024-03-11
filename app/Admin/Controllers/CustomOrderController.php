@@ -37,8 +37,8 @@ class CustomOrderController extends AdminController
                 'process' => 'info',
                 'approved' => 'default',
             ])->sortable();;
-        $grid->column('created_at', __('Отправлено'));
-        $grid->column('updated_at', __('Обновлено'));
+        $grid->column('created_at', __('Отправлено'))->date();
+        $grid->column('updated_at', __('Обновлено'))->date();
 
         $grid->disableFilter();
         $grid->disableExport();
