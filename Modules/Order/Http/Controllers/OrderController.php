@@ -5,6 +5,7 @@ namespace Modules\Order\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Modules\Order\Http\Requests\CreateUpdateOrderRequest;
+use Modules\Order\Http\Requests\CustomOrderRequest;
 use Modules\Order\Http\Responses\OrderResponse;
 use Modules\Order\Http\Responses\ShowOrderResponse;
 use Modules\Order\Services\OrderService;
