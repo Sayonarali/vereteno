@@ -15,5 +15,4 @@ class CustomOrder extends Model
         'description',
         'status',
     ];
-    public $timestamps = false;
 }
