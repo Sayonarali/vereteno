@@ -40,6 +40,12 @@ services:
             interval: 60s
             retries: 3
             timeout: 5s
+    mailhog:
+        image: mailhog/mailhog:latest
+        container_name: vereteno-mailhog
+        ports:
+            - "8003:1025"
+            - "8100:8025"
 volumes:
     app-mysql:
     caddy-data:
