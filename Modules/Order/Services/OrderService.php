@@ -66,8 +66,8 @@ class OrderService
             'name' => $dto->getName(),
             'description' => $dto->getDescription(),
         ]);
-        Mail::to('elizaveta_shevchenko_00@inbox.ru')->send(new CustomOrderMail($order));
-        return true;
+//        Mail::to('elizaveta_shevchenko_00@inbox.ru')->send(new CustomOrderMail($order));
+        return $order;
     }
 
     public function saveOrderItems(Order $order, Collection $cartItemIds)

@@ -20,6 +20,12 @@ Route::controller(OrderController::class)
     ->group(function () {
         Route::get('/', 'show');
         Route::post('/', 'create');
-        Route::post('/custom', 'custom');
         Route::patch('/{id}', 'updateOrderStatus');
+    });
+
+Route::controller(OrderController::class)
+    ->prefix('v1/order')
+    ->group(function ()
+    {
+        Route::post('/custom', 'custom');
     });
