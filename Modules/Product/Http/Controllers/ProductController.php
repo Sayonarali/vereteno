@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\ProductVendorCode;
 use App\Models\Statpage;
+use Modules\Product\Http\Requests\CreateFeedbackRequest;
 use Modules\Product\Http\Requests\ListProductsRequest;
 use Modules\Product\Http\Requests\ShowByIdsRequest;
 use Modules\Product\Http\Responses\AttributeResponse;
@@ -33,6 +34,11 @@ class ProductController extends Controller
         return new ProductVendorCodeResponse($productVendorCode);
     }
 
+    public function createFeedback(CreateFeedbackRequest $request)
+    {
+        return $this->productService->createFeedback($request->getDto());
+    }
+
     public function showByIds(ShowByIdsRequest $request)
     {
         return new ListProductVendorCodesResponse($this->productService->showByIds($request->getProductVendorCodeIds()));
@@ -42,7 +48,6 @@ class ProductController extends Controller
     {
         return $this->productService->getBanner()->map(fn(Statpage $banner) => new BannerResponse($banner));
     }
-
 
     public function getAttributes()
     {

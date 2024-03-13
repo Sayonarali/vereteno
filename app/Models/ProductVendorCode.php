@@ -32,6 +32,11 @@ class ProductVendorCode extends Pivot
         return $this->hasMany(ProductVendorCodeImage::class, 'product_vendor_code_id');
     }
 
+    public function feedbacks()
+    {
+        return $this->hasMany(ProductVendorCodeFeedback::class, 'product_vendor_code_id');
+    }
+
     public function sizes()
     {
         return $this->belongsToMany(Size::class, 'product_vendor_code_sizes', 'product_vendor_code_id')

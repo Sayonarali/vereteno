@@ -5,6 +5,7 @@ namespace Modules\Product\Http\Responses;
 use App\Models\AttributeValue;
 use App\Models\Product;
 use App\Models\ProductVendorCode;
+use App\Models\ProductVendorCodeFeedback;
 use App\Models\ProductVendorCodeImage;
 use App\Models\Size;
 use App\Models\VendorCode;
@@ -31,7 +32,8 @@ class ProductVendorCodeResponse implements \JsonSerializable
             'vendorCode' => $this->productVendorCode->code ? new VendorCodeResponse($this->productVendorCode->code) : null,
             'sizes' => $this->productVendorCode->sizes->map(fn(Size $size) => new SizeResponse($size)),
             'images' => $this->productVendorCode->images->map(fn(ProductVendorCodeImage $image) => new ImageResponse($image)),
-            'attributes' => $this->productVendorCode->attributes->map(fn(AttributeValue $attributeValue) => new AttributeValueResponse($attributeValue))
+            'attributes' => $this->productVendorCode->attributes->map(fn(AttributeValue $attributeValue) => new AttributeValueResponse($attributeValue)),
+            'feedbacks' => $this->productVendorCode->feedbacks->map(fn(ProductVendorCodeFeedback $feedback) => new FeedbackResponse($feedback))
         ];
     }
 }

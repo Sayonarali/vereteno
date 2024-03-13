@@ -7,8 +7,12 @@ use App\Models\Category;
 use App\Models\Color;
 use App\Models\Material;
 use App\Models\ProductVendorCode;
+use App\Models\ProductVendorCodeFeedback;
 use App\Models\Size;
 use App\Models\Statpage;
+use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Auth;
+use Modules\Product\Dto\CreateFeedbackDto;
 use Modules\Product\Dto\ListProductsDto;
 use Modules\Product\Dto\ResultListProductVendorCodeDto;
 
@@ -17,6 +21,7 @@ class ProductService
     public function index(ListProductsDto $dto)
     {
         $productVendorCodes = ProductVendorCode::query()
+            ->with(['product', 'discount', 'sizes', 'images', 'attributes', 'feedbacks'])
             ->whereHas('code', function ($query) use ($dto) {
                 $query->when($dto->getFilterDto()->getColors()->isNotEmpty(), function ($query) use ($dto) {
                     $query->whereIn('color_id', $dto->getFilterDto()->getColors());
@@ -80,6 +85,19 @@ class ProductService
             $productVendorCodes->count(),
             $productVendorCodes
         );
+    }
+
+    public function createFeedback(CreateFeedbackDto $dto)
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        return ProductVendorCodeFeedback::create([
+            'user_id' => $user->id,
+            'product_vendor_code_id' => $dto->getProductVendorCodeId(),
+            'comment' => $dto->getComment(),
+            'rating' => $dto->getRating(),
+        ]);
     }
 
     public function getBanner()

@@ -27,3 +27,11 @@ Route::controller(ProductController::class)
         Route::get('/list/sizes', 'getSizes');
         Route::get('/list/by-ids', 'showByIds');
     });
+
+Route::controller(ProductController::class)
+    ->middleware('auth:api')
+    ->prefix('v1/product')
+    ->group(function ()
+    {
+        Route::post('/feedback', 'createFeedback');
+    });
