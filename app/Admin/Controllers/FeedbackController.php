@@ -7,6 +7,7 @@ use App\Models\ProductVendorCodeFeedback;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Grid\Displayers\Actions;
 use Encore\Admin\Show;
 
 class FeedbackController extends AdminController
@@ -42,6 +43,8 @@ class FeedbackController extends AdminController
         $grid->disableExport();
 
         $grid->disableCreateButton();
+        $grid->setActionClass(Actions::class);
+
         $grid->actions(function ($actions) {
             $actions->disableView();
             $actions->disableEdit();
