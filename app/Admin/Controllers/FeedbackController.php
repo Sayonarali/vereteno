@@ -42,7 +42,10 @@ class FeedbackController extends AdminController
         $grid->disableExport();
 
         $grid->disableCreateButton();
-        $grid->disableActions();
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+            $actions->disableEdit();
+        });
         $grid->paginate(15);
         return $grid;
     }
