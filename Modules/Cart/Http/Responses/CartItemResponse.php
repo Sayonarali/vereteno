@@ -19,13 +19,13 @@ class CartItemResponse implements \JsonSerializable
             'id' => $this->item->id,
             'productName' => $this->item->product->product->name,
             'productVendorCodeId' => $this->item->product->id,
-            'inStockQuantity' => new SizeResponse($this->item->size),
+            'size' => new SizeResponse($this->item->product->size),
             'originalPrice' => $this->item->product->price,
             'discount' => $this->item->product->discount,
             'discountPrice' => empty($this->item->product->discount) ?
                 null : ($this->item->product->discount * $this->item->price),
             'quantity' => $this->item->quantity,
-            'size' => $this->item->size,
+//            'size' => $this->item->size,
             'originalTotalPrice' => $this->item->product->price * $this->item->quantity,
             'discountTotalPrice' => empty($this->item->product->discount) ?
                 null : ($this->item->product->discount * $this->item->price * $this->item->quantity)
