@@ -21,7 +21,7 @@ class ProductService
     public function index(ListProductsDto $dto)
     {
         $productVendorCodes = ProductVendorCode::query()
-            ->with(['product', 'discount', 'sizes', 'images', 'attributes', 'feedbacks'])
+            ->with(['product.category', 'discount', 'sizes', 'images', 'attributes', 'feedbacks'])
             ->whereHas('code', function ($query) use ($dto) {
                 $query->when($dto->getFilterDto()->getColors()->isNotEmpty(), function ($query) use ($dto) {
                     $query->whereIn('color_id', $dto->getFilterDto()->getColors());
@@ -79,7 +79,12 @@ class ProductService
 
     public function showByIds(array $productVendorCodeIds)
     {
-        $productVendorCodes = ProductVendorCode::whereIn('id', $productVendorCodeIds)->get();
+        $productVendorCodes = ProductVendorCode::whereIn('id', $productVendorCodeIds)
+            ->with([
+                'product.category', 'discount', 'code',
+                'sizes', 'images', 'attributes', 'feedbacks'
+            ])
+            ->get();
 
         return new ResultListProductVendorCodeDto(
             $productVendorCodes->count(),

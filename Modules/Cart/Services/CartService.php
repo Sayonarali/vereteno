@@ -16,6 +16,7 @@ class CartService
         $totalCount = CartItem::query()->where('user_id', Auth::user()->getAuthIdentifier())->count();
 
         $cartItems = CartItem::query()
+            ->with(['product.discount', 'size'])
             ->where('user_id', Auth::user()->getAuthIdentifier())
             ->with('product')
             ->get();
