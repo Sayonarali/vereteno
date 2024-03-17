@@ -19,7 +19,7 @@ class CartItemResponse implements \JsonSerializable
             'id' => $this->item->id,
             'productName' => $this->item->product->product->name,
             'productVendorCodeId' => $this->item->product->id,
-            'inStockQuantity' => $this->item->size->pivot,
+            'inStockQuantity' => new SizeResponse($this->item->size),
             'originalPrice' => $this->item->product->price,
             'discount' => $this->item->product->discount,
             'discountPrice' => empty($this->item->product->discount) ?
